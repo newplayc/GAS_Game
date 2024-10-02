@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\GAS_Game.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\GAS_Game.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\GAS_GameEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore.txt" />
+    <None Include="..\..\.vsconfig" />
+    <None Include="..\..\README.md" />
+    <None Include="..\..\UpgradeLog.htm" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\GAS_Game">
+      <UniqueIdentifier>{4F2636E4-F4F6-3DF1-B1A7-1092EB99E757}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\GAS_Game\GAS_Game.Build.cs">
+      <Filter>Source\GAS_Game</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\GAS_Game\GAS_Game.cpp">
+      <Filter>Source\GAS_Game</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\GAS_Game.h">
+      <Filter>Source\GAS_Game</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Private">
+      <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacter.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacterBase.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnemy.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraPlayerController.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Public">
+      <UniqueIdentifier>{AE44D595-7153-3E32-96FF-E7DE434E348B}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacter.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacterBase.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnemy.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerController.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
