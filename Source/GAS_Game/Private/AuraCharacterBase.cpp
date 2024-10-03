@@ -2,6 +2,8 @@
 
 
 #include "AuraCharacterBase.h"
+#include "AuraAbilitySystemComponent.h"
+#include "AuraAttributeSet.h"
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -11,6 +13,8 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), "WeaponHandSocket");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+
 }
 
 // Called when the game starts or when spawned
@@ -20,4 +24,7 @@ void AAuraCharacterBase::BeginPlay()
 	
 }
 
-
+UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilityComponent;
+}

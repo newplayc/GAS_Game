@@ -14,15 +14,14 @@ UCLASS()
 class GAS_GAME_API AAuraEnemy : public AAuraCharacterBase , public IEnemyInterface
 {
 	GENERATED_BODY()
+protected:
+	virtual void BeginPlay()override;
 public:
+	AAuraEnemy();
 
 	virtual void  HeightLightActor()override ;
 
 	virtual void  UnHeightLightActor()override;
 
-protected:
 	
-
-	UPROPERTY(BlueprintReadOnly)
-	bool bShouldHeightActor = false;
 };

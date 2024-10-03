@@ -6,6 +6,7 @@
 #include "AuraCharacterBase.h"
 #include "AuraCharacter.generated.h"
 
+class UAuraAbilitySystemComponent;
 /**
  * 
  */
@@ -16,5 +17,12 @@ class GAS_GAME_API AAuraCharacter : public AAuraCharacterBase
 public:
 	AAuraCharacter();
 
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+
+	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void OnRep_PlayerState()override;
+
+	void IniAbilityInfo();
 };
