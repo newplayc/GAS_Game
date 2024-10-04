@@ -20,7 +20,7 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetHealthAttribute()).AddUObject(this,&UOverlapWidgetController::OnHealthChangeCallback);
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxHealthAttribute()).AddUObject(this, &UOverlapWidgetController::OnMaxHealthChangeCallback);
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetManaAttribute()).AddUObject(this, &UOverlapWidgetController::OnManaChangeCallback);
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetManaAttribute()).AddUObject(this, &UOverlapWidgetController::OnMaxManaChangeCallback);
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxManaAttribute()).AddUObject(this, &UOverlapWidgetController::OnMaxManaChangeCallback);
 }
 
 void UOverlapWidgetController::OnHealthChangeCallback(const FOnAttributeChangeData& Data) const
