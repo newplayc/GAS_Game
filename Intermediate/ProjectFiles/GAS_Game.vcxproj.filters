@@ -12,7 +12,8 @@
       <Filter>Source</Filter>
     </None>
     <None Include="..\..\.gitattributes" />
-    <None Include="..\..\.gitignore.txt" />
+    <None Include="..\..\.gitignore" />
+    <None Include="..\..\.gitignore.bak" />
     <None Include="..\..\.vsconfig" />
     <None Include="..\..\README.md" />
     <None Include="..\..\UpgradeLog.htm" />
@@ -67,13 +68,25 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraHUD.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraPlayerController.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraPlayerState.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraUserWidget.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraUserWidgetController.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Public">
@@ -100,13 +113,25 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraHUD.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerController.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerState.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidget.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidgetController.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,9 @@
 #include "AuraCharacter.h"
 #include "AuraAbilitySystemComponent.h"
 #include "AuraPlayerState.h"
+#include "AuraPlayerController.h"
+#include "AuraAttributeSet.h"
+#include "AuraHUD.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -17,7 +20,6 @@ AAuraCharacter::AAuraCharacter()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
-	
 
 }
 
@@ -43,7 +45,20 @@ void AAuraCharacter::OnRep_PlayerState()
 }
 void AAuraCharacter::IniAbilityInfo()
 {
+
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
 	check(PS);
-	PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS ,this);
+	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+	check(ASC);
+	ASC->InitAbilityActorInfo(PS, this);
+
+	UAuraAttributeSet* AS = PS->GetAttributeSet();
+	AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(GetController());
+	if (PlayerController)
+	{
+		if (AAuraHUD* AHUD = Cast<AAuraHUD>(PlayerController->GetHUD()))
+		{
+			AHUD->IniOverlayWidget(PS, PlayerController, ASC, AS);
+		}
+	}
 }

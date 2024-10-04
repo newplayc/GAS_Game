@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "GameplayEffectTypes.h"
 #include "AuraAttributeSet.generated.h"
 
 
@@ -25,26 +26,33 @@ public:
 
 	UAuraAttributeSet();
 
-	
 
 	virtual void GetLifetimeReplicatedProps(TArray< class FLifetimeProperty >& OutLifetimeProps) const override;
+
 
 	UPROPERTY(BlueprintReadWrite , ReplicatedUsing = OnRep_Health , Category = "Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health);
 
 
+
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_MaxHealth, Category = "Attributes")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth);
+
+
 
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Mana, Category = "Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);
 
+
+
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_MaxMana, Category = "Attributes")
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana);
+
+
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData & OldHealth)const;

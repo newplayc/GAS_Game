@@ -24,6 +24,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	virtual UAuraAttributeSet* GetAttributeSet() const { return AttributeSet; }
+	
 protected:
 
 	UPROPERTY()

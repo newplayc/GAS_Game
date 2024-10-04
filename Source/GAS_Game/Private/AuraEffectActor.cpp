@@ -38,8 +38,11 @@ void AAuraEffectActor::OnBeginOverLap( UPrimitiveComponent* OverlappedComponent,
 		 UAuraAttributeSet* MutableAttribute = const_cast<UAuraAttributeSet*>(AttributeSet);
 		
 		MutableAttribute->SetHealth(AttributeSet->GetHealth() + 25.f);
+		Destroy();
 	}
+	
 }
+
 
 void AAuraEffectActor::OnEndOverLap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
