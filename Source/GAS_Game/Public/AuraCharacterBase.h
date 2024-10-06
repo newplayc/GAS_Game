@@ -20,10 +20,13 @@ public:
 	// Sets default values for this character's properties
 	AAuraCharacterBase();
 
+	
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void IniAbilityInfo();
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 

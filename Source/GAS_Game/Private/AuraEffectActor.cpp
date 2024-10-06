@@ -2,10 +2,7 @@
 
 
 #include "AuraEffectActor.h"
-#include "AbilitySystemComponent.h"
-#include "GameplayEffect.h"
-#include "AbilitySystemBlueprintLibrary.h"
-#include "AuraAttributeSet.h"
+
 
 // Sets default values
 AAuraEffectActor::AAuraEffectActor()
@@ -17,6 +14,58 @@ AAuraEffectActor::AAuraEffectActor()
 	
 }
 
+void AAuraEffectActor::OnOverlap(AActor * TargetActor)
+{
+	if (InstantlyEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InstantlyGameplayEffect);
+	}
+	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffect);
+	}
+	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffect);
+	}
+}
+
+void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
+{
+
+
+	if (InstantlyEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InstantlyGameplayEffect);
+	}
+	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffect);
+	}
+	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffect);
+	}
+	if(InfiniteEffectRemovePolicy == EEffectRemovePolicy::RemoveOnEndOverlap)
+	{
+		UAbilitySystemComponent * ASC  = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+		if (!ASC)return;
+		TArray<FActiveGameplayEffectHandle>DelArray;
+		for (auto ComPair : InfiniteComponents)
+		{
+			if (ComPair.Value == ASC)
+			{
+				ASC->RemoveActiveGameplayEffect(ComPair.Key,1);
+				DelArray.Add(ComPair.Key);
+			}
+		}
+		for (auto Del : DelArray)
+		{
+			InfiniteComponents.Remove(Del);
+		}
+	}
+}
+
 void AAuraEffectActor::ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect> GameplayEffect)
 {
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Actor);
@@ -25,8 +74,14 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayE
 	check(GameplayEffect)
 	FGameplayEffectContextHandle GECH = ASC->MakeEffectContext();
 	GECH.AddSourceObject(this);
-	FGameplayEffectSpecHandle GESH = ASC->MakeOutgoingSpec(GameplayEffect, 1.f, GECH);
-	ASC->ApplyGameplayEffectSpecToSelf(*GESH.Data.Get());
+	const FGameplayEffectSpecHandle GESH = ASC->MakeOutgoingSpec(GameplayEffect, 1.f, GECH);
+	const FActiveGameplayEffectHandle ActiveEffectHandle = ASC->ApplyGameplayEffectSpecToSelf(*GESH.Data.Get());
+	const bool IsInfinite = GESH.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
+	if (IsInfinite)
+	{
+		InfiniteComponents.Add(MakeTuple(ActiveEffectHandle, ASC));
+	}
+
 }
 
 
