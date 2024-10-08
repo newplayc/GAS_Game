@@ -7,7 +7,7 @@
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	AbilityComponent->InitAbilityActorInfo(this, this);
+
 }
 AAuraEnemy::AAuraEnemy()
 {
@@ -38,4 +38,9 @@ void AAuraEnemy::UnHeightLightActor()
 
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+}
+
+void AAuraEnemy::IniAbilityInfo()
+{
+	AbilityComponent->InitAbilityActorInfo(this, this);
 }

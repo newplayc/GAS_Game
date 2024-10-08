@@ -23,5 +23,5 @@ public:
 
 	virtual void  UnHeightLightActor()override;
 
-	
+	virtual void IniAbilityInfo() override;
 };

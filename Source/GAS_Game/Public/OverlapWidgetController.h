@@ -6,6 +6,7 @@
 #include "AuraUserWidgetController.h"
 #include "AuraAttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "AuraUserWidget.h"
 #include "OverlapWidgetController.generated.h"
 
 
@@ -16,6 +17,22 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChanged, float, MaxHealt
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChanged, float, Mana);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChanged, float, MaxMana);
+
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	FText Message = FText();
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	TSubclassOf<UAuraUserWidget>MessageWidget;
+};
+
 /**
  * 
  */

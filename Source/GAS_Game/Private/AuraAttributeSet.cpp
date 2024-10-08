@@ -47,9 +47,12 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	if (EP.SourceASC &&EP.SourceASC->AbilityActorInfo.IsValid()&& EP.SourceASC->AbilityActorInfo.Get()->AvatarActor.IsValid())
 	{
 		EP.SourceAvataActor = EP.SourceASC->AbilityActorInfo.Get()->AvatarActor.Get();
+		if(EP.SourceASC->AbilityActorInfo.Get()->PlayerController.IsValid())
 		EP.SourceController = EP.SourceASC->AbilityActorInfo.Get()->PlayerController.Get();
 		if (EP.SourceController)
-			EP.SourceCharacter = Cast<ACharacter>(EP.SourceController->GetCharacter());
+		{
+			EP.SourceCharacter = EP.SourceController->GetCharacter();
+		}
 		else if (EP.SourceController == nullptr && EP.SourceAvataActor != nullptr)
 		{
 			APawn* P = Cast<APawn>(EP.SourceAvataActor);
@@ -69,10 +72,12 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 
 	 if(Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo.Get()->AvatarActor.IsValid())
 	{
+
 		 EP.TargetAvataActor = Data.Target.AbilityActorInfo.Get()->AvatarActor.Get();
+		 if(Data.Target.AbilityActorInfo.Get()->PlayerController.IsValid())
 		 EP.TargetController = Data.Target.AbilityActorInfo.Get()->PlayerController.Get();
 		 EP.TargetASC = Data.Target.AbilityActorInfo.Get()->AbilitySystemComponent.Get();
-		 EP.TargetCharacter = Cast<ACharacter>(EP.TargetAvataActor);
+		// EP.TargetCharacter = dynamic_cast<ACharacter>(EP.TargetAvataActor);
 
 	}
 
@@ -85,6 +90,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 	Super::PostGameplayEffectExecute(Data);
 	FEffectProperties Properties;
+	SetEffectProperties(Data, Properties);
 
 
 }
