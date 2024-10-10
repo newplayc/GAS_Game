@@ -17,7 +17,23 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	 FGameplayTagContainer GameplayContainer;
-	GameplayEffectSpec.GetAllGrantedTags(GameplayContainer);
+	GameplayEffectSpec.GetAllAssetTags(GameplayContainer);
 	FAppliedAllTags.Broadcast(GameplayContainer);
+}
+
+void UAuraAbilitySystemComponent::InitPrimaryAttribute()
+{
+	check(InitalPrimaryEffect);
+	const FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
+	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(InitalPrimaryEffect , 1 , ContextHandle);
+	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
+}
+
+void UAuraAbilitySystemComponent::InitSecondaryAttribute()
+{
+	check(InitalSecondaryEffect);
+	const FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
+	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(InitalSecondaryEffect, 1, ContextHandle);
+	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
 }
 

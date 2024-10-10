@@ -27,7 +27,7 @@ public:
 	
 protected:
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
 	TObjectPtr<UAuraAbilitySystemComponent>AbilityComponent;
 
 	UPROPERTY()

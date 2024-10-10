@@ -24,43 +24,31 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 {
 	UAuraAttributeSet* Attribute = CastChecked<UAuraAttributeSet>(AttributeSet);
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetHealthAttribute()).AddUObject(this,&UOverlapWidgetController::OnHealthChangeCallback);
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnHealthChanged.Broadcast(Data.NewValue);});
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxHealthAttribute()).AddUObject(this, &UOverlapWidgetController::OnMaxHealthChangeCallback);
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxHealthChanged.Broadcast(Data.NewValue); });
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetManaAttribute()).AddUObject(this, &UOverlapWidgetController::OnManaChangeCallback);
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) { OnManaChanged.Broadcast(Data.NewValue); });
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxManaAttribute()).AddUObject(this, &UOverlapWidgetController::OnMaxManaChangeCallback);
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxManaChanged.Broadcast(Data.NewValue); });
 
 
-	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAppliedAllTags.AddLambda([](const FGameplayTagContainer& TagContainer) {
+	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAppliedAllTags.AddLambda([this](const FGameplayTagContainer& TagContainer) {
 		for (auto Tag : TagContainer)
 		{
-			const FString S = FString::Printf(TEXT("Tag : %s "), *Tag.ToString());
-			GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, S);
+			/*const FString S = FString::Printf(TEXT("Tag : %s "), *Tag.ToString());
+			GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, S);*/
+			const FGameplayTag Message = FGameplayTag::RequestGameplayTag(FName("Message"));
+
+			if (Tag.MatchesTag(Message))
+			{
+				FUIWidgetRow* Row = EffectMessageDataTabele.Get()->FindRow<FUIWidgetRow>(Tag.GetTagName() , TEXT(""));
+				FWidgetDelegate.Broadcast(*Row);
+			}
+
 		}
-		}
+	   }
 	);
 	
 }
 
-
-void UOverlapWidgetController::OnHealthChangeCallback(const FOnAttributeChangeData& Data) const
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlapWidgetController::OnMaxHealthChangeCallback(const FOnAttributeChangeData& Data) const
-{
-	OnMaxHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlapWidgetController::OnManaChangeCallback(const FOnAttributeChangeData& Data) const
-{
-	OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlapWidgetController::OnMaxManaChangeCallback(const FOnAttributeChangeData& Data) const
-{
-	OnMaxManaChanged.Broadcast(Data.NewValue);
-}

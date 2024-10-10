@@ -33,9 +33,11 @@ void AAuraHUD::IniOverlayWidget(APlayerState* PS, APlayerController* PC, UAbilit
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 	check(OverlayWidget);
 	
+
 	FWidgetContollerParams WidgetConteollerParam(PS, PC, ASC, AS);
 	UOverlapWidgetController* OWC = GetOverlayWidgetController(WidgetConteollerParam);
 	
+
 	check(OWC);
 	OverlayWidgetController = OWC;
 	OverlayWidget->SetWidgetController(OWC);

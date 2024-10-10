@@ -10,13 +10,7 @@
 #include "OverlapWidgetController.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, Health);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChanged, float, MaxHealth);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChanged, float, Mana);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChanged, float, MaxMana);
 
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
@@ -31,7 +25,23 @@ struct FUIWidgetRow : public FTableRowBase
 
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
 	TSubclassOf<UAuraUserWidget>MessageWidget;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	UTexture2D* Image;
+
+
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, Health);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChanged, float, MaxHealth);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChanged, float, Mana);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChanged, float, MaxMana);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
+
 
 /**
  * 
@@ -58,13 +68,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "DelegateAttribute")
 	FOnMaxManaChanged OnMaxManaChanged;
 
-protected:
+	UPROPERTY(BlueprintAssignable, Category = "DelegateWidgetMessage")
+	FOnMessageWidgetRowDelegate FWidgetDelegate;
 
-	void OnHealthChangeCallback(const FOnAttributeChangeData& Data) const;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UDataTable> EffectMessageDataTabele;
 
-	void OnMaxHealthChangeCallback(const FOnAttributeChangeData& Data) const;
-
-	void OnManaChangeCallback(const FOnAttributeChangeData& Data) const;
-
-	void OnMaxManaChangeCallback(const FOnAttributeChangeData& Data) const;
 };
+
