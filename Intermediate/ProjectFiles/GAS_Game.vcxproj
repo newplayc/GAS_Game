@@ -258,6 +258,7 @@
     <None Include="..\..\.vsconfig"/>
     <None Include="..\..\README.md"/>
     <None Include="..\..\UpgradeLog.htm"/>
+    <None Include="..\..\UpgradeLog2.htm"/>
     <None Include="..\..\Config\DefaultEditor.ini"/>
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
@@ -268,6 +269,10 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClInclude Include="..\..\Source\GAS_Game\GAS_Game.h"/>
+    <ClCompile Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.h"/>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAbilitySystemComponent.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -307,6 +312,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\ICombatInterface.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -323,6 +331,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidget.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidgetController.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\ICombatInterface.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h"/>
   </ItemGroup>
   <PropertyGroup>

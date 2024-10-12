@@ -44,3 +44,8 @@ void AAuraEnemy::IniAbilityInfo()
 {
 	AbilityComponent->InitAbilityActorInfo(this, this);
 }
+
+int32 AAuraEnemy::GetPlayerLevel()
+{
+	return Level;
+}

@@ -3,6 +3,8 @@
 
 #include "AuraAbilitySystemComponent.h"
 
+
+
 void UAuraAbilitySystemComponent::InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor)
 {
 	Super::InitAbilityActorInfo(InOwnerActor, InAvatarActor);
@@ -21,19 +23,24 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC, co
 	FAppliedAllTags.Broadcast(GameplayContainer);
 }
 
-void UAuraAbilitySystemComponent::InitPrimaryAttribute()
+void UAuraAbilitySystemComponent::InitAttribute(UObject * Source)
 {
-	check(InitalPrimaryEffect);
-	const FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
-	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(InitalPrimaryEffect , 1 , ContextHandle);
-	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
+	ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
+	ApplyEffectToInit(InitalSecondaryEffect, 1 , Source);
+	ApplyEffectToInit(InitalVitalEffect,1  ,Source);
 }
 
-void UAuraAbilitySystemComponent::InitSecondaryAttribute()
-{
-	check(InitalSecondaryEffect);
-	const FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
-	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(InitalSecondaryEffect, 1, ContextHandle);
-	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
-}
 
+
+/**
+ * Source Always is this
+ */
+void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect> GE, float level , UObject * Source)
+{
+	check(GE);
+	 FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
+	 ContextHandle.AddSourceObject(Source);
+	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(GE, level, ContextHandle);
+	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
+
+}

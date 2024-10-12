@@ -17,6 +17,7 @@
     <None Include="..\..\.vsconfig" />
     <None Include="..\..\README.md" />
     <None Include="..\..\UpgradeLog.htm" />
+    <None Include="..\..\UpgradeLog2.htm" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -46,6 +47,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\GAS_Game\GAS_Game.h">
       <Filter>Source\GAS_Game</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\AttributeCalcultion">
+      <UniqueIdentifier>{4F87604D-09FF-324D-A845-6E65F1B8D580}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.cpp">
+      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.h">
+      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Private">
       <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
@@ -87,6 +97,9 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\ICombatInterface.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
@@ -132,6 +145,9 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\ICombatInterface.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">

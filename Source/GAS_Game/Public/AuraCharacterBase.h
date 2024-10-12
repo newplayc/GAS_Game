@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AbilitySystemInterface.h"
+#include "ICombatInterface.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AuraCharacterBase.generated.h"
@@ -12,7 +13,7 @@ class UAuraAttributeSet;
 class UAttributeSet;
 
 UCLASS(abstract)
-class GAS_GAME_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
+class GAS_GAME_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public IICombatInterface
 {
 	GENERATED_BODY()
 

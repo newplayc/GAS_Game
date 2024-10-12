@@ -22,6 +22,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 	virtual void OnRep_PlayerState()override;
-
+	
 	virtual void IniAbilityInfo() override;
+
+	virtual int32 GetPlayerLevel()override;
 };

@@ -23,10 +23,13 @@ AAuraCharacter::AAuraCharacter()
 
 }
 
+
+
 UAbilitySystemComponent* AAuraCharacter::GetAbilitySystemComponent() const
 {
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
-	check(PS);
+	check(PS)
+
 	return PS->GetAbilitySystemComponent();
 	
 }
@@ -43,6 +46,16 @@ void AAuraCharacter::OnRep_PlayerState()
 	IniAbilityInfo();
 
 }
+
+
+int32 AAuraCharacter::GetPlayerLevel()
+{
+	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
+	check(PS);
+	return PS->GetPlayerLevel();
+}
+
+
 void AAuraCharacter::IniAbilityInfo()
 {
 
@@ -63,6 +76,7 @@ void AAuraCharacter::IniAbilityInfo()
 			AHUD->IniOverlayWidget(PS, PlayerController, ASC, AS);
 		}
 	}
-	ASC->InitPrimaryAttribute();
-	ASC->InitSecondaryAttribute();
+	ASC->InitAttribute(this);
+	
 }
+

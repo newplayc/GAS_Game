@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HrvvFIGBdxYjSAPLNAcuoPxoQRdgxInBMQJjEa7AgqTq3s6NGpT3oAuXRPZvVTU0A4qV2haLhEILozKvtxs1Wg==",
+  "dgSpecHash": "r4/NQ/uV5mU=",
   "success": true,
   "projectFilePath": "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj",
   "expectedPackageFiles": [
@@ -149,9 +149,9 @@
     "C:\\Users\\22637\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Users\\22637\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\22637\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\22637\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.29\\microsoft.windowsdesktop.app.ref.6.0.29.nupkg.sha512",
-    "C:\\Users\\22637\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.29\\microsoft.netcore.app.ref.6.0.29.nupkg.sha512",
-    "C:\\Users\\22637\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.29\\microsoft.aspnetcore.app.ref.6.0.29.nupkg.sha512"
+    "C:\\Users\\22637\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.35\\microsoft.windowsdesktop.app.ref.6.0.35.nupkg.sha512",
+    "C:\\Users\\22637\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.35\\microsoft.netcore.app.ref.6.0.35.nupkg.sha512",
+    "C:\\Users\\22637\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.35\\microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512"
   ],
   "logs": []
 }

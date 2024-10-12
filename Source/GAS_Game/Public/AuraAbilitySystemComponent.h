@@ -30,14 +30,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalSecondaryEffect;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect>InitalVitalEffect;
+
+	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>GE, float level ,UObject * Source);
+
 	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
 
 	void AbilityActorInfoSet();
 
 	void EffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GameplayEffectSpec ,FActiveGameplayEffectHandle ActiveEffectHandle);
 
-	void InitPrimaryAttribute();
+	void InitAttribute(UObject * Source); 
 
-	void InitSecondaryAttribute();
 
 };

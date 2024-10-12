@@ -21,3 +21,15 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 }
 
 
+void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME_CONDITION_NOTIFY(AAuraPlayerState, Level, COND_None, REPNOTIFY_Always);
+}
+
+void AAuraPlayerState::On_RepLevel()
+{
+	
+}
+
+

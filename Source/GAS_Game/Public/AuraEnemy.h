@@ -16,6 +16,10 @@ class GAS_GAME_API AAuraEnemy : public AAuraCharacterBase , public IEnemyInterfa
 	GENERATED_BODY()
 protected:
 	virtual void BeginPlay()override;
+
+	UPROPERTY(EditAnywhere , BlueprintReadOnly)
+	int32 Level = 1;
+
 public:
 	AAuraEnemy();
 
@@ -24,4 +28,6 @@ public:
 	virtual void  UnHeightLightActor()override;
 
 	virtual void IniAbilityInfo() override;
+
+	virtual int32 GetPlayerLevel()override;
 };

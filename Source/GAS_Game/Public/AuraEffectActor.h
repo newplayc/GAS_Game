@@ -83,7 +83,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 	EEffectRemovePolicy InfiniteEffectRemovePolicy = EEffectRemovePolicy::RemoveOnEndOverlap;
 
-
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> InfiniteComponents;
 
 };

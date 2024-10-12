@@ -25,6 +25,9 @@ public:
 
 	virtual UAuraAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
+	int32 GetPlayerLevel(){ return Level; }
+
+	virtual void  GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 protected:
 
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
@@ -33,5 +36,10 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAuraAttributeSet>AttributeSet;
 
+	UPROPERTY(EditAnywhere ,  BlueprintReadOnly , ReplicatedUsing = On_RepLevel , Category = "Attribute")
+	int32 Level = 1;
+
+	UFUNCTION()
+	void On_RepLevel();
 	
 };
