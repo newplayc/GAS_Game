@@ -9,10 +9,10 @@
 
 void UOverlapWidgetController::BroadcastInitailvalues()
 {
-
 	OnHealthChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetHealth());
 
 	OnMaxHealthChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetMaxHealth());
+
 
 	OnManaChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetMana());
 

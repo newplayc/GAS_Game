@@ -57,10 +57,19 @@
     <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.h">
       <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxManaMagnitudeCalculation.cpp">
+      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxManaMagnitudeCalculation.h">
+      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Private">
       <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAbilitySystemComponent.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAssetManager.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAttributeSet.cpp">
@@ -79,6 +88,9 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayTags.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraHUD.cpp">
@@ -111,6 +123,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAbilitySystemComponent.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAssetManager.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAttributeSet.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
@@ -127,6 +142,9 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayTags.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraHUD.h">
