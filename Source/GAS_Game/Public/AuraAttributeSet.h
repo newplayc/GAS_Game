@@ -7,9 +7,14 @@
 #include "AbilitySystemComponent.h"
 #include "GameplayAbilities/Public/GameplayEffectExtension.h"
 #include "GameplayEffectTypes.h"
+
 #include "AuraAttributeSet.generated.h"
 
 
+
+
+
+using TAttributeFunptr = FGameplayAttribute(*)();
 
 USTRUCT(BlueprintType)
 struct FEffectProperties
@@ -75,6 +80,8 @@ public:
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EP) const;
 
+
+	TMap<FGameplayTag, TAttributeFunptr> TagsToAttributes;
 
 
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Strength, Category = "Attributes")

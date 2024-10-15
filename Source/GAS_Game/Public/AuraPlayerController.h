@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	float show;
 private:
-	UPROPERTY(EditAnyWhere , Category = "Input")
+	UPROPERTY(EditAnyWhere, Category = "Input")
 	TObjectPtr<UInputMappingContext>AuraContext;
 
 	UPROPERTY(EditAnywhere , Category = "input")

@@ -66,6 +66,12 @@
     <Filter Include="Source\GAS_Game\Private">
       <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeInfo.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeWidgetController.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAbilitySystemComponent.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
@@ -73,6 +79,9 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAttributeSet.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacter.cpp">
@@ -120,6 +129,12 @@
     <Filter Include="Source\GAS_Game\Public">
       <UniqueIdentifier>{AE44D595-7153-3E32-96FF-E7DE434E348B}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeInfo.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeWidgetController.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAbilitySystemComponent.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
@@ -127,6 +142,9 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAttributeSet.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacter.h">

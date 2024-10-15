@@ -43,4 +43,5 @@ void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>
 	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(GE, level, ContextHandle);
 	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
 
+
 }

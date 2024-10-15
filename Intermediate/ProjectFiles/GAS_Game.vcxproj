@@ -277,6 +277,12 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxManaMagnitudeCalculation.h"/>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeInfo.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeWidgetController.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAbilitySystemComponent.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -284,6 +290,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAttributeSet.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacter.cpp">
@@ -328,9 +337,12 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeInfo.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeWidgetController.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAbilitySystemComponent.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAssetManager.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAttributeSet.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacter.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacterBase.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEffectActor.h"/>

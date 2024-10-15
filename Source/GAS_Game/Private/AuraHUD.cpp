@@ -18,10 +18,21 @@ UOverlapWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 		OverlayWidgetController = NewObject<UOverlapWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetParamas(WPC);
 		OverlayWidgetController->BindCallbacksToDependences();
-		return OverlayWidgetController;
 
 	}
 	return OverlayWidgetController;
+}
+
+UAttributeWidgetController* AAuraHUD::GetAttributeWidgetController(const FWidgetContollerParams& WPC)
+{
+	if (AttributeWidgetController == nullptr)
+	{
+		AttributeWidgetController = NewObject<UAttributeWidgetController>(this, AttributeWidgetControllerClass);
+		AttributeWidgetController->SetWidgetParamas(WPC);
+		AttributeWidgetController->BindCallbacksToDependences();
+
+	}
+	return AttributeWidgetController;
 }
 
 void AAuraHUD::IniOverlayWidget(APlayerState* PS, APlayerController* PC, UAbilitySystemComponent* ASC, UAttributeSet* AS)
