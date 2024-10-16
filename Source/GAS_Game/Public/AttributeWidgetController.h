@@ -28,4 +28,6 @@ public:
 
 	UPROPERTY(BlueprintAssignable , Category = "Delegate")
 	FAttributeDelegateClass FAttributeDelegate;
+
+
 };

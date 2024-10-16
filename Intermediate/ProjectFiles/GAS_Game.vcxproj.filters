@@ -96,7 +96,13 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnemy.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnhancedInputComponent.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayAbility.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayTags.cpp">
@@ -121,6 +127,12 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\ICombatInterface.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\InputDataConfig.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\MyClass.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
@@ -159,7 +171,13 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnemy.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnhancedInputComponent.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayAbility.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayTags.h">
@@ -184,6 +202,12 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\ICombatInterface.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\InputDataConfig.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\MyClass.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">

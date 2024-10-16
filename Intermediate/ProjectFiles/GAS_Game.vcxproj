@@ -307,7 +307,13 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnemy.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnhancedInputComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayAbility.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayTags.cpp">
@@ -334,6 +340,12 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\ICombatInterface.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\InputDataConfig.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\MyClass.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -347,7 +359,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacterBase.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEffectActor.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnemy.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnhancedInputComponent.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayAbility.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayTags.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraHUD.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerController.h"/>
@@ -356,6 +370,8 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidgetController.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\ICombatInterface.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\InputDataConfig.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\MyClass.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h"/>
   </ItemGroup>
   <PropertyGroup>

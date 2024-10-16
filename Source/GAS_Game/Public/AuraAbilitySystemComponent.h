@@ -44,5 +44,6 @@ public:
 
 	void InitAttribute(UObject * Source); 
 
+	void GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
 
 };

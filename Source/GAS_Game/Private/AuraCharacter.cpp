@@ -6,6 +6,7 @@
 #include "AuraPlayerController.h"
 #include "AuraAttributeSet.h"
 #include "AuraHUD.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -38,6 +39,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	IniAbilityInfo();
+	GiveStartAbilities();
 }
 
 void AAuraCharacter::OnRep_PlayerState()
@@ -78,5 +80,11 @@ void AAuraCharacter::IniAbilityInfo()
 	}
 	ASC->InitAttribute(this);
 	
+}
+
+void AAuraCharacter::GiveStartAbilities()
+{
+	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(AbilityComponent);
+	ASC->GiveAbilitiesArray(StartAbilitys);
 }
 

@@ -33,3 +33,5 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilityComponent;
 }
+
+

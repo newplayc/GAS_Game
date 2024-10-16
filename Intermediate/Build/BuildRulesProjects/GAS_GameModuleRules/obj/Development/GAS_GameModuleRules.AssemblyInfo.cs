@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GAS_GameModuleRules")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Development")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e08b534ae9535e37e059705a87227e7d85f3929")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+507bb9370d41b57ed6c9ca2b354909d4583927e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("GAS_GameModuleRules")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GAS_GameModuleRules")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "InputDataConfig.h"
 #include "AuraPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -45,4 +46,10 @@ private:
 
 	IEnemyInterface* HeightActor;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UInputDataConfig>InputAction;
+
+	void PressFunction(FGameplayTag ActionTag);
+	void ReleaseFunction(FGameplayTag ActionTag);
+	void HeldFunction(FGameplayTag ActionTag);
 };

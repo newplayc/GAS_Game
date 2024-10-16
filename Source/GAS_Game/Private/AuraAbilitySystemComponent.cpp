@@ -30,6 +30,15 @@ void UAuraAbilitySystemComponent::InitAttribute(UObject * Source)
 	ApplyEffectToInit(InitalVitalEffect,1  ,Source);
 }
 
+void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities)
+{
+	for (auto& Abi : Abilities)
+	{
+		FGameplayAbilitySpec SpecA = FGameplayAbilitySpec(Abi, 1);
+		GiveAbilityAndActivateOnce(SpecA);
+	}
+}
+
 
 
 /**
@@ -39,8 +48,11 @@ void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>
 {
 	check(GE);
 	 FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
+
 	 ContextHandle.AddSourceObject(Source);
+
 	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(GE, level, ContextHandle);
+
 	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
 
 

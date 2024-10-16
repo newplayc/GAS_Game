@@ -40,10 +40,12 @@ void AAuraPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* EnhancedInputCom = CastChecked<UEnhancedInputComponent>(InputComponent);
+	UAuraEnhancedInputComponent* EnhancedInputCom = CastChecked<UAuraEnhancedInputComponent>(InputComponent);
 
-	EnhancedInputCom->BindAction(MoveAction, ETriggerEvent::Triggered,this,  &AAuraPlayerController::Move);
+	EnhancedInputCom->BindAction(MoveAction, ETriggerEvent::Triggered , this,  &AAuraPlayerController::Move);
 	
+	EnhancedInputCom->BindAbilityActions(InputAction, this, &AAuraPlayerController::PressFunction, &AAuraPlayerController::ReleaseFunction, &AAuraPlayerController::HeldFunction);
+
 }
 
 void AAuraPlayerController::PlayerTick(float DeltaTime)
@@ -84,4 +86,19 @@ void AAuraPlayerController::CheckUnderCursor()
 			HeightActor = HitActor;
 			HeightActor->HeightLightActor();
 	}
+}
+
+void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, *ActionTag.ToString());
+}
+
+void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, *ActionTag.ToString());
+}
+
+void AAuraPlayerController::HeldFunction(FGameplayTag ActionTag)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, *ActionTag.ToString());
 }

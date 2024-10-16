@@ -33,6 +33,8 @@ protected:
 
 	virtual UAuraAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+
+
 	UPROPERTY(EditAnywhere , BlueprintReadWrite, Category = "weapon")
 	TObjectPtr<USkeletalMeshComponent>Weapon;
 
@@ -41,4 +43,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAuraAttributeSet>AttributeSet;
+
+
 };
