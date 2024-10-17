@@ -3,8 +3,16 @@
 
 #include "AuraPlayerController.h"
 #include <EnhancedInputComponent.h>
+
 #include "EnhancedInputSubsystems.h"
+#include "AuraAbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
+#include "Components/SplineComponent.h"
 #include "EnemyInterface.h"
+
+#include <AuraEnhancedInputComponent.h>
+#include <AbilitySystemBlueprintLibrary.h>
+#include <NavigationSystem.h>
 
 
 
@@ -12,6 +20,7 @@ AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
 	HeightActor = nullptr;
+	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -48,10 +57,29 @@ void AAuraPlayerController::SetupInputComponent()
 
 }
 
+
+
+void AAuraPlayerController::AutoRun()
+{
+	if (!bAutoRunning)return; 
+	APawn* ControlPawn = GetPawn();
+	if (!ControlPawn)return;
+	const FVector SplineLocation = Spline->FindLocationClosestToWorldLocation(ControlPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+	const FVector SplineDirection = Spline->FindDirectionClosestToWorldLocation(ControlPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+	ControlPawn->AddMovementInput(SplineDirection);
+
+	double Distance = (SplineLocation  - CachedDestination).Length();
+	if (Distance <= ShortPressThreshold)
+	{
+		bAutoRunning = false;
+	}
+}
+
 void AAuraPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 	CheckUnderCursor();
+	AutoRun();
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -72,33 +100,103 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::CheckUnderCursor()
 {
-	FHitResult HitResult;
+
 	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult);
 	if (!HitResult.bBlockingHit)return;
 	IEnemyInterface* HitActor = Cast<IEnemyInterface>(HitResult.GetActor());
-	if (HitActor == nullptr &&HeightActor!=nullptr){
-		HeightActor->UnHeightLightActor();
-	}
-	else if(HitActor!=nullptr){ 
-		if(HeightActor != nullptr)
+	if (HeightActor != HitActor)
+	{
+		if(HeightActor) {
 			HeightActor->UnHeightLightActor();
-
-			HeightActor = HitActor;
-			HeightActor->HeightLightActor();
+		}
+		if (HitActor) {
+		
+			HitActor->HeightLightActor();
+		}
 	}
+	HeightActor = HitActor;
 }
 
 void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, *ActionTag.ToString());
+	
+	bTargeting = HeightActor ? true : false;
+	bAutoRunning = false;
+	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag))
+	{
+		if (GetGAS())
+		{
+			GetGAS()->PressFunction(ActionTag);
+		}
+	}
+
+
 }
 
 void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Blue, *ActionTag.ToString());
+	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) || bTargeting)
+	{
+		if (GetGAS())
+		{
+			GetGAS()->ReleaseFunction(ActionTag);
+		}
+		return;
+	}
+	if (FollowTime <= ShortPressThreshold)
+	{
+
+		if (APawn* ConPawn = GetPawn())
+		{
+			UNavigationPath * Path = UNavigationSystemV1::FindPathToLocationSynchronously(GetWorld(), ConPawn->GetActorLocation(), CachedDestination);
+			Spline->ClearSplinePoints();
+			if (!Path)
+			{
+				//UE_LOG(LOG_TEMP,Warning, TEXT(" No Navigation Volume"));
+				return;
+			}
+			for (FVector & Point : Path->PathPoints)
+			{
+				Spline->AddSplinePoint(Point, ESplineCoordinateSpace::World);
+			}
+			CachedDestination = Path->PathPoints[Path->PathPoints.Num() - 1];
+		}
+		bAutoRunning = true;
+	
+	}
+	FollowTime = 0.f;
+	bTargeting = false;
 }
 
 void AAuraPlayerController::HeldFunction(FGameplayTag ActionTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Yellow, *ActionTag.ToString());
+	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) || bTargeting)
+	{
+		if (GetGAS())
+		{
+			GetGAS()->HeldFunction(ActionTag);
+		}
+		return;
+	}
+	else 
+	{
+		FollowTime += GetWorld()->GetDeltaSeconds();
+		if (HitResult.bBlockingHit)
+		{
+			CachedDestination = HitResult.Location;
+		}
+		if (APawn* ConPawn = GetPawn())
+		{
+			FVector Direction = (CachedDestination - ConPawn->GetActorLocation()).GetSafeNormal();
+			ConPawn->AddMovementInput(Direction, 1, false);
+		}
+	}
+	
+}
+
+ UAuraAbilitySystemComponent* AAuraPlayerController::GetGAS()
+{
+	if(AbilitySystemCom == nullptr)
+	AbilitySystemCom =  Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn()));
+	return AbilitySystemCom;
 }

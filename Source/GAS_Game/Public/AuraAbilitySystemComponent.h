@@ -40,10 +40,18 @@ public:
 
 	void AbilityActorInfoSet();
 
-	void EffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GameplayEffectSpec ,FActiveGameplayEffectHandle ActiveEffectHandle);
+	UFUNCTION(Client , Reliable)
+	void ClientEffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GameplayEffectSpec ,FActiveGameplayEffectHandle ActiveEffectHandle);
 
 	void InitAttribute(UObject * Source); 
 
 	void GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
+
+	void PressFunction(FGameplayTag ActionTag);
+
+	void ReleaseFunction(FGameplayTag ActionTag);
+
+	void HeldFunction(FGameplayTag ActionTag);
+
 
 };

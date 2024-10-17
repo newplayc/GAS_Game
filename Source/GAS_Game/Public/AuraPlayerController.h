@@ -6,12 +6,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "InputDataConfig.h"
+#include "NavigationPath.h"
 #include "AuraPlayerController.generated.h"
 
+
+class UAuraAbilitySystemComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
+class USplineComponent;
 /**
 * 
 * 
@@ -33,6 +37,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	float show;
+
+	
 private:
 	UPROPERTY(EditAnyWhere, Category = "Input")
 	TObjectPtr<UInputMappingContext>AuraContext;
@@ -43,13 +49,44 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 	
 	void CheckUnderCursor();
+	FHitResult HitResult;
 
+	
 	IEnemyInterface* HeightActor;
 
+
+	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputDataConfig>InputAction;
 
 	void PressFunction(FGameplayTag ActionTag);
+
 	void ReleaseFunction(FGameplayTag ActionTag);
+
 	void HeldFunction(FGameplayTag ActionTag);
+
+
+	UAuraAbilitySystemComponent*  GetGAS();
+
+	UPROPERTY()
+	UAuraAbilitySystemComponent * AbilitySystemCom;
+
+	FVector CachedDestination = FVector::ZeroVector;
+
+	float FollowTime = 0.f;
+
+	float ShortPressThreshold = 0.5f;
+
+	bool bAutoRunning = false;
+
+	bool bTargeting = false;
+
+	UPROPERTY(EditAnywhere)
+	float AutoRunAcceptanceRadious = 50.f;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent>Spline; 
+
+	void AutoRun();
+
 };

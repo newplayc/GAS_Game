@@ -2,6 +2,7 @@
 
 
 #include "AuraAbilitySystemComponent.h"
+#include <AuraGameplayAbility.h>
 
 
 
@@ -13,13 +14,14 @@ void UAuraAbilitySystemComponent::InitAbilityActorInfo(AActor* InOwnerActor, AAc
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
 }
 
-void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	 FGameplayTagContainer GameplayContainer;
 	GameplayEffectSpec.GetAllAssetTags(GameplayContainer);
+	GameplayEffectSpec.GetEffectContext();
 	FAppliedAllTags.Broadcast(GameplayContainer);
 }
 
@@ -34,10 +36,56 @@ void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGamepla
 {
 	for (auto& Abi : Abilities)
 	{
+
 		FGameplayAbilitySpec SpecA = FGameplayAbilitySpec(Abi, 1);
-		GiveAbilityAndActivateOnce(SpecA);
+		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(SpecA.Ability))
+		{
+			SpecA.DynamicAbilityTags.AddTag(AuraAbility->ActiveTag);
+			GiveAbility(SpecA);
+		}
+
 	}
 }
+
+
+void UAuraAbilitySystemComponent::PressFunction(FGameplayTag ActionTag)
+{
+	if (!ActionTag.IsValid())return;
+	for (FGameplayAbilitySpec& ASpec : GetActivatableAbilities())
+	{
+		if (ASpec.DynamicAbilityTags.HasTagExact(ActionTag))
+		{
+
+			AbilitySpecInputPressed(ASpec);
+			if (!ASpec.IsActive())
+			{
+				TryActivateAbility(ASpec.Handle);
+			}
+		}
+
+
+	}
+}
+
+
+void UAuraAbilitySystemComponent::ReleaseFunction(FGameplayTag ActionTag)
+{
+	if (!ActionTag.IsValid())return;
+	for (FGameplayAbilitySpec& ASpec : GetActivatableAbilities())
+	{
+		if (ASpec.DynamicAbilityTags.HasTagExact(ActionTag))
+		{
+			AbilitySpecInputReleased(ASpec);
+		}
+	}
+}
+
+void UAuraAbilitySystemComponent::HeldFunction(FGameplayTag ActionTag)
+{
+	if (!ActionTag.IsValid())return;
+}
+
+
 
 
 
