@@ -44,5 +44,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAuraAttributeSet>AttributeSet;
 
+	UPROPERTY(EditAnywhere)
+	FName WeaponSocketName;
+
+	virtual FVector GetWeaponSocketLocation() override;
 
 };

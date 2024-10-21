@@ -18,11 +18,4 @@ public:
 	UPROPERTY(EditAnywhere)
 	FGameplayTag ActiveTag;
 
-	virtual void InputPressed(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo)override;
-
-	/** Input binding stub. */
-	virtual void InputReleased(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo)override;
-
-
-	
 };

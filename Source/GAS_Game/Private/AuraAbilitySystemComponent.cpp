@@ -12,10 +12,12 @@ void UAuraAbilitySystemComponent::InitAbilityActorInfo(AActor* InOwnerActor, AAc
 	AbilityActorInfoSet();
 }
 
+
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
 }
+
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
@@ -25,12 +27,14 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 	FAppliedAllTags.Broadcast(GameplayContainer);
 }
 
+
 void UAuraAbilitySystemComponent::InitAttribute(UObject * Source)
 {
 	ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
 	ApplyEffectToInit(InitalSecondaryEffect, 1 , Source);
 	ApplyEffectToInit(InitalVitalEffect,1  ,Source);
 }
+
 
 void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities)
 {
@@ -59,7 +63,9 @@ void UAuraAbilitySystemComponent::PressFunction(FGameplayTag ActionTag)
 			AbilitySpecInputPressed(ASpec);
 			if (!ASpec.IsActive())
 			{
-				TryActivateAbility(ASpec.Handle);
+				if (!TryActivateAbility(ASpec.Handle)) {
+					GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Red, FString::Printf(TEXT("Faild TO Activate Ability %s"), *ASpec.Ability.GetName()));
+				}
 			}
 		}
 

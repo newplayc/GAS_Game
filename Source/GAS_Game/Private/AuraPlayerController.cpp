@@ -122,7 +122,7 @@ void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 	
 	bTargeting = HeightActor ? true : false;
 	bAutoRunning = false;
-	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag))
+	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag)||bTargeting)
 	{
 		if (GetGAS())
 		{
@@ -135,6 +135,7 @@ void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 
 void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 {
+
 	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) || bTargeting)
 	{
 		if (GetGAS())
@@ -143,6 +144,7 @@ void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 		}
 		return;
 	}
+
 	if (FollowTime <= ShortPressThreshold)
 	{
 
@@ -150,7 +152,7 @@ void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 		{
 			UNavigationPath * Path = UNavigationSystemV1::FindPathToLocationSynchronously(GetWorld(), ConPawn->GetActorLocation(), CachedDestination);
 			Spline->ClearSplinePoints();
-			if (!Path)
+			if (!Path || Path->PathPoints.Num()<=0)
 			{
 				//UE_LOG(LOG_TEMP,Warning, TEXT(" No Navigation Volume"));
 				return;
@@ -159,6 +161,7 @@ void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 			{
 				Spline->AddSplinePoint(Point, ESplineCoordinateSpace::World);
 			}
+			
 			CachedDestination = Path->PathPoints[Path->PathPoints.Num() - 1];
 		}
 		bAutoRunning = true;

@@ -24,4 +24,6 @@ class GAS_GAME_API IICombatInterface
 public:
 	virtual int32 GetPlayerLevel();
 
+	virtual FVector GetWeaponSocketLocation();
+
 };

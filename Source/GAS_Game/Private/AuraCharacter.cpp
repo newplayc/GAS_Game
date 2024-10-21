@@ -16,6 +16,9 @@ AAuraCharacter::AAuraCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0, 400.0, 0);
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	
+
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
@@ -27,8 +30,7 @@ AAuraCharacter::AAuraCharacter()
 UAbilitySystemComponent* AAuraCharacter::GetAbilitySystemComponent() const
 {
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
-	check(PS)
-
+	if (!PS)return nullptr;
 	return PS->GetAbilitySystemComponent();
 	
 }
@@ -51,16 +53,17 @@ void AAuraCharacter::OnRep_PlayerState()
 int32 AAuraCharacter::GetPlayerLevel()
 {
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
-	check(PS);
+	if (!PS)return -1;
 	return PS->GetPlayerLevel();
 }
+
 
 
 void AAuraCharacter::IniAbilityInfo()
 {
 
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
-	check(PS);
+	if (!PS)return;
 	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	check(ASC);
 	AbilityComponent = ASC;

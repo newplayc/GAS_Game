@@ -138,6 +138,15 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Projectile.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\ProjectileSpell.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\TargetDataTask.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Public">
       <UniqueIdentifier>{AE44D595-7153-3E32-96FF-E7DE434E348B}</UniqueIdentifier>
     </Filter>
@@ -211,6 +220,15 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Projectile.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\ProjectileSpell.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\TargetDataTask.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
   </ItemGroup>

@@ -23,9 +23,9 @@ public:
 	FGamplayAllTags FAppliedAllTags;
 
 	
-
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalPrimaryEffect;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalSecondaryEffect;
@@ -34,22 +34,31 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalVitalEffect;
 
+
 	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>GE, float level ,UObject * Source);
+
 
 	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
 
+
 	void AbilityActorInfoSet();
+
 
 	UFUNCTION(Client , Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GameplayEffectSpec ,FActiveGameplayEffectHandle ActiveEffectHandle);
 
+
 	void InitAttribute(UObject * Source); 
+
 
 	void GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
 
+
 	void PressFunction(FGameplayTag ActionTag);
 
+
 	void ReleaseFunction(FGameplayTag ActionTag);
+
 
 	void HeldFunction(FGameplayTag ActionTag);
 

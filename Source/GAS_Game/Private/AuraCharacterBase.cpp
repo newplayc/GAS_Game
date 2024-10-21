@@ -3,6 +3,7 @@
 
 #include "AuraCharacterBase.h"
 #include "AuraAbilitySystemComponent.h"
+#include "Components\CapsuleComponent.h"
 #include "AuraAttributeSet.h"
 
 // Sets default values
@@ -14,6 +15,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon->SetupAttachment(GetMesh(), "WeaponHandSocket");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+
+	
 
 }
 
@@ -32,6 +37,11 @@ void AAuraCharacterBase::IniAbilityInfo()
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilityComponent;
+}
+
+FVector AAuraCharacterBase::GetWeaponSocketLocation()
+{
+	return Weapon->GetSocketLocation(WeaponSocketName);
 }
 
 

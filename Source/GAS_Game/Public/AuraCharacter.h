@@ -29,6 +29,10 @@ public:
 
 	virtual int32 GetPlayerLevel()override;
 
+
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>> StartAbilitys;
+
+
 };
