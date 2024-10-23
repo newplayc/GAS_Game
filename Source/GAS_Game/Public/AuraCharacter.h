@@ -29,6 +29,9 @@ public:
 
 	virtual int32 GetPlayerLevel()override;
 
+protected:
+
+
 
 
 	UPROPERTY(EditDefaultsOnly)

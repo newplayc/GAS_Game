@@ -5,6 +5,7 @@
 #include "AuraAbilitySystemComponent.h"
 #include "Components\CapsuleComponent.h"
 #include "AuraAttributeSet.h"
+#include "GAS_Game\GAS_Game.h"
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -17,6 +18,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 
 	
 

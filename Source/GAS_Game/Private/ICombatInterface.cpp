@@ -14,3 +14,4 @@ FVector IICombatInterface::GetWeaponSocketLocation()
 {
 	return FVector();
 }
+

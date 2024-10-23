@@ -7,7 +7,7 @@
 #include "ICombatInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI , BlueprintType)
 class UICombatInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -26,4 +26,7 @@ public:
 
 	virtual FVector GetWeaponSocketLocation();
 
+
+	UFUNCTION(BlueprintCallable , BlueprintImplementableEvent)
+	void WrapActorInterface(FVector Target);
 };
