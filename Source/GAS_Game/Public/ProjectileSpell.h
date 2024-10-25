@@ -24,4 +24,5 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireBolt(const FVector  &TargetLocation);
+
 };
