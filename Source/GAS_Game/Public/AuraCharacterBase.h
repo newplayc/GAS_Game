@@ -38,7 +38,7 @@ protected:
 	UPROPERTY(EditAnywhere , BlueprintReadWrite, Category = "weapon")
 	TObjectPtr<USkeletalMeshComponent>Weapon;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
 	TObjectPtr<UAuraAbilitySystemComponent>AbilityComponent;
 
 	UPROPERTY()

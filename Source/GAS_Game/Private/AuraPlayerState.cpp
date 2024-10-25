@@ -4,6 +4,7 @@
 #include "AuraPlayerState.h"
 #include "AuraAbilitySystemComponent.h"
 #include "AuraAttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
 {

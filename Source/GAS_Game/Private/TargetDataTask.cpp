@@ -12,9 +12,9 @@ void UTargetDataTask::Activate()
 	
 	if (IsLocalControl)
 	{
-		SendTargetData();    // 本地发送 数据
+		SendTargetData();   
 	}
-	else     //服务器接收
+	else     
 	{
 		const FGameplayAbilitySpecHandle SpecHandle = GetAbilitySpecHandle();
 		const FPredictionKey Pkey = GetActivationPredictionKey();

@@ -2,6 +2,9 @@
 
 
 #include "Projectile.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet\GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
@@ -28,6 +31,7 @@ AProjectile::AProjectile()
 	ProjectileMoveCom->InitialSpeed = 550.f;
 	ProjectileMoveCom->MaxSpeed = 550.f;
 	ProjectileMoveCom->ProjectileGravityScale = 0.f;
+	
 	SetLifeSpan(lifeSpanTime);
 
 
@@ -45,9 +49,8 @@ void AProjectile::BeginPlay()
 void AProjectile::Destroyed()
 {
 
-	if (!bHit)
+	if (!bHit && !HasAuthority())
 	{
-		UKismetSystemLibrary::PrintString(this, "Overlap", true, true, FLinearColor::Red, 50.f);
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
 		AudioC->Stop();
@@ -58,12 +61,16 @@ void AProjectile::Destroyed()
 
 void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UKismetSystemLibrary::PrintString(this, "Overlap",true , true ,FLinearColor::Red, 50.f);
+	
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation());
 	AudioC->Stop();
 	if (HasAuthority())
 	{
+		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
+		{
+			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+		}
 		Destroy();
 	}
 	else

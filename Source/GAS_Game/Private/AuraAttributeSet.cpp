@@ -127,6 +127,10 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
+	if(Data.EvaluatedData.Attribute==GetMaxHealthAttribute())
+	{
+		GEngine->AddOnScreenDebugMessage(-1,10.f ,FColor::Red,FString::Printf(TEXT("MaxHealth: %f"),GetMaxHealth()));
+	}
 
 }
 

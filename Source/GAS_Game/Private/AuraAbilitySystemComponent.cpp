@@ -28,6 +28,7 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 }
 
 
+
 void UAuraAbilitySystemComponent::InitAttribute(UObject * Source)
 {
 	ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
@@ -98,7 +99,7 @@ void UAuraAbilitySystemComponent::HeldFunction(FGameplayTag ActionTag)
 /**
  * Source Always is this
  */
-void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect> GE, float level , UObject * Source)
+void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>& GE, float level , UObject * Source)
 {
 	check(GE);
 	 FGameplayEffectContextHandle ContextHandle = MakeEffectContext();

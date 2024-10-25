@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
@@ -22,6 +24,12 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+	UPROPERTY(BlueprintReadOnly ,  meta = (ExposeOnSpawn = true))
+	FGameplayEffectSpecHandle SpecHandle = nullptr;
+
+	
+
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,10 +54,15 @@ protected:
 
 	UAudioComponent* AudioC = nullptr;
 
+
+
+	
 	UPROPERTY(EditAnywhere)
 	float lifeSpanTime = 10.f;
+
 	
 	bool bHit = false;
+	
 	UFUNCTION()
 	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

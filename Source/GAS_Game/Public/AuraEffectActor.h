@@ -56,7 +56,7 @@ protected:
 
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect>GameplayEffect);
+	void ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect> GameplayEffect) ;
 
 
 

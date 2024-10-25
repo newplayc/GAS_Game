@@ -42,7 +42,7 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 
 			if (Tag.MatchesTag(Message))
 			{
-				FUIWidgetRow* Row = EffectMessageDataTabele.Get()->FindRow<FUIWidgetRow>(Tag.GetTagName() , TEXT(""));
+				FUIWidgetRow* Row = EffectMessageDataTable.Get()->FindRow<FUIWidgetRow>(Tag.GetTagName() , TEXT(""));
 				FWidgetDelegate.Broadcast(*Row);
 				
 			}

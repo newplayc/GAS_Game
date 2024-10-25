@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AuraUserWidgetController.h"
-#include "AuraAttributeSet.h"
+
 #include "AbilitySystemComponent.h"
 #include "AuraUserWidget.h"
 #include "OverlapWidgetController.generated.h"
@@ -33,13 +33,8 @@ struct FUIWidgetRow : public FTableRowBase
 };
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, Health);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float, NewValue);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChanged, float, MaxHealth);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChanged, float, Mana);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChanged, float, MaxMana);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
 
@@ -60,22 +55,22 @@ public:
 	virtual void BindCallbacksToDependences() override;
 
 	UPROPERTY(BlueprintAssignable , Category = "DelegateAttribute")
-	FOnHealthChanged OnHealthChanged;
+	FOnAttributeChanged OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "DelegateAttribute")
-	FOnMaxHealthChanged OnMaxHealthChanged;
+	FOnAttributeChanged OnMaxHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "DelegateAttribute")
-	FOnManaChanged OnManaChanged;
+	FOnAttributeChanged OnManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "DelegateAttribute")
-	FOnMaxManaChanged OnMaxManaChanged;
+	FOnAttributeChanged OnMaxManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "DelegateWidgetMessage")
 	FOnMessageWidgetRowDelegate FWidgetDelegate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<UDataTable> EffectMessageDataTabele;
+	TObjectPtr<UDataTable> EffectMessageDataTable;
 
 
 };

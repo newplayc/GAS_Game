@@ -35,7 +35,7 @@ public:
 	TSubclassOf<UGameplayEffect>InitalVitalEffect;
 
 
-	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>GE, float level ,UObject * Source);
+	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>&GE, float level ,UObject * Source);
 
 
 	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
