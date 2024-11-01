@@ -25,8 +25,14 @@ public:
 	virtual int32 GetPlayerLevel();
 
 	virtual FVector GetWeaponSocketLocation();
-
-
+	
 	UFUNCTION(BlueprintCallable , BlueprintImplementableEvent)
 	void WrapActorInterface(FVector Target);
+
+	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
+	UAnimMontage* GetAnimReactMontage();
+	
+	virtual void  Died() = 0;
+
+
 };

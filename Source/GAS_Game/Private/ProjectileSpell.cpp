@@ -5,6 +5,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "AuraGameplayTags.h"
 #include "Projectile.h"
 #include "ICombatInterface.h"
 
@@ -33,8 +34,13 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 	
 	if(UAbilitySystemComponent* ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo()))
 	{
-		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(ProjectileEffect , 1 , ASC->MakeEffectContext());
+		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(ProjectileEffect , GetAbilityLevel() , ASC->MakeEffectContext());
 	}
+	const FGameplayTag DTag  = FAuraGameplayTags::Get().Damage;
+	
+	const float DamageNum  = Damage.GetValueAtLevel(GetAbilityLevel());
+	
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->SpecHandle ,DTag , DamageNum);
 	
 	Projectile->FinishSpawning(SpawnTransform);
 

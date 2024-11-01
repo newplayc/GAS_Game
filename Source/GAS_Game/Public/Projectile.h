@@ -41,8 +41,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent>SphereComp;
-
+	
 	UPROPERTY(EditAnywhere)
+	
 	TObjectPtr<UNiagaraSystem>ImpactEffect;
 
 	UPROPERTY(EditAnywhere)

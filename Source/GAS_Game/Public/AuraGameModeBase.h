@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CharacterDataInfo.h"
 #include "GameFramework/GameModeBase.h"
 #include "AuraGameModeBase.generated.h"
 
@@ -13,5 +14,9 @@ UCLASS()
 class GAS_GAME_API AAuraGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UCharacterDataInfo>CharacterDataInfo;
+	
 	
 };

@@ -23,18 +23,9 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySys
 {
 	 FGameplayTagContainer GameplayContainer;
 	GameplayEffectSpec.GetAllAssetTags(GameplayContainer);
-	GameplayEffectSpec.GetEffectContext();
 	FAppliedAllTags.Broadcast(GameplayContainer);
 }
 
-
-
-void UAuraAbilitySystemComponent::InitAttribute(UObject * Source)
-{
-	ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
-	ApplyEffectToInit(InitalSecondaryEffect, 1 , Source);
-	ApplyEffectToInit(InitalVitalEffect,1  ,Source);
-}
 
 
 void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities)
@@ -60,7 +51,7 @@ void UAuraAbilitySystemComponent::PressFunction(FGameplayTag ActionTag)
 	{
 		if (ASpec.DynamicAbilityTags.HasTagExact(ActionTag))
 		{
-
+ 
 			AbilitySpecInputPressed(ASpec);
 			if (!ASpec.IsActive())
 			{
@@ -94,13 +85,12 @@ void UAuraAbilitySystemComponent::HeldFunction(FGameplayTag ActionTag)
 
 
 
-
-
 /**
  * Source Always is this
  */
 void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>& GE, float level , UObject * Source)
 {
+	
 	check(GE);
 	 FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
 
@@ -109,6 +99,4 @@ void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>
 	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(GE, level, ContextHandle);
 
 	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
-
-
 }

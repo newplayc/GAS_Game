@@ -18,6 +18,8 @@ class GAS_GAME_API UProjectileSpell : public UAuraGameplayAbility
 	GENERATED_BODY()
 
 public:
+	
+	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AProjectile>ProjectileClass;
 
@@ -27,4 +29,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireBolt(const  FVector  & TargetLocation) ;
 
+	
 };

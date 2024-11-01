@@ -9,11 +9,13 @@
 #include "AuraGameplayTags.h"
 #include "Components/SplineComponent.h"
 #include "EnemyInterface.h"
-
+#include "GameplayTagContainer.h"
+#include "NavigationPath.h"
 #include <AuraEnhancedInputComponent.h>
 #include <AbilitySystemBlueprintLibrary.h>
 #include <NavigationSystem.h>
 
+#include "GameFramework/Character.h"
 
 
 AAuraPlayerController::AAuraPlayerController()
@@ -84,6 +86,18 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 	CheckUnderCursor();
 	AutoRun();
+}
+
+void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacter* ECharacter)
+{
+	if(IsValid(DamageTextWidgetClass))
+	{
+		UDamageTextWidgetCom * DamageWidget = NewObject<UDamageTextWidgetCom>(ECharacter , DamageTextWidgetClass);
+		DamageWidget->RegisterComponent();
+		DamageWidget->AttachToComponent(ECharacter->GetRootComponent(),FAttachmentTransformRules::KeepWorldTransform);
+		DamageWidget->SetDamageText(Damage);
+		DamageWidget->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+	}
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)

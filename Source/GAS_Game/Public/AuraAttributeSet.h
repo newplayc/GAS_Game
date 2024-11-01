@@ -5,9 +5,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
-#include "GameplayAbilities/Public/GameplayEffectExtension.h"
 #include "GameplayEffectTypes.h"
-
 #include "AuraAttributeSet.generated.h"
 
 
@@ -103,8 +101,9 @@ public:
 	FGameplayAttributeData Resilience;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience);
 
-
-
+	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Resilience, Category = "Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
 
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_BlockChance, Category = "Attributes")
 	FGameplayAttributeData BlockChance;

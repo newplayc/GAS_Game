@@ -18,8 +18,7 @@ AAuraCharacter::AAuraCharacter()
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	
-
-
+	
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
@@ -79,7 +78,7 @@ void AAuraCharacter::IniAbilityInfo()
 			AHUD->IniOverlayWidget(PS, PlayerController, ASC, AS);
 		}
 	}
-	ASC->InitAttribute(this);
+	InitAttribute(this);
 	
 }
 

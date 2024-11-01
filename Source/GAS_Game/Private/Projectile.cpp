@@ -9,6 +9,7 @@
 #include "Kismet\GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Components/AudioComponent.h"
+#include "AuraGameplayTags.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -32,7 +33,7 @@ AProjectile::AProjectile()
 	ProjectileMoveCom->MaxSpeed = 550.f;
 	ProjectileMoveCom->ProjectileGravityScale = 0.f;
 	
-	SetLifeSpan(lifeSpanTime);
+
 
 
 }
@@ -41,6 +42,7 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	SetLifeSpan(lifeSpanTime);
 	AudioC = UGameplayStatics::SpawnSoundAttached(LoopingSound, RootComponent);
 	SphereComp->OnComponentBeginOverlap.AddDynamic(this ,&AProjectile::OnSphereOverlap);
 	
@@ -70,6 +72,7 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+	
 		}
 		Destroy();
 	}

@@ -3,9 +3,10 @@
 
 #include "AuraCharacterBase.h"
 #include "AuraAbilitySystemComponent.h"
-#include "Components\CapsuleComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "AuraAttributeSet.h"
-#include "GAS_Game\GAS_Game.h"
+#include "GAS_Game/GAS_Game.h"
+#include "Kismet/KismetMaterialLibrary.h"
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -32,7 +33,6 @@ void AAuraCharacterBase::BeginPlay()
 
 void AAuraCharacterBase::IniAbilityInfo()
 {
-
 }
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
@@ -40,9 +40,63 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilityComponent;
 }
 
+UAnimMontage* AAuraCharacterBase::GetAnimReactMontage_Implementation()
+{
+	return ReactAnimMontage;
+}
+
+void AAuraCharacterBase::Died()
+{
+	Weapon->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	NetDeath();
+}
+
+void AAuraCharacterBase::DissolveMesh()
+{
+	if(IsValid(WeaponDissolve))
+	{
+		UMaterialInstanceDynamic * WeapoInstanceDynamic = UKismetMaterialLibrary::CreateDynamicMaterialInstance(this , WeaponDissolve);
+		Weapon->SetMaterial(0, WeapoInstanceDynamic);
+		TimeLineSetWeaponMaterial();
+	}
+
+	if(IsValid(MeshDissolve))
+	{
+		UMaterialInstanceDynamic * MeshInstanceDynamic = UKismetMaterialLibrary::CreateDynamicMaterialInstance(this , MeshDissolve);
+		GetMesh()->SetMaterial(0, MeshInstanceDynamic);
+		TimeLineSetMeshMaterial();
+	}
+
+}
+
+void AAuraCharacterBase::NetDeath_Implementation()
+{
+	Weapon->SetSimulatePhysics(true);
+	Weapon->SetEnableGravity(true);
+	Weapon->SetCollisionEnabled(ECollisionEnabled::Type::PhysicsOnly);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetAllBodiesSimulatePhysics(true);
+
+	
+	DissolveMesh();
+	
+}
+
+void AAuraCharacterBase::InitAttribute(UObject* Source)
+{
+		AbilityComponent->ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
+		AbilityComponent->ApplyEffectToInit(InitalSecondaryEffect, 1 , Source);
+		AbilityComponent->ApplyEffectToInit(InitalVitalEffect,1  ,Source);
+}
+
 FVector AAuraCharacterBase::GetWeaponSocketLocation()
 {
 	return Weapon->GetSocketLocation(WeaponSocketName);
 }
+
+
+
+
 
 

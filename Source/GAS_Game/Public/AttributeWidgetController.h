@@ -21,11 +21,14 @@ class GAS_GAME_API UAttributeWidgetController : public UAuraUserWidgetController
 public:
 	virtual void BroadcastInitailvalues()override;
 
+	
 	virtual void BindCallbacksToDependences() override;
 
+	
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TObjectPtr<UAttributeInfo> AttributeInfoData;
 
+	
 	UPROPERTY(BlueprintAssignable , Category = "Delegate")
 	FAttributeDelegateClass FAttributeDelegate;
 

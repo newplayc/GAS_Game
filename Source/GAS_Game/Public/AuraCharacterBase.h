@@ -5,6 +5,7 @@
 #include "AbilitySystemInterface.h"
 #include "ICombatInterface.h"
 #include "CoreMinimal.h"
+#include "CharacterDataInfo.h"
 #include "GameFramework/Character.h"
 #include "AuraCharacterBase.generated.h"
 
@@ -33,7 +34,10 @@ protected:
 
 	virtual UAuraAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	virtual UAnimMontage * GetAnimReactMontage_Implementation() override;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UAnimMontage> ReactAnimMontage;
 
 	UPROPERTY(EditAnywhere , BlueprintReadWrite, Category = "weapon")
 	TObjectPtr<USkeletalMeshComponent>Weapon;
@@ -44,9 +48,50 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAuraAttributeSet>AttributeSet;
 
+	UPROPERTY(EditDefaultsOnly)
+	ECharacterClass CharacterClass;
+
+	
+	
 	UPROPERTY(EditAnywhere)
 	FName WeaponSocketName;
 
-	virtual FVector GetWeaponSocketLocation() override;
+		
+	UPROPERTY(EditAnywhere , BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect>InitalPrimaryEffect;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect>InitalSecondaryEffect;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect>InitalVitalEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> WeaponDissolve;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance>MeshDissolve;
+	
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void TimeLineSetWeaponMaterial();
+
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void TimeLineSetMeshMaterial();
+	
+	
+	virtual void Died() override;
+	
+	void DissolveMesh();
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void NetDeath();
+	
+	virtual void InitAttribute(UObject * Source); 
+
+	virtual FVector GetWeaponSocketLocation() override;
+	
+
+	
 };

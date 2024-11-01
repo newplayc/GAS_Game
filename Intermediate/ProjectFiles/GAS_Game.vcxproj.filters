@@ -15,6 +15,10 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\.gitignore.bak" />
     <None Include="..\..\.vsconfig" />
+    <None Include="..\..\GAS_Game.sln.DotSettings.user" />
+    <None Include="..\..\PrimaryElement.csv" />
+    <None Include="..\..\PrimaryRogue.csv" />
+    <None Include="..\..\PrimaryWarrior.csv" />
     <None Include="..\..\README.md" />
     <None Include="..\..\UpgradeLog.htm" />
     <None Include="..\..\UpgradeLog2.htm" />
@@ -123,6 +127,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraUserWidgetController.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\CharacterDataInfo.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
@@ -130,9 +137,6 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\InputDataConfig.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\MyClass.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
@@ -146,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\TargetDataTask.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\WidgetComponent">
+      <UniqueIdentifier>{8B9BB919-ABAF-393B-9FD9-1D96BCD96709}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\WidgetComponent\DamageTextWidgetCom.cpp">
+      <Filter>Source\GAS_Game\Private\WidgetComponent</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Public">
       <UniqueIdentifier>{AE44D595-7153-3E32-96FF-E7DE434E348B}</UniqueIdentifier>
@@ -207,6 +217,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidgetController.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\CharacterDataInfo.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
@@ -214,9 +227,6 @@
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\InputDataConfig.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\MyClass.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">
@@ -230,6 +240,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\TargetDataTask.h">
       <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\WidgetComponent">
+      <UniqueIdentifier>{36E4D712-2B4C-34DC-94E6-5BA90DEB7874}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\WidgetComponent\DamageTextWidgetCom.h">
+      <Filter>Source\GAS_Game\Public\WidgetComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

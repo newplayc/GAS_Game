@@ -8,6 +8,8 @@
 #include "AuraAbilitySystemComponent.h"
 #include "AuraAttributeSet.h"
 #include "AuraBlueprintFunctionLibrary.h"
+#include "AuraGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 AAuraEnemy::AAuraEnemy()
@@ -18,18 +20,18 @@ AAuraEnemy::AAuraEnemy()
 	AbilityComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitysysComponent");
 	AbilityComponent->SetIsReplicated(true);
 	AbilityComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-
+	
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetMesh());
-
 }
 
 
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed = EnemySpeed;
 	IniAbilityInfo();
 
 }
@@ -45,8 +47,6 @@ void AAuraEnemy::HeightLightActor()
 void AAuraEnemy::UnHeightLightActor()
 {
 
-	// bShouldHeightActor = false;
-
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
 }
@@ -54,15 +54,22 @@ void AAuraEnemy::UnHeightLightActor()
 void AAuraEnemy::IniAbilityInfo()
 {
 	AbilityComponent->InitAbilityActorInfo(this, this);
-	AbilityComponent->InitAttribute(this);
+	InitAttribute(this);
 	BindAttribute();
-
+	UAuraBlueprintFunctionLibrary::AddStartingAbilities(this , AbilityComponent);
 }
 
 int32 AAuraEnemy::GetPlayerLevel()
 {
 	return Level;
 }
+
+void AAuraEnemy::InitAttribute(UObject* Source)
+{
+	UAuraBlueprintFunctionLibrary::SetAttributeInfo(CharacterClass , this , AbilityComponent , Level);
+}
+
+
 
 void AAuraEnemy::BindAttribute()
 {
@@ -81,7 +88,21 @@ void AAuraEnemy::BindAttribute()
 		OnMaxHealthChanged.Broadcast(Data.NewValue);   
 	}
 	);
-
+	
+	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_React , EGameplayTagEventType::NewOrRemoved).AddUObject(this ,&AAuraEnemy::ReactTagChange);
+	
 	OnHealthChanged.Broadcast(AuraSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraSet->GetMaxHealth());
+}
+
+void AAuraEnemy::ReactTagChange(const FGameplayTag Tag, int32 count)
+{
+	GetCharacterMovement()->StopActiveMovement();
+}
+
+
+void AAuraEnemy::Died()
+{
+	Super::Died();
+	SetLifeSpan(LifeSpan);
 }

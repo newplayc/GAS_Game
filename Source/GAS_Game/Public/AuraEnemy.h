@@ -31,7 +31,14 @@ protected:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChanged OnMaxHealthChanged;
+
+	void ReactTagChange(const FGameplayTag Tag , int32 count);
+
 	
+	virtual void Died() override;
+
+	UPROPERTY(EditAnywhere)
+	 float LifeSpan = 5.0f;
 public:
 	AAuraEnemy();
 
@@ -43,6 +50,12 @@ public:
 
 	virtual int32 GetPlayerLevel()override;
 
+	virtual void InitAttribute(UObject* Source) override;
+
+
+	
 private:
 	void BindAttribute();
+
+	const float EnemySpeed =450.f; 
 };

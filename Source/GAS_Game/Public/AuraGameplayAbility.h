@@ -18,4 +18,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	FGameplayTag ActiveTag;
 
+	UPROPERTY(EditDefaultsOnly)
+	FScalableFloat Damage;
+
 };

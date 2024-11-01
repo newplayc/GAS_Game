@@ -29,7 +29,7 @@ void UTargetDataTask::Activate()
 void UTargetDataTask::SendTargetData()
 {
 	
-
+    
 	FScopedPredictionWindow FScopedPredictionWindow(AbilitySystemComponent.Get());
 	FGameplayAbilityTargetData_SingleTargetHit *  SingleHitResult = new FGameplayAbilityTargetData_SingleTargetHit();
 	APlayerController* PC = Ability->GetCurrentActorInfo()->PlayerController.Get();

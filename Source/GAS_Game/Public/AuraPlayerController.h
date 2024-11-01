@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "InputDataConfig.h"
-#include "NavigationPath.h"
+#include "WidgetComponent/DamageTextWidgetCom.h"
 #include "AuraPlayerController.generated.h"
 
 
@@ -16,6 +16,7 @@ class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
 class USplineComponent;
+
 /**
 * 
 * 
@@ -27,25 +28,34 @@ UCLASS()
 class GAS_GAME_API AAuraPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+	
 public:
 	AAuraPlayerController();
+
+	UFUNCTION(Client , Reliable)
+	void SetDamageText(float Damage , ACharacter * ECharacter);
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent()override;
 	virtual void PlayerTick(float DeltaTime)override;
-
-
+	
 	UPROPERTY(BlueprintReadOnly)
 	float show;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UDamageTextWidgetCom>DamageTextWidgetClass;
+
 
 	
 private:
 	UPROPERTY(EditAnyWhere, Category = "Input")
 	TObjectPtr<UInputMappingContext>AuraContext;
-
+	
 	UPROPERTY(EditAnywhere , Category = "input")
+	// ReSharper disable once UnrealHeaderToolError
 	TObjectPtr<UInputAction>MoveAction;
-
+	
 	UPROPERTY(EditAnywhere, Category = "input")
 	TObjectPtr<UInputAction>ShiftAction;
 	
@@ -59,11 +69,8 @@ private:
 	
 	void CheckUnderCursor();
 	FHitResult HitResult;
-
 	
 	IEnemyInterface* HeightActor;
-
-
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UInputDataConfig>InputAction;
@@ -73,8 +80,7 @@ private:
 	void ReleaseFunction(FGameplayTag ActionTag);
 
 	void HeldFunction(FGameplayTag ActionTag);
-
-
+	
 	UAuraAbilitySystemComponent*  GetGAS();
 
 	UPROPERTY()

@@ -4,6 +4,12 @@
 #include "AuraAttributeSet.h"
 #include "Net/UnrealNetwork.h"
 #include "AuraGameplayTags.h"
+#include "AuraPlayerController.h"
+#include "ICombatInterface.h"
+#include "GameFramework/Character.h"
+#include "GameplayEffectTypes.h"
+#include "GameplayEffectExtension.h"
+#include "Kismet/GameplayStatics.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -99,25 +105,29 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 
 	 if(Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo.Get()->AvatarActor.IsValid())
 	{
-
+	 	
 		 EP.TargetAvataActor = Data.Target.AbilityActorInfo.Get()->AvatarActor.Get();
+	 	
 		 if(Data.Target.AbilityActorInfo.Get()->PlayerController.IsValid())
+		 	
 		 EP.TargetController = Data.Target.AbilityActorInfo.Get()->PlayerController.Get();
+	 	
 		 EP.TargetASC = Data.Target.AbilityActorInfo.Get()->AbilitySystemComponent.Get();
-		// EP.TargetCharacter = dynamic_cast<ACharacter>(EP.TargetAvataActor);
 
 	}
 
 }
 
-
+/*
+ * 在Effect执行后执行的函数
+ */
 
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 
 	Super::PostGameplayEffectExecute(Data);
-	FEffectProperties Properties;
-	SetEffectProperties(Data, Properties);
+	//FEffectProperties Properties;
+	//SetEffectProperties(Data, Properties);
 
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
@@ -127,11 +137,43 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
-	if(Data.EvaluatedData.Attribute==GetMaxHealthAttribute())
+	if(Data.EvaluatedData.Attribute==GetIncomingDamageAttribute())
 	{
-		GEngine->AddOnScreenDebugMessage(-1,10.f ,FColor::Red,FString::Printf(TEXT("MaxHealth: %f"),GetMaxHealth()));
+		const float NewHealth = GetHealth() - GetIncomingDamage();
+		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
+		
+
+
+		AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
+		if(SourceActor)
+		{
+			AAuraPlayerController * Pc = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(SourceActor , 0));
+			if(Pc)
+			{
+				Pc->SetDamageText(GetIncomingDamage() ,Cast<ACharacter>(Data.Target.GetAvatarActor()));
+			}
+		}
+		const bool IsDied = NewHealth <=0;
+		/* 没死 */ 
+		if(!IsDied)
+		{
+			FGameplayTagContainer TempTags = FGameplayTagContainer();
+			TempTags.AddTag(FAuraGameplayTags::Get().Effects_React);
+			Data.Target.TryActivateAbilitiesByTag(TempTags);
+		}
+		else
+		{
+			
+			
+			IICombatInterface * Interface =  Cast<IICombatInterface>(Data.Target.GetAvatarActor());
+			if(!Interface)return;
+			Interface->Died();
+		}
+
+		
 	}
 
+	
 }
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
