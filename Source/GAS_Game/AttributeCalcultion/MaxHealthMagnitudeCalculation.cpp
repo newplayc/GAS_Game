@@ -2,8 +2,8 @@
 
 
 #include "MaxHealthMagnitudeCalculation.h"
-
-
+#include "GAS/AuraAttributeSet.h"
+#include "Interface/ICombatInterface.h"
 
 UMaxHealthMagnitudeCalculation::UMaxHealthMagnitudeCalculation()
 {

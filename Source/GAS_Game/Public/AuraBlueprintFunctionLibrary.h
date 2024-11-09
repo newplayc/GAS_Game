@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "OverlapWidgetController.h"
-#include "AttributeWidgetController.h"
-#include "CharacterDataInfo.h"
+#include "WidgetController/OverlapWidgetController.h"
+#include "WidgetController/AttributeWidgetController.h"
+#include "Data/CharacterDataInfo.h"
 #include "AuraBlueprintFunctionLibrary.generated.h"
 
 
@@ -33,6 +33,20 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static void AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent );
-	
 
+	UFUNCTION(BlueprintCallable)
+	static UCurveTable * GetAttributeCurveTable(UObject * WorldContext);
+
+	UFUNCTION(BlueprintCallable)
+	static void SetGameContextBlock(  FGameplayEffectContextHandle& GameContextHandle , bool Block);
+
+	UFUNCTION(BlueprintCallable)
+	static void SetGameContextCritical(  FGameplayEffectContextHandle& GameContextHandle , bool Critical);
+
+	UFUNCTION(BlueprintCallable , BlueprintPure)
+	static bool GetGameContextBlock(const FGameplayEffectContextHandle& GameplayEffectContextHandle);
+
+	UFUNCTION(BlueprintCallable , BlueprintPure)
+	static bool GetGameContextCritical(const FGameplayEffectContextHandle& GameplayEffectContextHandle);
+	
 };

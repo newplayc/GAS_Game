@@ -3,6 +3,8 @@
 
 
 #include "MaxManaMagnitudeCalculation.h"
+#include "GAS/AuraAttributeSet.h"
+#include "Interface/ICombatInterface.h"
 
 UMaxManaMagnitudeCalculation::UMaxManaMagnitudeCalculation()
 {

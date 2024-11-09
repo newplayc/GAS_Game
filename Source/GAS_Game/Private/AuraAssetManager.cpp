@@ -2,7 +2,7 @@
 
 
 #include "AuraAssetManager.h"
-#include "AuraGameplayTags.h"
+#include "Tag/AuraGameplayTags.h"
 #include "AbilitySystemGlobals.h"
 
 const UAuraAssetManager& UAuraAssetManager::Get()

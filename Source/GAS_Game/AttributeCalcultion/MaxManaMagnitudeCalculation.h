@@ -7,8 +7,11 @@
 #include "MaxManaMagnitudeCalculation.generated.h"
 
 /**
- * 
+ *
+ *
  */
+
+
 UCLASS()
 class GAS_GAME_API UMaxManaMagnitudeCalculation : public UGameplayModMagnitudeCalculation
 {

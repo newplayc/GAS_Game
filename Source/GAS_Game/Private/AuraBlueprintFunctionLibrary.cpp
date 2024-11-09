@@ -2,13 +2,14 @@
 
 
 #include "AuraBlueprintFunctionLibrary.h"
-#include "AuraUserWidgetController.h"
-#include "AuraHUD.h"
-#include "AuraAttributeSet.h"
-#include "AuraGameModeBase.h"
+#include "WidgetController/AuraUserWidgetController.h"
+#include "HUD/AuraHUD.h"
+#include "GAS/AuraAttributeSet.h"
+#include "Game/AuraGameModeBase.h"
 #include "GameFramework/PlayerController.h"
+#include "GAS/Effect/AuraGameplayEffectTypes.h"
 #include "kismet/GameplayStatics.h"
-#include "AuraPlayerState.h"
+#include "PlayerState/AuraPlayerState.h"
 
 UOverlapWidgetController* UAuraBlueprintFunctionLibrary::GetOverlayWidgetController(UObject * WorldContext)
 {
@@ -89,4 +90,49 @@ void UAuraBlueprintFunctionLibrary::AddStartingAbilities(UObject * WorldContext 
 		AbilitySystemComponent->GiveAbility(AbilitySpec);
 	}
 
+}
+
+UCurveTable* UAuraBlueprintFunctionLibrary::GetAttributeCurveTable(UObject* WorldContext)
+{
+	const AAuraGameModeBase * Gmb =  Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
+	if(!Gmb)return nullptr;
+
+	return Gmb->CharacterDataInfo->AttributeCurve;
+	
+}
+
+void UAuraBlueprintFunctionLibrary::SetGameContextBlock( FGameplayEffectContextHandle& GameContextHandle, bool Block)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast<FAuraGameplayEffectContext*>(GameContextHandle.Get()))
+	{
+		GEC->SetbBlock(Block);
+	}
+}
+
+void UAuraBlueprintFunctionLibrary::SetGameContextCritical( FGameplayEffectContextHandle& GameContextHandle,
+	bool Critical)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast<FAuraGameplayEffectContext*>(GameContextHandle.Get()))
+	{
+    		GEC->SetbCritical(Critical);
+	}
+}
+
+bool UAuraBlueprintFunctionLibrary::GetGameContextBlock(const FGameplayEffectContextHandle& GameplayEffectContextHandle)
+{
+	if( const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(GameplayEffectContextHandle.Get()))
+	{
+		return GEC->GetbBlock();
+	}
+	return false;
+}
+
+bool UAuraBlueprintFunctionLibrary::GetGameContextCritical(
+	const FGameplayEffectContextHandle& GameplayEffectContextHandle)
+{
+	if( const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(GameplayEffectContextHandle.Get()))
+	{
+		return GEC->GetbCritical();
+	}
+	return false;
 }

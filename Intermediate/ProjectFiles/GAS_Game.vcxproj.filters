@@ -15,13 +15,11 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\.gitignore.bak" />
     <None Include="..\..\.vsconfig" />
-    <None Include="..\..\GAS_Game.sln.DotSettings.user" />
     <None Include="..\..\PrimaryElement.csv" />
     <None Include="..\..\PrimaryRogue.csv" />
     <None Include="..\..\PrimaryWarrior.csv" />
+    <None Include="..\..\qodana.yaml" />
     <None Include="..\..\README.md" />
-    <None Include="..\..\UpgradeLog.htm" />
-    <None Include="..\..\UpgradeLog2.htm" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -70,86 +68,137 @@
     <Filter Include="Source\GAS_Game\Private">
       <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeInfo.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeWidgetController.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAbilitySystemComponent.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAssetManager.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraAttributeSet.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacter.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Calculation">
+      <UniqueIdentifier>{9A2C9E45-B04B-3A20-BF26-E63C4DB4030B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Calculation\ExeCalDamage.cpp">
+      <Filter>Source\GAS_Game\Private\Calculation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraCharacterBase.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Character">
+      <UniqueIdentifier>{312BC0D1-13BE-3A83-A4C5-9D126BA0F3B6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Character\AuraCharacter.cpp">
+      <Filter>Source\GAS_Game\Private\Character</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEffectActor.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Character\AuraCharacterBase.cpp">
+      <Filter>Source\GAS_Game\Private\Character</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnemy.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Character\AuraEnemy.cpp">
+      <Filter>Source\GAS_Game\Private\Character</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraEnhancedInputComponent.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Component">
+      <UniqueIdentifier>{54B1EE26-C7EE-3C77-B66F-398A2B7DE287}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Component\AuraEnhancedInputComponent.cpp">
+      <Filter>Source\GAS_Game\Private\Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameModeBase.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Controller">
+      <UniqueIdentifier>{F31D8A35-4E41-379B-9D9D-5D39C6FF0ACC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Controller\AuraPlayerController.cpp">
+      <Filter>Source\GAS_Game\Private\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayAbility.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Data">
+      <UniqueIdentifier>{C8A3C7F1-E3B1-3C21-9E1E-70DD73839E3E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\AttributeInfo.cpp">
+      <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameplayTags.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\CharacterDataInfo.cpp">
+      <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraHUD.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\InputDataConfig.cpp">
+      <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraPlayerController.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Game">
+      <UniqueIdentifier>{72371CC7-72BF-32F3-98EB-A5CE8C185E6E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Game\AuraGameModeBase.cpp">
+      <Filter>Source\GAS_Game\Private\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraPlayerState.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\GAS">
+      <UniqueIdentifier>{8228F2B3-46FC-3345-AF8F-0E793E9EEB8F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\AuraAbilitySystemComponent.cpp">
+      <Filter>Source\GAS_Game\Private\GAS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraUserWidget.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\AuraAbilitySystemGlobals.cpp">
+      <Filter>Source\GAS_Game\Private\GAS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraUserWidgetController.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\AuraAttributeSet.cpp">
+      <Filter>Source\GAS_Game\Private\GAS</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\CharacterDataInfo.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\GAS\Ability">
+      <UniqueIdentifier>{18B3E39C-0AE9-3E9B-B236-AAD07ABB35F7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AuraGameplayAbility.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\EnemyInterface.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\ICombatInterface.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\GAS\Ability\AbilityTask">
+      <UniqueIdentifier>{DF7936E9-5A00-3FA5-8DC9-7ADD2C0BE716}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AbilityTask\TargetDataTask.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability\AbilityTask</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\InputDataConfig.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\GAS\Effect">
+      <UniqueIdentifier>{49BFBF06-AE90-313C-BA0E-4013E48CDEE6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Effect\AuraGameplayEffectTypes.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\OverlapWidgetController.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\GAS\Effect\EffectActor">
+      <UniqueIdentifier>{88F09A46-0B45-3390-84F6-C1EF184EB169}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Effect\EffectActor\AuraEffectActor.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Effect\EffectActor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\Projectile.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\HUD">
+      <UniqueIdentifier>{D16CA70D-2568-3CC4-8AE7-FF228AE1A56A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\HUD\AuraHUD.cpp">
+      <Filter>Source\GAS_Game\Private\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\ProjectileSpell.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <Filter Include="Source\GAS_Game\Private\Interface">
+      <UniqueIdentifier>{EE459A54-CEA9-3417-84F1-D520124BFFFB}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Interface\EnemyInterface.cpp">
+      <Filter>Source\GAS_Game\Private\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\TargetDataTask.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Interface\ICombatInterface.cpp">
+      <Filter>Source\GAS_Game\Private\Interface</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\PlayerState">
+      <UniqueIdentifier>{01109C75-E243-3BFF-A623-E307B1EA5144}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\PlayerState\AuraPlayerState.cpp">
+      <Filter>Source\GAS_Game\Private\PlayerState</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Projectile">
+      <UniqueIdentifier>{6AB007F4-0AFB-37AB-8F7F-0F77C0680D76}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Projectile\Projectile.cpp">
+      <Filter>Source\GAS_Game\Private\Projectile</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Tag">
+      <UniqueIdentifier>{FEB7E23F-BBB0-31B5-846A-85BD85701BAC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Tag\AuraGameplayTags.cpp">
+      <Filter>Source\GAS_Game\Private\Tag</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Widget">
+      <UniqueIdentifier>{0674BCC8-C900-36F4-A7B9-34615F890997}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Widget\AuraUserWidget.cpp">
+      <Filter>Source\GAS_Game\Private\Widget</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\WidgetComponent">
       <UniqueIdentifier>{8B9BB919-ABAF-393B-9FD9-1D96BCD96709}</UniqueIdentifier>
@@ -157,95 +206,170 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\WidgetComponent\DamageTextWidgetCom.cpp">
       <Filter>Source\GAS_Game\Private\WidgetComponent</Filter>
     </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\WidgetController">
+      <UniqueIdentifier>{3379C5F5-C900-38AE-8A95-EBA3DE74AB88}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\WidgetController\AttributeWidgetController.cpp">
+      <Filter>Source\GAS_Game\Private\WidgetController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\WidgetController\AuraUserWidgetController.cpp">
+      <Filter>Source\GAS_Game\Private\WidgetController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\WidgetController\OverlapWidgetController.cpp">
+      <Filter>Source\GAS_Game\Private\WidgetController</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Public">
       <UniqueIdentifier>{AE44D595-7153-3E32-96FF-E7DE434E348B}</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeInfo.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeWidgetController.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAbilitySystemComponent.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAssetManager.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAttributeSet.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacter.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Calculation">
+      <UniqueIdentifier>{3D256216-47F2-3BDC-A439-D7363FE88262}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Calculation\ExeCalDamage.h">
+      <Filter>Source\GAS_Game\Public\Calculation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraCharacterBase.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Character">
+      <UniqueIdentifier>{27CB2196-70D2-3B37-852E-23465584D1CB}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacter.h">
+      <Filter>Source\GAS_Game\Public\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEffectActor.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacterBase.h">
+      <Filter>Source\GAS_Game\Public\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnemy.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraEnemy.h">
+      <Filter>Source\GAS_Game\Public\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraEnhancedInputComponent.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Component">
+      <UniqueIdentifier>{A09F2EFA-6D2E-356F-9BCD-FED452B131B7}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Component\AuraEnhancedInputComponent.h">
+      <Filter>Source\GAS_Game\Public\Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameModeBase.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Data">
+      <UniqueIdentifier>{015425C3-C031-3118-939D-1EEAFF54003A}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AttributeInfo.h">
+      <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayAbility.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\CharacterDataInfo.h">
+      <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameplayTags.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\InputDataConfig.h">
+      <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraHUD.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Game">
+      <UniqueIdentifier>{54F1C8C1-FD44-38B3-A1E5-CCE085B0F4D6}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Game\AuraGameModeBase.h">
+      <Filter>Source\GAS_Game\Public\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerController.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\GAS">
+      <UniqueIdentifier>{D6EC2603-2B18-32E5-B4B3-7D00F906F0AC}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAbilitySystemComponent.h">
+      <Filter>Source\GAS_Game\Public\GAS</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraPlayerState.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAbilitySystemGlobals.h">
+      <Filter>Source\GAS_Game\Public\GAS</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidget.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAttributeSet.h">
+      <Filter>Source\GAS_Game\Public\GAS</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraUserWidgetController.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\GAS\Ability">
+      <UniqueIdentifier>{FA67CEB5-52F3-327A-B0A7-CA8DF7BBE6F6}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayAbility.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\CharacterDataInfo.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\EnemyInterface.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\GAS\Ability\AbilityTask">
+      <UniqueIdentifier>{7239A14E-EEAA-3561-99CF-FE895B0E083D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AbilityTask\TargetDataTask.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability\AbilityTask</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\ICombatInterface.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\GAS\Effect">
+      <UniqueIdentifier>{33F5FACC-C49A-3F4F-A42A-04085B869B39}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Effect\AuraGameplayEffectTypes.h">
+      <Filter>Source\GAS_Game\Public\GAS\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\InputDataConfig.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\GAS\Effect\EffectActor">
+      <UniqueIdentifier>{31746BA6-00CB-3E16-97C9-197B160A9AB7}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Effect\EffectActor\AuraEffectActor.h">
+      <Filter>Source\GAS_Game\Public\GAS\Effect\EffectActor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\OverlapWidgetController.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\HUD">
+      <UniqueIdentifier>{172DD509-F714-38D6-9AF8-335F3D443167}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\HUD\AuraHUD.h">
+      <Filter>Source\GAS_Game\Public\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\Projectile.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\Interface">
+      <UniqueIdentifier>{9EF4C641-C150-303F-97DD-B1535947ADA7}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Interface\EnemyInterface.h">
+      <Filter>Source\GAS_Game\Public\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\ProjectileSpell.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Interface\ICombatInterface.h">
+      <Filter>Source\GAS_Game\Public\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\TargetDataTask.h">
-      <Filter>Source\GAS_Game\Public</Filter>
+    <Filter Include="Source\GAS_Game\Public\PlayerController">
+      <UniqueIdentifier>{958B4BCC-280D-310D-993F-94D4ACADD54F}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\PlayerController\AuraPlayerController.h">
+      <Filter>Source\GAS_Game\Public\PlayerController</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\PlayerState">
+      <UniqueIdentifier>{338EF7E0-96FB-3A6A-A754-F13331A7FF3D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\PlayerState\AuraPlayerState.h">
+      <Filter>Source\GAS_Game\Public\PlayerState</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Projectile">
+      <UniqueIdentifier>{5D23E107-1CA1-314F-ABFF-D480B3AC8084}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Projectile\Projectile.h">
+      <Filter>Source\GAS_Game\Public\Projectile</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Tag">
+      <UniqueIdentifier>{8DB32C07-D348-3D56-AD0D-3AA9DFD6D9B4}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Tag\AuraGameplayTags.h">
+      <Filter>Source\GAS_Game\Public\Tag</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Widget">
+      <UniqueIdentifier>{5802A808-2511-3B3D-8347-7A76A9EA71B5}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Widget\AuraUserWidget.h">
+      <Filter>Source\GAS_Game\Public\Widget</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\WidgetComponent">
       <UniqueIdentifier>{36E4D712-2B4C-34DC-94E6-5BA90DEB7874}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\GAS_Game\Public\WidgetComponent\DamageTextWidgetCom.h">
       <Filter>Source\GAS_Game\Public\WidgetComponent</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\WidgetController">
+      <UniqueIdentifier>{52464978-058E-396E-8F40-B98DDE2024DB}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\WidgetController\AttributeWidgetController.h">
+      <Filter>Source\GAS_Game\Public\WidgetController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\WidgetController\AuraUserWidgetController.h">
+      <Filter>Source\GAS_Game\Public\WidgetController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\WidgetController\OverlapWidgetController.h">
+      <Filter>Source\GAS_Game\Public\WidgetController</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

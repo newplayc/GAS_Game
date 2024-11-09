@@ -1,4 +1,7 @@
 
 /.vs
-/.Intermediate
 /Intermediate
+/Binaries
+/Saved
+/.idea
+/.github
