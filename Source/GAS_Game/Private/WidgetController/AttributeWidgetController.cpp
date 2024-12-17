@@ -19,6 +19,8 @@ void UAttributeWidgetController::BroadcastInitailvalues()
 	}
 }
 
+
+
 void UAttributeWidgetController::BindCallbacksToDependences()
 {
 	UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(AttributeSet);

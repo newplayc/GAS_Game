@@ -32,6 +32,7 @@ public:
 UCLASS()
 class GAS_GAME_API UCharacterDataInfo : public UDataAsset
 {
+
 	
 	GENERATED_BODY()
 public:
@@ -49,10 +50,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	// ReSharper disable once UnrealHeaderToolError
 	TArray<TSubclassOf<UGameplayAbility>>StartingAbilities;
-
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCurveTable> AttributeCurve;
+
+	UPROPERTY(EditDefaultsOnly)
+	TMap<FGameplayTag, FScalableFloat>DamageTypeData;
 	
 	FCharacterDifDataInfo GetCharacterDataInfo(ECharacterClass CharaClass) const;
 

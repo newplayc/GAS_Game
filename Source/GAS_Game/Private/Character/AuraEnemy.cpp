@@ -6,7 +6,9 @@
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "GAS/AuraAttributeSet.h"
 #include "AuraBlueprintFunctionLibrary.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "PlayerController/AuraAiController.h"
 #include "Tag/AuraGameplayTags.h"
 
 
@@ -55,7 +57,11 @@ void AAuraEnemy::IniAbilityInfo()
 	AbilityComponent->InitAbilityActorInfo(this, this);
 	InitAttribute(this);
 	BindAttribute();
-	UAuraBlueprintFunctionLibrary::AddStartingAbilities(this , AbilityComponent);
+	if(HasAuthority())
+	{
+		UAuraBlueprintFunctionLibrary::AddStartingAbilities(this , AbilityComponent);
+	}
+
 }
 
 int32 AAuraEnemy::GetPlayerLevel()
@@ -65,7 +71,11 @@ int32 AAuraEnemy::GetPlayerLevel()
 
 void AAuraEnemy::InitAttribute(UObject* Source)
 {
-	UAuraBlueprintFunctionLibrary::SetAttributeInfo(CharacterClass , this , AbilityComponent , Level);
+	if(HasAuthority())
+	{
+		UAuraBlueprintFunctionLibrary::SetAttributeInfo(CharacterClass , this , AbilityComponent , Level);
+	}
+
 }
 
 
@@ -87,15 +97,31 @@ void AAuraEnemy::BindAttribute()
 		OnMaxHealthChanged.Broadcast(Data.NewValue);   
 	}
 	);
-	
+
+	/*
+	 * 根据被打做出反应
+	 */
 	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_React , EGameplayTagEventType::NewOrRemoved).AddUObject(this ,&AAuraEnemy::ReactTagChange);
 	
 	OnHealthChanged.Broadcast(AuraSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraSet->GetMaxHealth());
 }
 
+void AAuraEnemy::PossessedBy(AController* NewController)
+{
+	if(!HasAuthority())return;
+	AIController = Cast<AAuraAiController>(NewController);
+	Super::PossessedBy(NewController);
+
+	AIController->RunBehaviorTree(BehaviorTree);
+	const bool IsRanegr = !(CharacterClass == ECharacterClass::Warrior);
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("IsRanger") , IsRanegr);
+}
+
 void AAuraEnemy::ReactTagChange(const FGameplayTag Tag, int32 count)
 {
+	bHitReacting = count > 0 ;
+	GetCharacterMovement()->MaxWalkSpeed = 0.f;
 	GetCharacterMovement()->StopActiveMovement();
 }
 

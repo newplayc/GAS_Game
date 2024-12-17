@@ -3,19 +3,21 @@
 
 #include "GAS/Effect/EffectActor/AuraEffectActor.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+
 
 // Sets default values
 AAuraEffectActor::AAuraEffectActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	
 	SetRootComponent(CreateDefaultSubobject<USceneComponent>("Root"));
 	
 }
 
 void AAuraEffectActor::OnOverlap(AActor * TargetActor)
 {
+	if(TargetActor->ActorHasTag("Enemy") && !bApplyToEnemy)return;
 	if (InstantlyEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
 		ApplyEffectToTarget(TargetActor, InstantlyGameplayEffect);
@@ -33,7 +35,7 @@ void AAuraEffectActor::OnOverlap(AActor * TargetActor)
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
 
-
+	if(TargetActor->ActorHasTag("Enemy") && !bApplyToEnemy)return;
 	if (InstantlyEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
 		ApplyEffectToTarget(TargetActor, InstantlyGameplayEffect);
@@ -68,18 +70,22 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 
 void AAuraEffectActor::ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect> GameplayEffect)
 {
+	
 	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Actor);
 	if (!ASC)return;
-
 	check(GameplayEffect)
 	FGameplayEffectContextHandle GECH = ASC->MakeEffectContext();
-	GECH.AddSourceObject(this);
+	GECH.AddSourceObject(this);   
 	const FGameplayEffectSpecHandle GESH = ASC->MakeOutgoingSpec(GameplayEffect, 1.f, GECH);
 	const FActiveGameplayEffectHandle ActiveEffectHandle = ASC->ApplyGameplayEffectSpecToSelf(*GESH.Data.Get());
 	const bool IsInfinite = GESH.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
 	if (IsInfinite)
 	{
 		InfiniteComponents.Add(MakeTuple(ActiveEffectHandle, ASC));
+	}
+	if(!IsInfinite &&bApplyDestory)
+	{
+		Destroy();
 	}
 
 }

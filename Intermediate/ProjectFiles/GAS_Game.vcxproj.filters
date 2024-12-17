@@ -15,10 +15,10 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\.gitignore.bak" />
     <None Include="..\..\.vsconfig" />
+    <None Include="..\..\GAS_Game.sln.DotSettings.user" />
     <None Include="..\..\PrimaryElement.csv" />
     <None Include="..\..\PrimaryRogue.csv" />
     <None Include="..\..\PrimaryWarrior.csv" />
-    <None Include="..\..\qodana.yaml" />
     <None Include="..\..\README.md" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -74,6 +74,15 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\AI">
+      <UniqueIdentifier>{3B19F633-AD8C-3DFB-998A-605F9EFA2624}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AI\FindNearstEnemy.cpp">
+      <Filter>Source\GAS_Game\Private\AI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\Private\AI\FindNearstEnemy.h">
+      <Filter>Source\GAS_Game\Private\AI</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Private\Calculation">
       <UniqueIdentifier>{9A2C9E45-B04B-3A20-BF26-E63C4DB4030B}</UniqueIdentifier>
     </Filter>
@@ -101,6 +110,9 @@
     <Filter Include="Source\GAS_Game\Private\Controller">
       <UniqueIdentifier>{F31D8A35-4E41-379B-9D9D-5D39C6FF0ACC}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Controller\AuraAiController.cpp">
+      <Filter>Source\GAS_Game\Private\Controller</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Controller\AuraPlayerController.cpp">
       <Filter>Source\GAS_Game\Private\Controller</Filter>
     </ClCompile>
@@ -138,6 +150,9 @@
       <UniqueIdentifier>{18B3E39C-0AE9-3E9B-B236-AAD07ABB35F7}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AuraGameplayAbility.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AuraGameplayDamageAbility.cpp">
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
@@ -287,6 +302,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayAbility.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayDamageAbility.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
@@ -326,6 +344,9 @@
     <Filter Include="Source\GAS_Game\Public\PlayerController">
       <UniqueIdentifier>{958B4BCC-280D-310D-993F-94D4ACADD54F}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\PlayerController\AuraAiController.h">
+      <Filter>Source\GAS_Game\Public\PlayerController</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\PlayerController\AuraPlayerController.h">
       <Filter>Source\GAS_Game\Public\PlayerController</Filter>
     </ClInclude>

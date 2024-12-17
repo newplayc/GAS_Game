@@ -2,12 +2,53 @@
 
 
 #include "Calculation/ExeCalDamage.h"
-
 #include "AuraBlueprintFunctionLibrary.h"
-#include "FileCache.h"
+#include "GAS/AuraAttributeSet.h"
 #include "Tag/AuraGameplayTags.h"
 #include "Interface/ICombatInterface.h"
 #include "GAS/Effect/AuraGameplayEffectTypes.h"
+
+USTRUCT()
+struct FCaptureDefinitionStatic
+{
+
+	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(ArmorPenetration);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(BlockChance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitChance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitResistance);
+
+	DECLARE_ATTRIBUTE_CAPTUREDEF(FireResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(ArcaneResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(LightningResistance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicsResistance);
+
+
+	FCaptureDefinitionStatic()
+	{
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArmorPenetration , Source , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, Armor , Target , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, BlockChance , Target , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitChance , Source , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitResistance , Target , false);
+		
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, FireResistance , Target , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArcaneResistance , Target , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, LightningResistance , Target , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, PhysicsResistance , Target , false);
+	}
+	
+	
+};
+
+
+static const FCaptureDefinitionStatic& GetDefinitionStatic()
+{
+	static FCaptureDefinitionStatic captureDefinitionStatic;
+	return captureDefinitionStatic;
+}
+
+
 
 
 UExeCalDamage::UExeCalDamage()
@@ -17,12 +58,32 @@ UExeCalDamage::UExeCalDamage()
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().BlockChanceDef);
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().CriticalHitChanceDef);
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().CriticalHitResistanceDef);
+	
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().ArcaneResistanceDef);
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().FireResistanceDef);
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().LightningResistanceDef);
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().PhysicsResistanceDef);
 }
 
 
 void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
 	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
+
+	TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> AttributeDefinitions;
+	const FAuraGameplayTags & AuraGameplayTags = FAuraGameplayTags::Get();
+		
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_Armor , GetDefinitionStatic().ArmorDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_ArmorPenetration , GetDefinitionStatic().ArmorPenetrationDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_BlockChance , GetDefinitionStatic().BlockChanceDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitChance , GetDefinitionStatic().CriticalHitChanceDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitResistance , GetDefinitionStatic().CriticalHitResistanceDef);
+
+	/* 抵御类型  */
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_FireResistance , GetDefinitionStatic().FireResistanceDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_ArcaneResistance , GetDefinitionStatic().ArcaneResistanceDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_LightningResistance ,GetDefinitionStatic().LightningResistanceDef);
+	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_PhysicsResistance ,GetDefinitionStatic().PhysicsResistanceDef);
 	
 	const FGameplayEffectSpec Effectspec = ExecutionParams.GetOwningSpec();
 	const UAbilitySystemComponent *  SourceASC = ExecutionParams.GetSourceAbilitySystemComponent();
@@ -55,14 +116,40 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	float TargetCriticalHitResistance = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDefinitionStatic().CriticalHitResistanceDef , AggregatorParameters , TargetCriticalHitResistance);
 
+	float Damage  = 0;
+	for(auto Data : FAuraGameplayTags::Get().DamageTypeToResistance)
+	{
+		const FGameplayTag DamageType =  Data.Key;
+		const FGameplayTag DamageResistance =  Data.Value;
+		
+		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType);
+		checkf(AttributeDefinitions.Contains(DamageResistance) , TEXT("TagsCapture Not Found %s"),*DamageResistance.ToString());
+	
+		
+		const FGameplayEffectAttributeCaptureDefinition CaptureDefinition = AttributeDefinitions[DamageResistance];
+		
+	
+		float DamageResistanceValue  = 0.f;
+		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDefinition, AggregatorParameters , DamageResistanceValue);
+		DamageResistanceValue  = FMath::Clamp(DamageResistanceValue, 0.f, 100.f);
+		
+		DamageTypeValue = DamageTypeValue * (100 - DamageResistanceValue) / 100.f;
+	
+		Damage += DamageTypeValue;
+	}
+
+
+	
 	SourceCriticalHitChance = SourceCriticalHitChance * (100 - TargetCriticalHitResistance * 0.25) /100.f;
 
 	
 	FRealCurve * ArPenCurve = AttCt->FindCurve("ArmorPenetration" , FString());
 	float EffArmor = TargetArmor  * (100 - SourceArmorPenetration * ArPenCurve->Eval(SourceCom->GetPlayerLevel())) / 100.f;
 	
-	const float Damage  = Effectspec.GetSetByCallerMagnitude(FAuraGameplayTags::Get().Damage);
+
+	
 	const bool bCritical = FMath::RandRange(0 , 100)<=SourceCriticalHitChance;
+	
 	FRealCurve * ArCurve = AttCt->FindCurve("Armor" , FString());
 	
 	const float ArmorCoeffient = ArCurve->Eval(TargetCom->GetPlayerLevel());
@@ -75,7 +162,10 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	
 	UAuraBlueprintFunctionLibrary::SetGameContextCritical( EffectContextHandle, bCritical);
 	
+	
 	FGameplayModifierEvaluatedData EffData = FGameplayModifierEvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute() ,EGameplayModOp::Override , EffDamage);
+
+	
 	
 	OutExecutionOutput.AddOutputModifier(EffData);
 }

@@ -136,3 +136,4 @@ bool UAuraBlueprintFunctionLibrary::GetGameContextCritical(
 	}
 	return false;
 }
+

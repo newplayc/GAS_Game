@@ -37,6 +37,11 @@ public:
 	FGameplayTag Attributes_Vital_Health;
 	FGameplayTag Attributes_Vital_Mana;
 
+
+	
+	/*
+	 * 输入标签
+	 */
 	FGameplayTag Input_LMB;
 	FGameplayTag Input_RMB;
 	FGameplayTag Input_1;
@@ -46,7 +51,25 @@ public:
 
 	FGameplayTag Damage;
 	FGameplayTag Effects_React;
+	
+	/*
+	* 伤害类型
+	*/
+	FGameplayTag Attributes_DamageType_Fire;
+	FGameplayTag Attributes_DamageType_Arcane;
+	FGameplayTag Attributes_DamageType_Lightning;
+	FGameplayTag Attributes_DamageType_Physics;
 
+	/*
+	 *抵御类型
+	 */
+	FGameplayTag Attributes_Resistance_FireResistance;
+	FGameplayTag Attributes_Resistance_ArcaneResistance;
+	FGameplayTag Attributes_Resistance_LightningResistance;
+	FGameplayTag Attributes_Resistance_PhysicsResistance;
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypeToResistance;
+	
 private:
 	static  FAuraGameplayTags GameplayTags;
 

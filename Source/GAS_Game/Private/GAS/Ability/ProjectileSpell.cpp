@@ -4,7 +4,6 @@
 #include "GAS/Ability/ProjectileSpell.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
-#include "Tag/AuraGameplayTags.h"
 #include "Projectile/Projectile.h"
 #include "Interface/ICombatInterface.h"
 
@@ -23,7 +22,7 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 	if (!Ac)return;
 	FVector WeaponSocketLocation = Ac->GetWeaponSocketLocation();
 	FRotator SpawnRotator = (TargetLocation - WeaponSocketLocation).Rotation();
-	SpawnRotator.Pitch = 0.f;
+
 	SpawnTransform.SetLocation(WeaponSocketLocation);
 	SpawnTransform.SetRotation(SpawnRotator.Quaternion());
 	AProjectile* Projectile = GetWorld()->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform, GetOwningActorFromActorInfo(),
@@ -39,12 +38,11 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(ProjectileEffect , GetAbilityLevel() , EffContextHanle);
 	}
 	
-	const FGameplayTag DTag  = FAuraGameplayTags::Get().Damage;
-	
-	const float DamageNum  = Damage.GetValueAtLevel(GetAbilityLevel());
-	
-	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->SpecHandle ,DTag , DamageNum);
-	
+	for(auto Data : DamageTypes)
+	{
+		float DataValue = Data.Value.GetValueAtLevel(GetAbilityLevel());
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->SpecHandle ,Data.Key , DataValue);
+	}
 	Projectile->FinishSpawning(SpawnTransform);
 
 

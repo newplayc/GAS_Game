@@ -20,12 +20,12 @@ AProjectile::AProjectile()
 	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereCom");
 	RootComponent = SphereComp;
 	SphereComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	SphereComp->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
 	SphereComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 	SphereComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
 	SphereComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	SphereComp->SetCollisionObjectType(ECollisionChannel::ECC_EngineTraceChannel1);
+	
 	ProjectileMoveCom = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMoveComponent");
 	ProjectileMoveCom->InitialSpeed = 550.f;
 	ProjectileMoveCom->MaxSpeed = 550.f;
@@ -39,6 +39,7 @@ AProjectile::AProjectile()
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
+	
 	Super::BeginPlay();
 	SetLifeSpan(lifeSpanTime);
 	AudioC = UGameplayStatics::SpawnSoundAttached(LoopingSound, RootComponent);
@@ -48,12 +49,18 @@ void AProjectile::BeginPlay()
 
 void AProjectile::Destroyed()
 {
-
+	
 	if (!bHit && !HasAuthority())
 	{
+		
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
-		AudioC->Stop();
+		if(AudioC)
+		{
+			AudioC->Stop();
+		}
+
+		
 	}
 	Super::Destroyed();
 	
@@ -62,15 +69,17 @@ void AProjectile::Destroyed()
 void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation());
-	AudioC->Stop();
+	if(!bHit)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation());
+		if(AudioC) AudioC->Stop();
+	}
 	if (HasAuthority())
 	{
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-	
 		}
 		Destroy();
 	}
@@ -78,5 +87,6 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	{
 		bHit = true;
 	}
+	
 }
 

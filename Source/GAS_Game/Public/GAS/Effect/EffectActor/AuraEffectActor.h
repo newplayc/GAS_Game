@@ -18,7 +18,7 @@
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy:uint8
 {
-	ApplyOnOverlap,
+	ApplyOnOverlap,    
 	ApplyOnEndOverlap,
 	NeverApply
 };
@@ -56,12 +56,11 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect> GameplayEffect) ;
-
-
+	
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly ,Category = "EffectToApply" )
 	TSubclassOf<UGameplayEffect>InstantlyGameplayEffect;
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite ,Category = "EffectToApply" )
 	EEffectApplicationPolicy InstantlyEffectApplicationPolicy = EEffectApplicationPolicy::ApplyOnOverlap;
 
 
@@ -69,7 +68,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "EffectToApply")
 	TSubclassOf<UGameplayEffect>DurationGameplayEffect;
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite ,Category = "EffectToApply")
 	EEffectApplicationPolicy DurationEffectApplicationPolicy = EEffectApplicationPolicy::ApplyOnOverlap;
 
 
@@ -77,11 +76,19 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "EffectToApply")
 	TSubclassOf<UGameplayEffect>InfiniteGameplayEffect;
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite,Category = "EffectToApply")
 	EEffectApplicationPolicy InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::ApplyOnOverlap;
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite,Category = "EffectToApply")
 	EEffectRemovePolicy InfiniteEffectRemovePolicy = EEffectRemovePolicy::RemoveOnEndOverlap;
 
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "EffectToApply")
+	bool bApplyToEnemy;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "EffectToApply")
+	bool bApplyDestory;
+
+	
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> InfiniteComponents;
 
 };

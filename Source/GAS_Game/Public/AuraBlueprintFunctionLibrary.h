@@ -48,5 +48,6 @@ public:
 
 	UFUNCTION(BlueprintCallable , BlueprintPure)
 	static bool GetGameContextCritical(const FGameplayEffectContextHandle& GameplayEffectContextHandle);
-	
+
+
 };

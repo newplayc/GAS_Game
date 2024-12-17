@@ -52,9 +52,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase>LoopingSound;
 
-
+	UPROPERTY()
 	UAudioComponent* AudioC = nullptr;
 
+
+	
 
 
 	

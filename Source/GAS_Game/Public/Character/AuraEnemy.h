@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AuraCharacterBase.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "Interface/EnemyInterface.h"
 #include "Components/WidgetComponent.h"
+#include "PlayerController/AuraAiController.h"
 #include "WidgetController/OverlapWidgetController.h"
 #include "AuraEnemy.generated.h"
 
@@ -38,7 +40,16 @@ protected:
 	virtual void Died() override;
 
 	UPROPERTY(EditAnywhere)
-	 float LifeSpan = 5.0f;
+	float LifeSpan = 5.0f;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UBehaviorTree>BehaviorTree;
+
+	UPROPERTY()
+	AAuraAiController* AIController;
+	
+	bool bHitReacting = false;
+	
 public:
 	AAuraEnemy();
 
@@ -57,5 +68,8 @@ public:
 private:
 	void BindAttribute();
 
-	const float EnemySpeed =450.f; 
+	virtual void PossessedBy(AController* NewController) override;
+	const float EnemySpeed =450.f;
+
+	
 };
