@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Iris/Core/IrisProfiler.h"
 #include "UObject/Interface.h"
 #include "EnemyInterface.generated.h"
 
@@ -24,5 +25,12 @@ class GAS_GAME_API IEnemyInterface
 public:
 
 	virtual void HeightLightActor() = 0;
+	
 	virtual void UnHeightLightActor() = 0;
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	AActor * GetTargetActor();
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	void SetTargetActor(AActor * TargetActor);
 };

@@ -32,7 +32,7 @@ public:
 	static void SetAttributeInfo(ECharacterClass  CharacterClass , UObject* WorldContext , UAbilitySystemComponent* AbilitySystemComponent ,float Level);
 
 	UFUNCTION(BlueprintCallable)
-	static void AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent );
+	static void AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent ,ECharacterClass CharacterClass , int32 Level);
 
 	UFUNCTION(BlueprintCallable)
 	static UCurveTable * GetAttributeCurveTable(UObject * WorldContext);
@@ -49,5 +49,6 @@ public:
 	UFUNCTION(BlueprintCallable , BlueprintPure)
 	static bool GetGameContextCritical(const FGameplayEffectContextHandle& GameplayEffectContextHandle);
 
-
+	UFUNCTION(BlueprintCallable)
+	static void GetOverlapActors(const UObject* WorldContext , const FVector & Origin , const  TArray<AActor* > & Ignores ,const float Radius , TArray<AActor*> & HitActors);
 };

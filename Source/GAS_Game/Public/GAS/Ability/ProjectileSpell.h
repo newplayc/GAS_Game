@@ -24,11 +24,11 @@ public:
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AProjectile>ProjectileClass;
 
-	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
-	TSubclassOf<UGameplayEffect>ProjectileEffect;
+
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireBolt(const  FVector  & TargetLocation) ;
 
+	
 	
 };

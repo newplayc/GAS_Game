@@ -9,19 +9,25 @@ void UTargetDataTask::Activate()
 {
 
 	const bool IsLocalControl = Ability->GetCurrentActorInfo()->IsLocallyControlled();
-	
+
+	/*
+	 * TargetData 发送
+	 */
 	if (IsLocalControl)
 	{
 		SendTargetData();   
 	}
+	/*
+	 *   
+	 */
 	else     
 	{
 		const FGameplayAbilitySpecHandle SpecHandle = GetAbilitySpecHandle();
 		const FPredictionKey Pkey = GetActivationPredictionKey();
 		AbilitySystemComponent.Get()->AbilityTargetDataSetDelegate(SpecHandle, Pkey).AddUObject(this,&UTargetDataTask::OnTargetDataCallBack);
 		const bool IsSet = AbilitySystemComponent.Get()->CallReplicatedTargetDataDelegatesIfSet(SpecHandle, Pkey);
+		if(!IsSet)
 			SetWaitingOnRemotePlayerData();
-		
 	}
 }
 
@@ -51,6 +57,7 @@ void UTargetDataTask::SendTargetData()
 
 }
 
+/**  服务端 接收到TargetData 的回调函数 */  
 void UTargetDataTask::OnTargetDataCallBack(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag Activation)
 {
 	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
@@ -59,7 +66,6 @@ void UTargetDataTask::OnTargetDataCallBack(const FGameplayAbilityTargetDataHandl
 	{
 		TargetData.Broadcast(DataHandle);
 	}
-
 }
 
 

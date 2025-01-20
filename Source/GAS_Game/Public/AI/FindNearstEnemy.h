@@ -21,5 +21,7 @@ class UFindNearstEnemy : public UBTService
 
 	UPROPERTY(EditAnywhere)
 	FBlackboardKeySelector NeareatActorKey;
-	
+
+	UPROPERTY(EditAnywhere)
+	FBlackboardKeySelector IsRanegr;
 };

@@ -69,8 +69,8 @@ void AAuraPlayerController::AutoRun()
 	if (!ControlPawn)return;
 	const FVector SplineLocation = Spline->FindLocationClosestToWorldLocation(ControlPawn->GetActorLocation(), ESplineCoordinateSpace::World);
 	const FVector SplineDirection = Spline->FindDirectionClosestToWorldLocation(ControlPawn->GetActorLocation(), ESplineCoordinateSpace::World);
-	ControlPawn->AddMovementInput(SplineDirection);
 
+	ControlPawn->AddMovementInput(SplineDirection);
 	double Distance = (SplineLocation  - CachedDestination).Length();
 	if (Distance <= ShortPressThreshold)
 	{
@@ -91,11 +91,10 @@ void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacte
 	{
 		UDamageTextWidgetCom * DamageWidget = NewObject<UDamageTextWidgetCom>(ECharacter , DamageTextWidgetClass);
 		DamageWidget->RegisterComponent();
-		DamageWidget->AttachToComponent(ECharacter->GetRootComponent(),FAttachmentTransformRules::KeepWorldTransform);
+		DamageWidget->AttachToComponent(ECharacter->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform);
 		bool Block = UAuraBlueprintFunctionLibrary::GetGameContextBlock(EffectContextHandle);
 		bool Critical = UAuraBlueprintFunctionLibrary::GetGameContextCritical(EffectContextHandle);
 		DamageWidget->SetDamageText(Damage , Block ,Critical);
-		DamageWidget->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
 	}
 }
 
@@ -156,10 +155,11 @@ void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 			GetGAS()->PressFunction(ActionTag);
 		}
 	}
-
-
 }
-
+/*
+ *
+ * 如果按压时间短会触发 点击自动寻路
+ */
 void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 {
 
@@ -195,7 +195,9 @@ void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 	FollowTime = 0.f;
 	bTargeting = false;
 }
-
+/*
+ *计算按压时间
+ */
 void AAuraPlayerController::HeldFunction(FGameplayTag ActionTag)
 {
 	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) || bTargeting||bShift)
@@ -209,6 +211,7 @@ void AAuraPlayerController::HeldFunction(FGameplayTag ActionTag)
 	else 
 	{
 		FollowTime += GetWorld()->GetDeltaSeconds();
+
 		if (HitResult.bBlockingHit)
 		{
 			CachedDestination = HitResult.Location;

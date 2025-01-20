@@ -27,7 +27,7 @@ public:
 	UPROPERTY(BlueprintReadOnly ,  meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle SpecHandle = nullptr;
 
-	
+
 
 	
 protected:

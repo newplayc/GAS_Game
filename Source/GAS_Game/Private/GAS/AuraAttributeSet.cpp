@@ -9,7 +9,6 @@
 #include "GameFramework/Character.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayEffectExtension.h"
-#include "Kismet/GameplayStatics.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -91,26 +90,26 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	if (EP.SourceASC &&EP.SourceASC->AbilityActorInfo.IsValid()&& EP.SourceASC->AbilityActorInfo.Get()->AvatarActor.IsValid())
 	{
 		EP.SourceAvataActor = EP.SourceASC->AbilityActorInfo.Get()->AvatarActor.Get();
+		
 		if(EP.SourceASC->AbilityActorInfo.Get()->PlayerController.IsValid())
 		EP.SourceController = EP.SourceASC->AbilityActorInfo.Get()->PlayerController.Get();
-		if (EP.SourceController)
+		
+		if (EP.SourceController == nullptr && EP.SourceAvataActor !=nullptr)
 		{
-			EP.SourceCharacter = EP.SourceController->GetCharacter();
-		}
-		else if (EP.SourceController == nullptr && EP.SourceAvataActor != nullptr)
-		{
+			
 			APawn* P = Cast<APawn>(EP.SourceAvataActor);
 			if (P)
 			{
 				EP.SourceController = P->GetController();
-
 			}
 		}
-
-		if (EP.SourceController)
+		if(EP.SourceController!=nullptr)
 		{
-			EP.SourceCharacter = EP.SourceController->GetCharacter();
+			UE_LOG(LogTemp, Warning , TEXT("Im Here"));
+			EP.SourceCharacter =  EP.SourceController->GetCharacter();
 		}
+
+		
 	}
 
 
@@ -120,23 +119,49 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		 EP.TargetAvataActor = Data.Target.AbilityActorInfo.Get()->AvatarActor.Get();
 	 	
 		 if(Data.Target.AbilityActorInfo.Get()->PlayerController.IsValid())
-		 	
 		 EP.TargetController = Data.Target.AbilityActorInfo.Get()->PlayerController.Get();
 	 	
-		 EP.TargetASC = Data.Target.AbilityActorInfo.Get()->AbilitySystemComponent.Get();
-
+	 	if(EP.TargetController == nullptr && EP.TargetAvataActor!=nullptr)
+	 	{
+	 		const APawn * p = Cast<APawn>(EP.TargetAvataActor);
+	 		EP.TargetController = p->GetController();
+	 	}
+	 	
+	 	EP.TargetASC = Data.Target.AbilityActorInfo.Get()->AbilitySystemComponent.Get();
+	 	
+	 	EP.TargetCharacter = EP.TargetController->GetCharacter();
 	}
-
 }
 
 /*
  * 在Effect执行后执行的函数
  */
 
+void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor)
+{
+	if(SourceActor)
+	{
+		AAuraPlayerController * Pc = Cast<AAuraPlayerController>(Cast<ACharacter>(SourceActor)->GetController());
+		if(Pc)
+		{
+			Pc->SetDamageText(GetIncomingDamage() ,Cast<ACharacter>(TargetActor) ,Data.EffectSpec.GetContext());
+			return;
+		}
+		Pc = Cast<AAuraPlayerController>(Cast<ACharacter>(TargetActor)->GetController());
+		if(Pc)
+		{
+			Pc->SetDamageText(GetIncomingDamage() ,Cast<ACharacter>(TargetActor) ,Data.EffectSpec.GetContext());
+		}
+			
+	}
+
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 
 	Super::PostGameplayEffectExecute(Data);
+	
 	//FEffectProperties Properties;
 	//SetEffectProperties(Data, Properties);
 
@@ -156,15 +181,10 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	
 
 		AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
+		AActor * TargetActor = Data.Target.GetAvatarActor();
 		
-		if(SourceActor)
-		{
-			AAuraPlayerController * Pc = Cast<AAuraPlayerController>(Cast<ACharacter>(SourceActor)->GetController());
-			if(Pc)
-			{
-				Pc->SetDamageText(GetIncomingDamage() ,Cast<ACharacter>(Data.Target.GetAvatarActor()) ,Data.EffectSpec.GetContext());
-			}
-		}
+		ShowText(Data, SourceActor, TargetActor);
+		
 		const bool IsDied = NewHealth <=0;
 		/* 没死 */ 
 		if(!IsDied)
@@ -175,11 +195,12 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 		else
 		{
-			
-			
-			IICombatInterface * Interface =  Cast<IICombatInterface>(Data.Target.GetAvatarActor());
-			if(!Interface)return;
-			Interface->Died();
+			if( Data.Target.GetAvatarActor()->Implements<UICombatInterface>())
+			{
+				AActor * Target  = Data.Target.GetAvatarActor();
+				IICombatInterface::Execute_SetDead(Target , true);
+				IICombatInterface::Execute_HasDied(Target);
+			}
 		}
 
 		

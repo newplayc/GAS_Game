@@ -77,6 +77,7 @@ public:
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EP) const;
+	void ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor);
 
 
 	TMap<FGameplayTag, TAttributeFunptr> TagsToAttributes;
@@ -84,7 +85,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Strength, Category = "Attributes")
 	FGameplayAttributeData Strength;
-	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength);
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength); 
 
 
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Vigor, Category = "Attributes")
@@ -182,8 +183,6 @@ public:
 	FGameplayAttributeData LightningResistance;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, LightningResistance);
 
-	UPROPERTY()
-	FEffectProperties EffectProperties;
 
 	
 protected:

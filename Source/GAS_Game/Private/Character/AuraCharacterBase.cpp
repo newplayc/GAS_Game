@@ -16,11 +16,13 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), "WeaponHandSocket");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Ignore);
 
 	
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
-	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 	GetMesh()->SetGenerateOverlapEvents(true);
 
@@ -47,7 +49,9 @@ UAnimMontage* AAuraCharacterBase::GetAnimReactMontage_Implementation()
 	return ReactAnimMontage;
 }
 
-void AAuraCharacterBase::Died()
+
+
+void AAuraCharacterBase::HasDied_Implementation()
 {
 	Weapon->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	NetDeath();
@@ -55,6 +59,7 @@ void AAuraCharacterBase::Died()
 
 void AAuraCharacterBase::DissolveMesh()
 {
+	
 	if(IsValid(WeaponDissolve))
 	{
 		UMaterialInstanceDynamic * WeapoInstanceDynamic = UKismetMaterialLibrary::CreateDynamicMaterialInstance(this , WeaponDissolve);
@@ -87,14 +92,29 @@ void AAuraCharacterBase::NetDeath_Implementation()
 
 void AAuraCharacterBase::InitAttribute(UObject* Source)
 {
-		AbilityComponent->ApplyEffectToInit(InitalPrimaryEffect, 1 , Source);
-		AbilityComponent->ApplyEffectToInit(InitalSecondaryEffect, 1 , Source);
-		AbilityComponent->ApplyEffectToInit(InitalVitalEffect,1  ,Source);
+		AbilityComponent->ApplyEffectToInit(InitalPrimaryEffect, GetPlayerLevel_Implementation() , Source);
+		AbilityComponent->ApplyEffectToInit(InitalSecondaryEffect, GetPlayerLevel_Implementation() , Source);
+		AbilityComponent->ApplyEffectToInit(InitalVitalEffect,GetPlayerLevel_Implementation()  ,Source);
 }
 
-FVector AAuraCharacterBase::GetWeaponSocketLocation()
+FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation()
 {
 	return Weapon->GetSocketLocation(WeaponSocketName);
+}
+
+ECharacterClass AAuraCharacterBase::GetCharacterClass()
+{
+	return CharacterClass;
+}
+
+bool AAuraCharacterBase::IsDead_Implementation()
+{
+	return IsDead;
+}
+
+void AAuraCharacterBase::SetDead_Implementation(bool bisDead)
+{
+	this->IsDead = bisDead;
 }
 
 

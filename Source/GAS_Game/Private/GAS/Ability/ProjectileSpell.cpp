@@ -12,15 +12,15 @@
 void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 {
 	
+	
 	if (!GetAvatarActorFromActorInfo()->HasAuthority())
 	{
 		return;
 	}
 	FTransform SpawnTransform;
 
-	IICombatInterface* Ac = Cast<IICombatInterface>(GetAvatarActorFromActorInfo());
-	if (!Ac)return;
-	FVector WeaponSocketLocation = Ac->GetWeaponSocketLocation();
+
+	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation(GetAvatarActorFromActorInfo());
 	FRotator SpawnRotator = (TargetLocation - WeaponSocketLocation).Rotation();
 
 	SpawnTransform.SetLocation(WeaponSocketLocation);
@@ -35,7 +35,8 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 		FGameplayEffectContextHandle EffContextHanle =  ASC->MakeEffectContext();
 		EffContextHanle.SetAbility(this);
 		EffContextHanle.AddSourceObject(GetAvatarActorFromActorInfo());
-		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(ProjectileEffect , GetAbilityLevel() , EffContextHanle);
+		
+		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(DamageEffect , GetAbilityLevel() , EffContextHanle);
 	}
 	
 	for(auto Data : DamageTypes)

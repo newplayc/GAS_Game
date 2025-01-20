@@ -3,21 +3,9 @@
 
 #include "Interface/ICombatInterface.h"
 
-// Add default functionality here for any IICombatInterface functions that are not pure virtual.
 
-int32 IICombatInterface::GetPlayerLevel()
+// 默认返回主角职业
+ECharacterClass IICombatInterface::GetCharacterClass()
 {
-	return 0;
+	return ECharacterClass::elementalist;
 }
-
-
-FVector IICombatInterface::GetWeaponSocketLocation()
-{
-	return FVector();
-}
-
-void IICombatInterface::Died()
-{
-	return;
-}
-

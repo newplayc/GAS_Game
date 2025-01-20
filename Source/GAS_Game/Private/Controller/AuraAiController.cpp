@@ -3,10 +3,13 @@
 
 #include "PlayerController/AuraAiController.h"
 
-
+#include "BehaviorTree/BlackboardComponent.h"
 
 
 AAuraAiController::AAuraAiController()
 {
+	Blackboard = CreateDefaultSubobject<UBlackboardComponent>("BlackboardComponent");
+	check(Blackboard);
 	BehaviorTree = CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTree");
+	check(BehaviorTree);
 }

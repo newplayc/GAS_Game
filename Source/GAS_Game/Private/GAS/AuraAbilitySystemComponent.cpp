@@ -32,17 +32,18 @@ void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGamepla
 {
 	for (auto& Abi : Abilities)
 	{
-
 		FGameplayAbilitySpec SpecA = FGameplayAbilitySpec(Abi, 1);
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(SpecA.Ability))
 		{
 			SpecA.DynamicAbilityTags.AddTag(AuraAbility->ActiveTag);
 			GiveAbility(SpecA);
 		}
-
 	}
 }
 
+/*
+ *  被playerController调用  
+ */
 
 void UAuraAbilitySystemComponent::PressFunction(FGameplayTag ActionTag)
 {

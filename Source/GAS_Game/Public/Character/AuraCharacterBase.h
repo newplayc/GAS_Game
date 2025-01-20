@@ -80,8 +80,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetMeshMaterial();
 	
+	bool IsDead = false;
 	
-	virtual void Died() override;
+	void HasDied_Implementation();
 	
 	void DissolveMesh();
 
@@ -90,8 +91,12 @@ protected:
 	
 	virtual void InitAttribute(UObject * Source); 
 
-	virtual FVector GetWeaponSocketLocation() override;
+	 FVector GetWeaponSocketLocation_Implementation();
 	
+	virtual ECharacterClass GetCharacterClass() override;
 
+	bool IsDead_Implementation();
+
+	void SetDead_Implementation(bool bisDead);
 	
 };

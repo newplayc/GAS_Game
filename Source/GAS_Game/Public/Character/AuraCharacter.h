@@ -27,13 +27,10 @@ public:
 
 	void GiveStartAbilities();
 
-	virtual int32 GetPlayerLevel()override;
+	virtual int32 GetPlayerLevel_Implementation();
 
 protected:
-
-
-
-
+	
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>> StartAbilitys;
 

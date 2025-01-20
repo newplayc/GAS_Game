@@ -288,7 +288,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AI\FindNearstEnemy.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClInclude Include="..\..\Source\GAS_Game\Private\AI\FindNearstEnemy.h"/>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AI\Task\BTT_Attack.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Calculation\ExeCalDamage.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -335,6 +337,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AuraGameplayDamageAbility.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\MeleeAbility.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
@@ -384,6 +389,8 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraAssetManager.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AI\FindNearstEnemy.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AI\Task\BTT_Attack.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Calculation\ExeCalDamage.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacter.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacterBase.h"/>
@@ -398,6 +405,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAttributeSet.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayAbility.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayDamageAbility.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\MeleeAbility.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AbilityTask\TargetDataTask.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Effect\AuraGameplayEffectTypes.h"/>

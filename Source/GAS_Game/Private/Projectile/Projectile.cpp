@@ -7,6 +7,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet\GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Chaos/Deformable/ChaosDeformableCollisionsProxy.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
@@ -30,9 +31,6 @@ AProjectile::AProjectile()
 	ProjectileMoveCom->InitialSpeed = 550.f;
 	ProjectileMoveCom->MaxSpeed = 550.f;
 	ProjectileMoveCom->ProjectileGravityScale = 0.f;
-	
-
-
 
 }
 
@@ -68,7 +66,7 @@ void AProjectile::Destroyed()
 
 void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
+	if(OtherActor == GetOwner())return;
 	if(!bHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
@@ -80,6 +78,7 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+			GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Red ,FString("Resceive Attack"));
 		}
 		Destroy();
 	}

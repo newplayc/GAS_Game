@@ -69,7 +69,9 @@ public:
 	FGameplayTag Attributes_Resistance_PhysicsResistance;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypeToResistance;
-	
+
+
+	FGameplayTag Attack_MeleeAttack;
 private:
 	static  FAuraGameplayTags GameplayTags;
 

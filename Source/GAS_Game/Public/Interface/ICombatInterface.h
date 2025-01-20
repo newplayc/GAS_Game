@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Data/CharacterDataInfo.h"
 #include "UObject/Interface.h"
 #include "ICombatInterface.generated.h"
 
@@ -22,17 +23,32 @@ class GAS_GAME_API IICombatInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual int32 GetPlayerLevel();
 
-	virtual FVector GetWeaponSocketLocation();
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent)
+	int32 GetPlayerLevel();
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	FVector GetWeaponSocketLocation();
+
 	
 	UFUNCTION(BlueprintCallable , BlueprintImplementableEvent)
 	void WrapActorInterface(FVector Target);
-
+	
 	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
 	UAnimMontage* GetAnimReactMontage();
 	
-	virtual void  Died() = 0;
+	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
+	 void  HasDied();
 
+	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
+	bool IsDead();
+	
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	void SetDead(bool bisDead);
+	
+	virtual ECharacterClass GetCharacterClass()= 0;
+	
+
+	
 
 };

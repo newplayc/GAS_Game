@@ -59,12 +59,12 @@ void AAuraEnemy::IniAbilityInfo()
 	BindAttribute();
 	if(HasAuthority())
 	{
-		UAuraBlueprintFunctionLibrary::AddStartingAbilities(this , AbilityComponent);
+		UAuraBlueprintFunctionLibrary::AddStartingAbilities(this , AbilityComponent,CharacterClass , Level);
 	}
 
 }
 
-int32 AAuraEnemy::GetPlayerLevel()
+int32 AAuraEnemy::GetPlayerLevel_Implementation()
 {
 	return Level;
 }
@@ -78,10 +78,9 @@ void AAuraEnemy::InitAttribute(UObject* Source)
 
 }
 
-
-
 void AAuraEnemy::BindAttribute()
 {
+	
 	if(UAuraUserWidget * UserWidget =  Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
 		UserWidget->SetWidgetController(this);
@@ -109,10 +108,12 @@ void AAuraEnemy::BindAttribute()
 
 void AAuraEnemy::PossessedBy(AController* NewController)
 {
+	
 	if(!HasAuthority())return;
-	AIController = Cast<AAuraAiController>(NewController);
 	Super::PossessedBy(NewController);
-
+	
+	AIController = Cast<AAuraAiController>(NewController);
+	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset.Get());
 	AIController->RunBehaviorTree(BehaviorTree);
 	const bool IsRanegr = !(CharacterClass == ECharacterClass::Warrior);
 	AIController->GetBlackboardComponent()->SetValueAsBool(FName("IsRanger") , IsRanegr);
@@ -121,13 +122,27 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 void AAuraEnemy::ReactTagChange(const FGameplayTag Tag, int32 count)
 {
 	bHitReacting = count > 0 ;
-	GetCharacterMovement()->MaxWalkSpeed = 0.f;
-	GetCharacterMovement()->StopActiveMovement();
+	if(bHitReacting)
+	{
+		GetCharacterMovement()->StopActiveMovement();
+	}
+
 }
 
 
-void AAuraEnemy::Died()
+void AAuraEnemy::HasDied_Implementation()
 {
-	Super::Died();
+	Super::HasDied_Implementation();
 	SetLifeSpan(LifeSpan);
+}
+
+AActor* AAuraEnemy::GetTargetActor_Implementation()
+{
+	return TargetEnemy;
+	
+}
+
+void AAuraEnemy::SetTargetActor_Implementation(AActor* TargetActor)
+{
+	this->TargetEnemy = TargetActor;
 }

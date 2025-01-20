@@ -25,9 +25,15 @@ float UMaxHealthMagnitudeCalculation::CalculateBaseMagnitude_Implementation(cons
 	GetCapturedAttributeMagnitude(VigorDef, Spec, AggregatorParameters,Vigor);
 	Vigor = FMath::Max<float>(Vigor, 0.f);
 
-	IICombatInterface* Interface = Cast<IICombatInterface>(Spec.GetContext().GetSourceObject());
-	const int32 PlayerLevel = Interface->GetPlayerLevel();
+	UObject* obj = Spec.GetContext().GetSourceObject();
 
-	return 80.f + 2.5f * Vigor + 10.f * PlayerLevel;
+
+	if(obj->Implements<UICombatInterface>())
+	{
+		const int PlayerLevel = IICombatInterface::Execute_GetPlayerLevel(obj);
+		return 80.f + 2.5f * Vigor + 10.f * PlayerLevel;
+	}
+	return 0;
+	
 
 }

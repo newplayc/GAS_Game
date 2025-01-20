@@ -34,10 +34,7 @@ protected:
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChanged OnMaxHealthChanged;
 
-	void ReactTagChange(const FGameplayTag Tag , int32 count);
-
-	
-	virtual void Died() override;
+	bool bHitReacting = false;
 
 	UPROPERTY(EditAnywhere)
 	float LifeSpan = 5.0f;
@@ -47,8 +44,18 @@ protected:
 
 	UPROPERTY()
 	AAuraAiController* AIController;
+
+	UPROPERTY()
+	AActor * TargetEnemy = nullptr;
 	
-	bool bHitReacting = false;
+	void ReactTagChange(const FGameplayTag Tag , int32 count);
+	
+	void HasDied_Implementation();
+
+	AActor* GetTargetActor_Implementation();
+
+	void SetTargetActor_Implementation(AActor* TargetActor);
+
 	
 public:
 	AAuraEnemy();
@@ -59,7 +66,7 @@ public:
 
 	virtual void IniAbilityInfo() override;
 
-	virtual int32 GetPlayerLevel()override;
+	int32 GetPlayerLevel_Implementation();
 
 	virtual void InitAttribute(UObject* Source) override;
 

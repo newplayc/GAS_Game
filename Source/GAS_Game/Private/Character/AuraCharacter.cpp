@@ -43,13 +43,14 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 void AAuraCharacter::OnRep_PlayerState()
 {
+	UE_LOG(LogTemp , Warning , TEXT("I am %s") ,*GetName());
 	Super::OnRep_PlayerState();
 	IniAbilityInfo();
 
 }
 
 
-int32 AAuraCharacter::GetPlayerLevel()
+int32 AAuraCharacter::GetPlayerLevel_Implementation()
 {
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
 	if (!PS)return -1;

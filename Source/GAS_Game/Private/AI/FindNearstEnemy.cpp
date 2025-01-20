@@ -2,15 +2,22 @@
 
 
 #include "AI/FindNearstEnemy.h"
-
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Interface/EnemyInterface.h"
+#include "Interface/ICombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 void UFindNearstEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	AActor * AiOwner = OwnerComp.GetAIOwner()->GetPawn();
+	bool IsRanger  = false;
+	if(IICombatInterface * AiCombat = Cast<IICombatInterface>(AiOwner))
+	{
+		IsRanger = AiCombat->GetCharacterClass() == ECharacterClass::Ranger;
+	}
+	
 	FName EnemyName = AiOwner->ActorHasTag(FName("Player")) ? FName("Enemy") : FName("Player");
 
 	TArray<AActor*> EnemysFound;
@@ -21,15 +28,16 @@ void UFindNearstEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 	AActor * NearstActor = nullptr;
 	for(AActor * Actor : EnemysFound)
 	{
+		if(IICombatInterface::Execute_IsDead(Actor))continue;
 		if(AiOwner->GetDistanceTo(Actor) < NearstDistance)
 		{
 			NearstActor = Actor;
 			NearstDistance = AiOwner->GetDistanceTo(Actor);
 		}
 	}
-
+	IEnemyInterface::Execute_SetTargetActor(AiOwner,NearstActor);
 
 	OwnerComp.GetBlackboardComponent()->SetValueAsFloat(NearestDistanceKey.SelectedKeyName , NearstDistance);
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(NeareatActorKey.SelectedKeyName ,NearstActor);
-	
+	OwnerComp.GetBlackboardComponent()->SetValueAsBool(IsRanegr.SelectedKeyName ,IsRanger);
 }

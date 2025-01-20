@@ -3,6 +3,7 @@
 
 #include "Tag/AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
+#include "Kismet/GameplayStatics.h"
 
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
@@ -52,6 +53,8 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Arcane , GameplayTags.Attributes_Resistance_ArcaneResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Lightning , GameplayTags.Attributes_Resistance_LightningResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Physics	 , GameplayTags.Attributes_Resistance_PhysicsResistance);
-	
+
+
+	GameplayTags.Attack_MeleeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.MeleeAttack"), FString("激活 AI 近战攻击的标签"));
 }
 

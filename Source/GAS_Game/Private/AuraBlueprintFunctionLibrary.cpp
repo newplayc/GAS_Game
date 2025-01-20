@@ -7,7 +7,9 @@
 #include "GAS/AuraAttributeSet.h"
 #include "Game/AuraGameModeBase.h"
 #include "GameFramework/PlayerController.h"
+#include "GAS/Ability/AuraGameplayAbility.h"
 #include "GAS/Effect/AuraGameplayEffectTypes.h"
+#include "Interface/ICombatInterface.h"
 #include "kismet/GameplayStatics.h"
 #include "PlayerState/AuraPlayerState.h"
 
@@ -75,7 +77,7 @@ void UAuraBlueprintFunctionLibrary::SetAttributeInfo(ECharacterClass CharacterCl
 	AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*VitalEffectSpecHandle.Data.Get());
 }
 
-void UAuraBlueprintFunctionLibrary::AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent)
+void UAuraBlueprintFunctionLibrary::AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent , ECharacterClass CharacterClass , int32 Level)
 {
 	const AAuraGameModeBase * Gmb =  Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
 	if(!Gmb)return;
@@ -88,6 +90,13 @@ void UAuraBlueprintFunctionLibrary::AddStartingAbilities(UObject * WorldContext 
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(GA,1);
 		AbilitySystemComponent->GiveAbility(AbilitySpec);
+	}
+
+	const FCharacterDifDataInfo FDataInfo =  DataInfo->GetCharacterDataInfo(CharacterClass);
+	for(TSubclassOf<UGameplayAbility> Ability : FDataInfo.StartingAbilities)
+	{
+		FGameplayAbilitySpec Aspec = FGameplayAbilitySpec(Ability ,Level);
+		AbilitySystemComponent->GiveAbility(Aspec);
 	}
 
 }
@@ -137,3 +146,24 @@ bool UAuraBlueprintFunctionLibrary::GetGameContextCritical(
 	return false;
 }
 
+void  UAuraBlueprintFunctionLibrary::GetOverlapActors(const UObject* WorldContext, const FVector& Origin,
+	const TArray<AActor*>& Ignores , const float Radius , TArray<AActor*> & HitActors)
+{
+	FCollisionQueryParams SphereParams;
+	SphereParams.AddIgnoredActors(Ignores);
+
+
+	TArray<FOverlapResult> Overlaps;
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContext, EGetWorldErrorMode::LogAndReturnNull))
+	{
+		World->OverlapMultiByObjectType(Overlaps, Origin, FQuat::Identity, FCollisionObjectQueryParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects), FCollisionShape::MakeSphere(Radius), SphereParams);
+	}
+	
+	for(FOverlapResult& res : Overlaps)
+	{
+		if(res.GetActor()->Implements<UICombatInterface>() && !(IICombatInterface::Execute_IsDead(res.GetActor())))
+		{
+			HitActors.AddUnique(res.GetActor());
+		}
+	}
+}

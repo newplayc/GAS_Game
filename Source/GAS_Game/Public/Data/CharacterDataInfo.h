@@ -24,6 +24,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UGameplayEffect>PrimaryEffect;
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TSubclassOf<UGameplayAbility>>StartingAbilities;
 };
 
 /**
@@ -47,15 +50,17 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UGameplayEffect>VitalEffet;
 
+	/**
+	 * 通用能力
+	 */
 	UPROPERTY(EditDefaultsOnly)
-	// ReSharper disable once UnrealHeaderToolError
 	TArray<TSubclassOf<UGameplayAbility>>StartingAbilities;
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCurveTable> AttributeCurve;
-
-	UPROPERTY(EditDefaultsOnly)
-	TMap<FGameplayTag, FScalableFloat>DamageTypeData;
+ 
+	// UPROPERTY(EditDefaultsOnly)
+	// TMap<FGameplayTag, FScalableFloat>DamageTypeData;
 	
 	FCharacterDifDataInfo GetCharacterDataInfo(ECharacterClass CharaClass) const;
 

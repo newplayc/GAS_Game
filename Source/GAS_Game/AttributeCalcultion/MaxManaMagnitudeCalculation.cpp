@@ -27,7 +27,14 @@ float UMaxManaMagnitudeCalculation::CalculateBaseMagnitude_Implementation(const 
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, AggregatorParameters, Intelligence);
 	Intelligence = FMath::Max<float>(Intelligence, 0.f);
 
-	IICombatInterface* Interface = Cast<IICombatInterface>(Spec.GetContext().GetSourceObject());
-	int PlayerLevel = Interface->GetPlayerLevel();
-	return  80.f + 2.5f * Intelligence + 10.f * PlayerLevel;
+	
+	UObject * obj = Spec.GetContext().GetSourceObject();
+
+	if(obj->Implements<UICombatInterface>())
+	{
+		int PlayerLevel = IICombatInterface::Execute_GetPlayerLevel(obj);
+		return  80.f + 2.5f * Intelligence + 10.f * PlayerLevel;
+	}
+	return 0;
+
 }
