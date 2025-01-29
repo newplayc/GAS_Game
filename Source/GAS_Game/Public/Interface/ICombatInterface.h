@@ -3,11 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NiagaraSystem.h"
 #include "Data/CharacterDataInfo.h"
 #include "UObject/Interface.h"
 #include "ICombatInterface.generated.h"
 
-// This class does not need to be modified.
+USTRUCT(BlueprintType , Blueprintable)
+struct FTagMontage
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	FGameplayTag Tag;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	TObjectPtr<UAnimMontage>AttackMontage;
+
+	UPROPERTY(EditDefaultsOnly ,BlueprintReadOnly)
+	TObjectPtr<USoundBase>ImpactSound;
+
+
+};
+
+
+
 UINTERFACE(MinimalAPI , BlueprintType)
 class UICombatInterface : public UInterface
 {
@@ -28,7 +47,7 @@ public:
 	int32 GetPlayerLevel();
 
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
-	FVector GetWeaponSocketLocation();
+	FVector GetWeaponSocketLocation(FGameplayTag AttackTag);
 
 	
 	UFUNCTION(BlueprintCallable , BlueprintImplementableEvent)
@@ -45,6 +64,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
 	void SetDead(bool bisDead);
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	TArray<FTagMontage> GetAttackMontage();
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	UNiagaraSystem *  GetBloodEffect();
 	
 	virtual ECharacterClass GetCharacterClass()= 0;
 	

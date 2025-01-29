@@ -4,6 +4,7 @@
 #include "Projectile/Projectile.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "AuraBlueprintFunctionLibrary.h"
 #include "Components/SphereComponent.h"
 #include "Kismet\GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
@@ -50,15 +51,13 @@ void AProjectile::Destroyed()
 	
 	if (!bHit && !HasAuthority())
 	{
-		
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
 		if(AudioC)
 		{
 			AudioC->Stop();
 		}
-
-		
+		bHit = true;
 	}
 	Super::Destroyed();
 	
@@ -66,25 +65,30 @@ void AProjectile::Destroyed()
 
 void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor == GetOwner())return;
+	
+	if(SpecHandle.Data.IsValid() &&  SpecHandle.Data.Get()->GetContext().GetEffectCauser())
+	{
+		AActor * Causer = SpecHandle.Data.Get()->GetContext().GetEffectCauser();
+		if(OtherActor == Causer || UAuraBlueprintFunctionLibrary::IsFriend(Causer , OtherActor))return;
+	}
+	else
+	{
+		return;
+	}
 	if(!bHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation());
 		if(AudioC) AudioC->Stop();
+		bHit = true;
 	}
 	if (HasAuthority())
 	{
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-			GEngine->AddOnScreenDebugMessage(-1,5.f,FColor::Red ,FString("Resceive Attack"));
 		}
 		Destroy();
-	}
-	else
-	{
-		bHit = true;
 	}
 	
 }

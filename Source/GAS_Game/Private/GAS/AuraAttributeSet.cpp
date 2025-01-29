@@ -133,9 +133,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	}
 }
 
-/*
- * 在Effect执行后执行的函数
- */
+
 
 void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor)
 {
@@ -156,7 +154,9 @@ void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AAc
 	}
 
 }
-
+/*
+ * 在Effect执行后执行的函数
+ */
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 

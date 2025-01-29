@@ -51,4 +51,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static void GetOverlapActors(const UObject* WorldContext , const FVector & Origin , const  TArray<AActor* > & Ignores ,const float Radius , TArray<AActor*> & HitActors);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsFriend(AActor * a1 , AActor* a2);
+
+	UFUNCTION(BlueprintCallable)
+	static  FTagMontage GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& Tag); 
 };

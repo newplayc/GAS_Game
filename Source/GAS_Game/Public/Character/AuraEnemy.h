@@ -70,13 +70,15 @@ public:
 
 	virtual void InitAttribute(UObject* Source) override;
 
-
+	UPROPERTY(EditAnywhere , BlueprintReadWrite)
+	float EnemySpeed =450.f;
 	
 private:
 	void BindAttribute();
 
 	virtual void PossessedBy(AController* NewController) override;
-	const float EnemySpeed =450.f;
+
+
 
 	
 };

@@ -4,6 +4,7 @@
 #include "Interface/ICombatInterface.h"
 
 
+
 // 默认返回主角职业
 ECharacterClass IICombatInterface::GetCharacterClass()
 {

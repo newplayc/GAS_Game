@@ -63,7 +63,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float lifeSpanTime = 10.f;
 
-	
+
 	bool bHit = false;
 	
 	UFUNCTION()

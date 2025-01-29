@@ -7,3 +7,4 @@ FCharacterDifDataInfo UCharacterDataInfo::GetCharacterDataInfo(ECharacterClass C
 {
 	return CharacterInfos.FindRef(CharaClass);
 }
+ 

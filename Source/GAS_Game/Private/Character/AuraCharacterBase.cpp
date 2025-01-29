@@ -5,8 +5,10 @@
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GAS/AuraAttributeSet.h"
+#include "GAS/Ability/AuraGameplayAbility.h"
 #include "GAS_Game/GAS_Game.h"
 #include "Kismet/KismetMaterialLibrary.h"
+#include "Tag/AuraGameplayTags.h"
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -97,9 +99,22 @@ void AAuraCharacterBase::InitAttribute(UObject* Source)
 		AbilityComponent->ApplyEffectToInit(InitalVitalEffect,GetPlayerLevel_Implementation()  ,Source);
 }
 
-FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation()
+FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag)
 {
-	return Weapon->GetSocketLocation(WeaponSocketName);
+	FAuraGameplayTags AllTags =  FAuraGameplayTags::Get();
+	if(AttackTag.MatchesTagExact(AllTags.Montage_WeaponAttack))
+	{
+		return Weapon->GetSocketLocation(WeaponSocketName);
+	}
+	if(AttackTag.MatchesTagExact(AllTags.Montage_LeftHandAttack))
+	{
+		return GetMesh()->GetSocketLocation(LeftHandSocketName);
+	}
+	if(AttackTag.MatchesTagExact(AllTags.Montage_RightHandAttack))
+	{
+		return GetMesh()->GetSocketLocation(RightHandSocketName);
+	}
+	return FVector();
 }
 
 ECharacterClass AAuraCharacterBase::GetCharacterClass()
@@ -112,9 +127,19 @@ bool AAuraCharacterBase::IsDead_Implementation()
 	return IsDead;
 }
 
+TArray<FTagMontage> AAuraCharacterBase::GetAttackMontage_Implementation()
+{
+	return AttackMontage;
+}
+
 void AAuraCharacterBase::SetDead_Implementation(bool bisDead)
 {
 	this->IsDead = bisDead;
+}
+
+UNiagaraSystem* AAuraCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
 }
 
 

@@ -35,5 +35,4 @@ float UMaxHealthMagnitudeCalculation::CalculateBaseMagnitude_Implementation(cons
 	}
 	return 0;
 	
-
 }

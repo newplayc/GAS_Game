@@ -6,7 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "Projectile/Projectile.h"
 #include "Interface/ICombatInterface.h"
-
+#include "Tag/AuraGameplayTags.h"
 
 
 void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
@@ -20,7 +20,7 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 	FTransform SpawnTransform;
 
 
-	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation(GetAvatarActorFromActorInfo());
+	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation( GetAvatarActorFromActorInfo(), FAuraGameplayTags::Get().Montage_WeaponAttack);
 	FRotator SpawnRotator = (TargetLocation - WeaponSocketLocation).Rotation();
 
 	SpawnTransform.SetLocation(WeaponSocketLocation);
@@ -35,10 +35,9 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 		FGameplayEffectContextHandle EffContextHanle =  ASC->MakeEffectContext();
 		EffContextHanle.SetAbility(this);
 		EffContextHanle.AddSourceObject(GetAvatarActorFromActorInfo());
-		
 		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(DamageEffect , GetAbilityLevel() , EffContextHanle);
 	}
-	
+		
 	for(auto Data : DamageTypes)
 	{
 		float DataValue = Data.Value.GetValueAtLevel(GetAbilityLevel());

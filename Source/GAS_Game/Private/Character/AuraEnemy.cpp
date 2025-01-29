@@ -125,13 +125,23 @@ void AAuraEnemy::ReactTagChange(const FGameplayTag Tag, int32 count)
 	if(bHitReacting)
 	{
 		GetCharacterMovement()->StopActiveMovement();
+		if(AIController)
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReact") , true);
+
+	}
+	else
+	{
+		if(AIController)
+			AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReact"), false);
 	}
 
+	
 }
 
 
 void AAuraEnemy::HasDied_Implementation()
 {
+	DetachFromControllerPendingDestroy();
 	Super::HasDied_Implementation();
 	SetLifeSpan(LifeSpan);
 }
@@ -139,7 +149,6 @@ void AAuraEnemy::HasDied_Implementation()
 AActor* AAuraEnemy::GetTargetActor_Implementation()
 {
 	return TargetEnemy;
-	
 }
 
 void AAuraEnemy::SetTargetActor_Implementation(AActor* TargetActor)

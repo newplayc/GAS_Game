@@ -2,6 +2,8 @@
 
 
 #include "AuraBlueprintFunctionLibrary.h"
+
+#include "Character/AuraCharacterBase.h"
 #include "WidgetController/AuraUserWidgetController.h"
 #include "HUD/AuraHUD.h"
 #include "GAS/AuraAttributeSet.h"
@@ -12,6 +14,7 @@
 #include "Interface/ICombatInterface.h"
 #include "kismet/GameplayStatics.h"
 #include "PlayerState/AuraPlayerState.h"
+#include "Tag/AuraGameplayTags.h"
 
 UOverlapWidgetController* UAuraBlueprintFunctionLibrary::GetOverlayWidgetController(UObject * WorldContext)
 {
@@ -166,4 +169,28 @@ void  UAuraBlueprintFunctionLibrary::GetOverlapActors(const UObject* WorldContex
 			HitActors.AddUnique(res.GetActor());
 		}
 	}
+}
+
+bool UAuraBlueprintFunctionLibrary::IsFriend(AActor* a1, AActor* a2)
+{
+	if(a1->ActorHasTag(FName("player")))
+	{
+		return a2->ActorHasTag(FName("player"));
+	}
+	else
+	{
+		return a2->ActorHasTag(FName("Enemy"));
+	}
+}
+
+ FTagMontage UAuraBlueprintFunctionLibrary::GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& Tag)
+{
+	for(auto TagMon : TagMontages)
+	{
+		if(TagMon.Tag.MatchesTagExact(Tag))
+		{
+			return TagMon;
+		}
+	}
+	return FTagMontage();
 }

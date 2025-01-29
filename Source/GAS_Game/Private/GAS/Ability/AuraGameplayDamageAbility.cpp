@@ -5,10 +5,12 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "AuraBlueprintFunctionLibrary.h"
 #include "RenderGraphBuilder.h"
 
 void UAuraGameplayDamageAbility::CauseDamage(AActor* Target)
 {
+	if(UAuraBlueprintFunctionLibrary::IsFriend(Target , GetAvatarActorFromActorInfo()))return;
 	if(GetAvatarActorFromActorInfo()->HasAuthority())
 	{
 		FGameplayEffectSpecHandle SpecHandle =  MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());

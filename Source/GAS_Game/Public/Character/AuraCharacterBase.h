@@ -5,6 +5,7 @@
 #include "AbilitySystemInterface.h"
 #include "Interface/ICombatInterface.h"
 #include "CoreMinimal.h"
+#include "NiagaraSystem.h"
 #include "Data/CharacterDataInfo.h"
 #include "GameFramework/Character.h"
 #include "AuraCharacterBase.generated.h"
@@ -12,6 +13,9 @@
 class UAuraAbilitySystemComponent;
 class UAuraAttributeSet;
 class UAttributeSet;
+
+
+
 
 UCLASS(abstract)
 class GAS_GAME_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public IICombatInterface
@@ -56,6 +60,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 	FName WeaponSocketName;
 
+	UPROPERTY(EditAnywhere)
+	FName LeftHandSocketName;
+
+	UPROPERTY(EditAnywhere)
+	FName RightHandSocketName;
 		
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalPrimaryEffect;
@@ -73,12 +82,21 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance>MeshDissolve;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	TArray<FTagMontage>AttackMontage;
+
+
+	UPROPERTY(EditAnywhere , BlueprintReadOnly)
+	TObjectPtr<UNiagaraSystem> BloodEffect;
+
 	
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetWeaponMaterial();
 
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetMeshMaterial();
+
 	
 	bool IsDead = false;
 	
@@ -91,12 +109,15 @@ protected:
 	
 	virtual void InitAttribute(UObject * Source); 
 
-	 FVector GetWeaponSocketLocation_Implementation();
+	 FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
 	
 	virtual ECharacterClass GetCharacterClass() override;
 
 	bool IsDead_Implementation();
 
+	TArray<FTagMontage> GetAttackMontage_Implementation();
+
 	void SetDead_Implementation(bool bisDead);
-	
+
+	UNiagaraSystem * GetBloodEffect_Implementation();
 };
