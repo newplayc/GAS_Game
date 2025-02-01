@@ -65,7 +65,14 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	FName RightHandSocketName;
-		
+
+	UPROPERTY(EditAnywhere)
+	FName RightTraildSocketName;
+
+	UPROPERTY(EditAnywhere)
+	FName LeftTrailSocketName;
+
+	
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalPrimaryEffect;
 
@@ -90,6 +97,8 @@ protected:
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TObjectPtr<UNiagaraSystem> BloodEffect;
 
+	UPROPERTY(EditAnywhere , BlueprintReadOnly)
+	TObjectPtr<USoundBase>DeathSound;
 	
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetWeaponMaterial();

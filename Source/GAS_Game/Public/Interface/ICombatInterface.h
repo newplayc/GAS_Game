@@ -3,10 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MovieSceneSection.h"
 #include "NiagaraSystem.h"
 #include "Data/CharacterDataInfo.h"
 #include "UObject/Interface.h"
 #include "ICombatInterface.generated.h"
+UENUM(BlueprintType)
+enum class EAttackType : uint8
+{
+	Remote,
+	Melee
+};
+
 
 USTRUCT(BlueprintType , Blueprintable)
 struct FTagMontage
@@ -14,7 +22,13 @@ struct FTagMontage
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
-	FGameplayTag Tag;
+	 EAttackType  AttType;
+		
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	FGameplayTag MontageTag;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	FGameplayTag SocketTag;
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TObjectPtr<UAnimMontage>AttackMontage;
@@ -22,7 +36,14 @@ struct FTagMontage
 	UPROPERTY(EditDefaultsOnly ,BlueprintReadOnly)
 	TObjectPtr<USoundBase>ImpactSound;
 
-
+	bool operator==(const FTagMontage& it) const
+	{
+		return AttType ==  it.AttType &&
+			MontageTag == it.MontageTag &&
+			AttackMontage == it.AttackMontage &&
+			ImpactSound == it.ImpactSound&&
+			SocketTag == it.SocketTag;
+	}
 };
 
 

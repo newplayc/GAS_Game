@@ -57,10 +57,24 @@ void FAuraGameplayTags::AddGameplayTag()
 
 	GameplayTags.Attack_MeleeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.MeleeAttack"), FString("激活 AI 近战攻击的标签"));
 	GameplayTags.Attack_RangeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.RangeAttack") , FString("激活 AI 远程攻击"));
-	
-	GameplayTags.Montage_WeaponAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.WeaponAttack"), FString("Montage Weapon"));
-	GameplayTags.Montage_LeftHandAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.LeftHandAttack"), FString("Montage LeftHand"));
-	GameplayTags.Montage_RightHandAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.RightHandAttack"), FString("Montage RightHand"));
+
+	/*
+	 * Socket
+	 */
+	GameplayTags.Socket_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.Weapon"), FString("Socket Weapon"));
+	GameplayTags.Socket_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.LeftHand"), FString("Socket LeftHand"));
+	GameplayTags.Socket_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.RightHand"), FString("Socket RightHand"));
+	GameplayTags.Socket_LeftTrail = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.LeftTrail"), FString("Socket LeftTrail"));
+	GameplayTags.Socket_RightTrail = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.RightTrail"), FString("Socket RightTrail"));
+
+	/*
+	 *Montage
+	 */
+	GameplayTags.Montage_Attack_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_1"), FString("Montage_Attack_1"));
+	GameplayTags.Montage_Attack_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_2"), FString("Montage_Attack_2"));
+	GameplayTags.Montage_Attack_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_3"), FString("Montage_Attack_3"));
+	GameplayTags.Montage_Attack_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_4"), FString("Montage_Attack_4"));
+	GameplayTags.Montage_Attack_5 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_5"), FString("Montage_Attack_5"));
 	
 }
 

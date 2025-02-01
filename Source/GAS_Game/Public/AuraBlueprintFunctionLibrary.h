@@ -7,6 +7,7 @@
 #include "WidgetController/OverlapWidgetController.h"
 #include "WidgetController/AttributeWidgetController.h"
 #include "Data/CharacterDataInfo.h"
+#include "Interface/ICombatInterface.h"
 #include "AuraBlueprintFunctionLibrary.generated.h"
 
 
@@ -56,5 +57,9 @@ public:
 	static bool IsFriend(AActor * a1 , AActor* a2);
 
 	UFUNCTION(BlueprintCallable)
-	static  FTagMontage GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& Tag); 
+	static  FTagMontage GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& MontageTag);
+
+	UFUNCTION(BlueprintCallable)
+	static  TArray<  FTagMontage> GetTagMontageTypeWithType(const TArray<FTagMontage>& TagMontages,const EAttackType& AttType);
+
 };

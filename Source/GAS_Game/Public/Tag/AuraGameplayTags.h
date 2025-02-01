@@ -73,11 +73,19 @@ public:
 
 	FGameplayTag Attack_MeleeAttack;
 	FGameplayTag Attack_RangeAttack;
+
 	
-	FGameplayTag Montage_WeaponAttack;
-	FGameplayTag Montage_LeftHandAttack;
-	FGameplayTag Montage_RightHandAttack;
-	
+	FGameplayTag Montage_Attack_1;
+	FGameplayTag Montage_Attack_2;
+	FGameplayTag Montage_Attack_3;
+	FGameplayTag Montage_Attack_4;
+	FGameplayTag Montage_Attack_5;
+
+	FGameplayTag Socket_Weapon;
+	FGameplayTag Socket_LeftHand;
+	FGameplayTag Socket_RightHand;
+	FGameplayTag Socket_LeftTrail;
+	FGameplayTag Socket_RightTrail;
 private:
 	static  FAuraGameplayTags GameplayTags;
 

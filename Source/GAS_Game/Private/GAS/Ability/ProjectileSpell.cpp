@@ -9,7 +9,7 @@
 #include "Tag/AuraGameplayTags.h"
 
 
-void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
+void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation , FGameplayTag SocketTag)
 {
 	
 	
@@ -20,7 +20,7 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation)
 	FTransform SpawnTransform;
 
 
-	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation( GetAvatarActorFromActorInfo(), FAuraGameplayTags::Get().Montage_WeaponAttack);
+	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation( GetAvatarActorFromActorInfo(), SocketTag);
 	FRotator SpawnRotator = (TargetLocation - WeaponSocketLocation).Rotation();
 
 	SpawnTransform.SetLocation(WeaponSocketLocation);

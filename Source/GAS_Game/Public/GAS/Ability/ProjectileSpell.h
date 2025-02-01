@@ -27,7 +27,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnFireBolt(const  FVector  & TargetLocation) ;
+	void SpawnFireBolt(const  FVector  & TargetLocation , FGameplayTag SocketTag) ;
 
 	
 	

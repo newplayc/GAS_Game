@@ -183,14 +183,28 @@ bool UAuraBlueprintFunctionLibrary::IsFriend(AActor* a1, AActor* a2)
 	}
 }
 
- FTagMontage UAuraBlueprintFunctionLibrary::GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& Tag)
+ FTagMontage UAuraBlueprintFunctionLibrary::GetTagMontageWithTag( TArray<FTagMontage> TagMontages, const FGameplayTag& MontageTag)
 {
 	for(auto TagMon : TagMontages)
 	{
-		if(TagMon.Tag.MatchesTagExact(Tag))
+		if(TagMon.MontageTag.MatchesTagExact(MontageTag))
 		{
 			return TagMon;
 		}
 	}
 	return FTagMontage();
+}
+
+ TArray< FTagMontage> UAuraBlueprintFunctionLibrary::GetTagMontageTypeWithType( const TArray<FTagMontage>& TagMontages,
+const EAttackType & AttType)
+{
+	TArray<FTagMontage>TypeMontage;
+	for( const FTagMontage& it : TagMontages)
+	{
+		if(it.AttType == AttType)
+		{
+			TypeMontage.AddUnique(it);
+		}
+	}
+	return TypeMontage;
 }

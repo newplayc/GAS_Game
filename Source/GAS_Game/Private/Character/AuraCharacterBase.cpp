@@ -7,6 +7,7 @@
 #include "GAS/AuraAttributeSet.h"
 #include "GAS/Ability/AuraGameplayAbility.h"
 #include "GAS_Game/GAS_Game.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMaterialLibrary.h"
 #include "Tag/AuraGameplayTags.h"
 
@@ -86,8 +87,7 @@ void AAuraCharacterBase::NetDeath_Implementation()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetMesh()->SetAllBodiesSimulatePhysics(true);
-
-	
+	UGameplayStatics::PlaySoundAtLocation(this, DeathSound ,GetActorLocation());
 	DissolveMesh();
 	
 }
@@ -102,17 +102,25 @@ void AAuraCharacterBase::InitAttribute(UObject* Source)
 FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag)
 {
 	FAuraGameplayTags AllTags =  FAuraGameplayTags::Get();
-	if(AttackTag.MatchesTagExact(AllTags.Montage_WeaponAttack))
+	if(AttackTag.MatchesTagExact(AllTags.Socket_Weapon))
 	{
 		return Weapon->GetSocketLocation(WeaponSocketName);
 	}
-	if(AttackTag.MatchesTagExact(AllTags.Montage_LeftHandAttack))
+	if(AttackTag.MatchesTagExact(AllTags.Socket_LeftHand))
 	{
 		return GetMesh()->GetSocketLocation(LeftHandSocketName);
 	}
-	if(AttackTag.MatchesTagExact(AllTags.Montage_RightHandAttack))
+	if(AttackTag.MatchesTagExact(AllTags.Socket_RightHand))
 	{
 		return GetMesh()->GetSocketLocation(RightHandSocketName);
+	}
+	if(AttackTag.MatchesTagExact(AllTags.Socket_LeftTrail))
+	{
+		return GetMesh()->GetSocketLocation(RightTraildSocketName);
+	}
+	if(AttackTag.MatchesTagExact(AllTags.Socket_RightTrail))
+	{
+		return GetMesh()->GetSocketLocation(LeftTrailSocketName);
 	}
 	return FVector();
 }

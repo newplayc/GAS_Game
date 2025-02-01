@@ -27,9 +27,6 @@ public:
 	UPROPERTY(BlueprintReadOnly ,  meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle SpecHandle = nullptr;
 
-
-
-	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,7 +40,6 @@ protected:
 	TObjectPtr<USphereComponent>SphereComp;
 	
 	UPROPERTY(EditAnywhere)
-	
 	TObjectPtr<UNiagaraSystem>ImpactEffect;
 
 	UPROPERTY(EditAnywhere)
@@ -54,16 +50,10 @@ protected:
 
 	UPROPERTY()
 	UAudioComponent* AudioC = nullptr;
-
-
-	
-
-
 	
 	UPROPERTY(EditAnywhere)
 	float lifeSpanTime = 10.f;
-
-
+	
 	bool bHit = false;
 	
 	UFUNCTION()
