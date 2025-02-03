@@ -17,7 +17,7 @@ class GAS_GAME_API UAuraGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditAnywhere)
 	FGameplayTag ActiveTag;
-
+	
 
 
 };

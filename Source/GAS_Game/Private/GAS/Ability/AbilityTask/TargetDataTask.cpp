@@ -41,6 +41,7 @@ void UTargetDataTask::SendTargetData()
 	APlayerController* PC = Ability->GetCurrentActorInfo()->PlayerController.Get();
 	PC->GetHitResultUnderCursor(ECC_Visibility, false, SingleHitResult->HitResult);
 	FGameplayAbilityTargetDataHandle DataHandle;
+	
 	DataHandle.Add(SingleHitResult);
 
 	AbilitySystemComponent->ServerSetReplicatedTargetData(

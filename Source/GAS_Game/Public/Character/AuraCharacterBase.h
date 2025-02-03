@@ -106,19 +106,26 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetMeshMaterial();
 
+	UPROPERTY(BlueprintReadWrite)
+	int32 NumSummon = 0;
+	
+	
 	
 	bool IsDead = false;
 	
 	void HasDied_Implementation();
-	
+
+	int32 GetSummonNum_Implementation();
+
+	void ChangeSummonNum_Implementation(int32 Num) ;
 	void DissolveMesh();
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void NetDeath();
 	
-	virtual void InitAttribute(UObject * Source); 
+	virtual void InitAttribute(UObject * Source);
 
-	 FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
+	FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
 	
 	virtual ECharacterClass GetCharacterClass() override;
 
@@ -129,4 +136,5 @@ protected:
 	void SetDead_Implementation(bool bisDead);
 
 	UNiagaraSystem * GetBloodEffect_Implementation();
+	
 };

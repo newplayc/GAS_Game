@@ -12,7 +12,8 @@ UENUM(BlueprintType)
 enum class EAttackType : uint8
 {
 	Remote,
-	Melee
+	Melee,
+	Summon
 };
 
 
@@ -91,6 +92,12 @@ public:
 
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
 	UNiagaraSystem *  GetBloodEffect();
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	int32 GetSummonNum();
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	void  ChangeSummonNum(int32 Num);
 	
 	virtual ECharacterClass GetCharacterClass()= 0;
 	

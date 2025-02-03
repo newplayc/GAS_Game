@@ -74,6 +74,12 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Ability">
+      <UniqueIdentifier>{B461859C-8A6C-3C20-BF79-4C1DF5884612}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Ability\GA_Summon.cpp">
+      <Filter>Source\GAS_Game\Private\Ability</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\AI">
       <UniqueIdentifier>{3B19F633-AD8C-3DFB-998A-605F9EFA2624}</UniqueIdentifier>
     </Filter>
@@ -164,6 +170,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ShamanSummon.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\GAS\Ability\AbilityTask">
       <UniqueIdentifier>{DF7936E9-5A00-3FA5-8DC9-7ADD2C0BE716}</UniqueIdentifier>
     </Filter>
@@ -248,6 +257,12 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Ability">
+      <UniqueIdentifier>{1AACA13E-9B87-326C-B440-A60E341B9F6A}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Ability\GA_Summon.h">
+      <Filter>Source\GAS_Game\Public\Ability</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\AI">
       <UniqueIdentifier>{9C7BEF3B-054F-3619-98F6-6E20B68BED73}</UniqueIdentifier>
     </Filter>
@@ -327,6 +342,9 @@
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ShamanSummon.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\GAS\Ability\AbilityTask">

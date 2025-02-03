@@ -60,6 +60,16 @@ void AAuraCharacterBase::HasDied_Implementation()
 	NetDeath();
 }
 
+int32 AAuraCharacterBase::GetSummonNum_Implementation()
+{
+	return NumSummon;
+}
+
+void AAuraCharacterBase::ChangeSummonNum_Implementation(int32 Num)
+{
+	NumSummon +=Num;
+}
+
 void AAuraCharacterBase::DissolveMesh()
 {
 	

@@ -345,6 +345,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ShamanSummon.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AbilityTask\TargetDataTask.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -407,6 +410,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayDamageAbility.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\MeleeAbility.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ShamanSummon.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AbilityTask\TargetDataTask.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Effect\AuraGameplayEffectTypes.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Effect\EffectActor\AuraEffectActor.h"/>

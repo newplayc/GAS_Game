@@ -60,6 +60,6 @@ public:
 	static  FTagMontage GetTagMontageWithTag(TArray<FTagMontage> TagMontages, const FGameplayTag& MontageTag);
 
 	UFUNCTION(BlueprintCallable)
-	static  TArray<  FTagMontage> GetTagMontageTypeWithType(const TArray<FTagMontage>& TagMontages,const EAttackType& AttType);
+	static  TArray<FTagMontage> GetTagMontageTypeWithType(const TArray<FTagMontage>& TagMontages,const EAttackType& AttType);
 
 };

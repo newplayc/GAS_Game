@@ -73,7 +73,7 @@ public:
 
 	FGameplayTag Attack_MeleeAttack;
 	FGameplayTag Attack_RangeAttack;
-
+	FGameplayTag Attack_Summmon;
 	
 	FGameplayTag Montage_Attack_1;
 	FGameplayTag Montage_Attack_2;
