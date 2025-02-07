@@ -39,7 +39,11 @@ void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGamepla
 			GiveAbility(SpecA);
 		}
 	}
+	InitAbility = true;
+	FAbilityDelegate.ExecuteIfBound(this);
 }
+
+
 
 /*
  *  被playerController调用  
@@ -85,6 +89,18 @@ void UAuraAbilitySystemComponent::HeldFunction(FGameplayTag ActionTag)
 }
 
 
+FGameplayTag UAuraAbilitySystemComponent::GetAbilityTag(const FGameplayAbilitySpec& AbilitySpec)
+{
+	const FGameplayTag AbilityTag = FGameplayTag::RequestGameplayTag(FName("Abilities"));
+	for(auto tag : AbilitySpec.Ability.Get()->AbilityTags)
+	{
+		if(tag.MatchesTag(AbilityTag))
+		{
+			return tag;
+		}
+	}
+	return FGameplayTag();
+}
 
 /**
  * Source Always is this
@@ -100,4 +116,12 @@ void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>
 	const FGameplayEffectSpecHandle EffectSpecHanlde = MakeOutgoingSpec(GE, level, ContextHandle);
 
 	ApplyGameplayEffectSpecToTarget(*EffectSpecHanlde.Data.Get(), this);
+}
+
+void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
+{
+	Super::OnRep_ActivateAbilities();
+	InitAbility = true;
+	FAbilityDelegate.ExecuteIfBound(this);
+
 }

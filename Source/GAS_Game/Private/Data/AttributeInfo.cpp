@@ -4,6 +4,8 @@
 
 #include "Data/AttributeInfo.h"
 
+#include "GAS_Game/AuraLog.h"
+
 const FAttributeInfos UAttributeInfo::FindAttributeInfo(const FGameplayTag& GameplayTag, bool IsLogNotF) const
 {
 	for (const FAttributeInfos& AttriInfo : AttributeInfoArray)
@@ -15,7 +17,7 @@ const FAttributeInfos UAttributeInfo::FindAttributeInfo(const FGameplayTag& Game
 	}
 	if (IsLogNotF)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Not Found Match Tag"));
+		UE_LOG(AuraLog, Warning, TEXT("Not Found Match Tag"));
 	}
 	return FAttributeInfos();
 }

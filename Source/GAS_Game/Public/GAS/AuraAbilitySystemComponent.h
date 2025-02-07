@@ -7,13 +7,16 @@
 #include "GameplayAbilities/Public/GameplayEffect.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FGamplayAllTags, FGameplayTagContainer);
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FGamplayAllTags,const  FGameplayTagContainer);
+DECLARE_DELEGATE_OneParam(FAbilityDelegate, UAuraAbilitySystemComponent * );
 
 class UGameplayEffect;
+
 /**
  * 
  */
+
 UCLASS()
 class GAS_GAME_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 {
@@ -22,14 +25,20 @@ public:
 
 	FGamplayAllTags FAppliedAllTags;
 
-	
+	FAbilityDelegate FAbilityDelegate;
 
+	bool InitAbility = false;
+	
+	static FGameplayTag GetAbilityTag(const FGameplayAbilitySpec& AbilitySpec);
+
+	
 	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>&GE, float level ,UObject * Source);
 
+	virtual void OnRep_ActivateAbilities()override;
 
 	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
 
-
+	
 	void AbilityActorInfoSet();
 
 

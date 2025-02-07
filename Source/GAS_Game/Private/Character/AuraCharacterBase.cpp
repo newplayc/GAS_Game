@@ -102,6 +102,7 @@ void AAuraCharacterBase::NetDeath_Implementation()
 	
 }
 
+
 void AAuraCharacterBase::InitAttribute(UObject* Source)
 {
 		AbilityComponent->ApplyEffectToInit(InitalPrimaryEffect, GetPlayerLevel_Implementation() , Source);

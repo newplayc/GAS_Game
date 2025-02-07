@@ -2,6 +2,8 @@
 
 
 #include "WidgetController/OverlapWidgetController.h"
+
+#include "EntitySystem/MovieSceneEntitySystemRunner.h"
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "GAS/AuraAttributeSet.h"
 
@@ -34,22 +36,45 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 
 
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAppliedAllTags.AddLambda([this](const FGameplayTagContainer& TagContainer) {
-		for (auto Tag : TagContainer)
-		{
-			/*const FString S = FString::Printf(TEXT("Tag : %s "), *Tag.ToString());
-			GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, S);*/
-			const FGameplayTag Message = FGameplayTag::RequestGameplayTag(FName("Message"));
-
-			if (Tag.MatchesTag(Message))
+		const FGameplayTag Message = FGameplayTag::RequestGameplayTag(FName("Message"));
+			for (auto Tag : TagContainer)
 			{
-				FUIWidgetRow* Row = EffectMessageDataTable.Get()->FindRow<FUIWidgetRow>(Tag.GetTagName() , TEXT(""));
-				FWidgetDelegate.Broadcast(*Row);
-				
+				if (Tag.MatchesTag(Message))
+				{
+					FUIWidgetRow* Row = EffectMessageDataTable.Get()->FindRow<FUIWidgetRow>(Tag.GetTagName() , TEXT(""));
+					FWidgetDelegate.Broadcast(*Row);
+				}
 			}
-
-		}
 	   }
 	);
+
+	if(Cast<UAuraAbilitySystemComponent>(AbilityComponent)->InitAbility == true)
+	{
+		OnAbilityBroadCast(Cast<UAuraAbilitySystemComponent>(AbilityComponent));
+	}
+	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAbilityDelegate.BindUObject(this ,&UOverlapWidgetController::OnAbilityBroadCast);
 	
+}
+
+void UOverlapWidgetController::OnAbilityBroadCast( UAuraAbilitySystemComponent* ASC)
+{
+	if(Cast<UAuraAbilitySystemComponent>(AbilityComponent)->InitAbility == false)return;
+	const FGameplayTag Ability =  FGameplayTag::RequestGameplayTag(FName("Abilities"));
+	FScopedAbilityListLock SAL(*AbilityComponent.Get());
+	for(auto AbilitySpec :  ASC->GetActivatableAbilities())
+	{
+		if(AbilitySpec.Ability.Get()->AbilityTags.HasTag(Ability))
+		{
+			FGameplayTag AbTag = UAuraAbilitySystemComponent::GetAbilityTag(AbilitySpec);
+			FAbilityInfo AInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbTag);
+			for(auto tag : AbilitySpec.DynamicAbilityTags)
+				if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Input"))))
+				{
+					AInfo.InputTag = tag;
+					break;
+				}
+			AbilitiyInfoDelegate.Broadcast(AInfo);
+		}
+	}
 }
 

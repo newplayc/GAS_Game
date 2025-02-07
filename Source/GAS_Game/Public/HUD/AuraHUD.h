@@ -47,6 +47,7 @@ private:
 	UPROPERTY()
 	TObjectPtr<UAttributeWidgetController>AttributeWidgetController;
 
+	
 	UPROPERTY()
 	TObjectPtr<UAuraUserWidget>OverlayWidget;
 
@@ -54,6 +55,7 @@ private:
 	TSubclassOf<UAuraUserWidget>OverlayWidgetClass;
 
 
+	
 	UPROPERTY()
 	TObjectPtr<UOverlapWidgetController>OverlayWidgetController;
 

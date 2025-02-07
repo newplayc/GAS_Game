@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AuraUserWidgetController.h"
 #include "AbilitySystemComponent.h"
+#include "Data/AbilitiyInfo.h"
 #include "Widget/AuraUserWidget.h"
 #include "OverlapWidgetController.generated.h"
 
@@ -27,16 +28,13 @@ struct FUIWidgetRow : public FTableRowBase
 
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
 	UTexture2D* Image;
-
-
+	
 };
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float, NewValue);
-
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityAddDelegate , FAbilityInfo, AddInfo);
 
 
 
@@ -68,9 +66,16 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "DelegateWidgetMessage")
 	FOnMessageWidgetRowDelegate FWidgetDelegate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UDataTable> EffectMessageDataTable;
 
+	UPROPERTY(EditAnywhere , BlueprintReadOnly)
+	TObjectPtr<UAbilitiyInfo> AbilityInfos;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAbilityAddDelegate AbilitiyInfoDelegate;
+	
+	void OnAbilityBroadCast(UAuraAbilitySystemComponent * ASC);
 
 };
 

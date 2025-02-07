@@ -86,6 +86,10 @@ public:
 	FGameplayTag Socket_RightHand;
 	FGameplayTag Socket_LeftTrail;
 	FGameplayTag Socket_RightTrail;
+
+	FGameplayTag Abilities_Fire_FireBolt;
+
+	
 private:
 	static  FAuraGameplayTags GameplayTags;
 

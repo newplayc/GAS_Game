@@ -12,7 +12,7 @@ void UAttributeWidgetController::BroadcastInitailvalues()
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{
-		FAttributeInfos  Att = AttributeInfoData->FindAttributeInfo(Pair.Key);
+		FAttributeInfos Att = AttributeInfoData->FindAttributeInfo(Pair.Key);
 		Att.Value = Pair.Value().GetNumericValue(AS);
 		FAttributeDelegate.Broadcast(Att);
 

@@ -52,7 +52,8 @@ void AAuraHUD::IniOverlayWidget(APlayerState* PS, APlayerController* PC, UAbilit
 	check(OWC);
 	OverlayWidgetController = OWC;
 	OverlayWidget->SetWidgetController(OWC);
-
+	
+	
 	OWC->BroadcastInitailvalues();
 	OverlayWidget->AddToViewport();
 }

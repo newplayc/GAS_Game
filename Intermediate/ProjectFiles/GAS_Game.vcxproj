@@ -266,6 +266,10 @@
     <None Include="..\..\Config\DefaultGame.ini"/>
     <None Include="..\..\Config\DefaultGameplayTags.ini"/>
     <None Include="..\..\Config\DefaultInput.ini"/>
+    <ClCompile Include="..\..\Source\GAS_Game\AuraLog.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\AuraLog.h"/>
     <None Include="..\..\Source\GAS_Game\GAS_Game.Build.cs"/>
     <ClCompile Include="..\..\Source\GAS_Game\GAS_Game.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -310,6 +314,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Controller\AuraPlayerController.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\AbilitiyInfo.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Data\AttributeInfo.cpp">
@@ -399,6 +406,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacterBase.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraEnemy.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Component\AuraEnhancedInputComponent.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AbilitiyInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AttributeInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\CharacterDataInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\InputDataConfig.h"/>

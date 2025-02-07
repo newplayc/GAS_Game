@@ -41,6 +41,12 @@
     <Filter Include="Source\GAS_Game">
       <UniqueIdentifier>{4F2636E4-F4F6-3DF1-B1A7-1092EB99E757}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\AuraLog.cpp">
+      <Filter>Source\GAS_Game</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\AuraLog.h">
+      <Filter>Source\GAS_Game</Filter>
+    </ClInclude>
     <None Include="..\..\Source\GAS_Game\GAS_Game.Build.cs">
       <Filter>Source\GAS_Game</Filter>
     </None>
@@ -73,12 +79,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
-    <Filter Include="Source\GAS_Game\Private\Ability">
-      <UniqueIdentifier>{B461859C-8A6C-3C20-BF79-4C1DF5884612}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\Ability\GA_Summon.cpp">
-      <Filter>Source\GAS_Game\Private\Ability</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\AI">
       <UniqueIdentifier>{3B19F633-AD8C-3DFB-998A-605F9EFA2624}</UniqueIdentifier>
@@ -128,6 +128,9 @@
     <Filter Include="Source\GAS_Game\Private\Data">
       <UniqueIdentifier>{C8A3C7F1-E3B1-3C21-9E1E-70DD73839E3E}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\AbilitiyInfo.cpp">
+      <Filter>Source\GAS_Game\Private\Data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Data\AttributeInfo.cpp">
       <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
@@ -257,12 +260,6 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
-    <Filter Include="Source\GAS_Game\Public\Ability">
-      <UniqueIdentifier>{1AACA13E-9B87-326C-B440-A60E341B9F6A}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\Ability\GA_Summon.h">
-      <Filter>Source\GAS_Game\Public\Ability</Filter>
-    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\AI">
       <UniqueIdentifier>{9C7BEF3B-054F-3619-98F6-6E20B68BED73}</UniqueIdentifier>
     </Filter>
@@ -302,6 +299,9 @@
     <Filter Include="Source\GAS_Game\Public\Data">
       <UniqueIdentifier>{015425C3-C031-3118-939D-1EEAFF54003A}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AbilitiyInfo.h">
+      <Filter>Source\GAS_Game\Public\Data</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AttributeInfo.h">
       <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
