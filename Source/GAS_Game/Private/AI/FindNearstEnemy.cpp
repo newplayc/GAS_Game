@@ -13,9 +13,9 @@ void UFindNearstEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	AActor * AiOwner = OwnerComp.GetAIOwner()->GetPawn();
 	bool IsRanger  = false;
-	if(IICombatInterface * AiCombat = Cast<IICombatInterface>(AiOwner))
+	if(AiOwner->Implements<UICombatInterface>())
 	{
-		IsRanger = AiCombat->GetCharacterClass() == ECharacterClass::Ranger;
+		IsRanger = IICombatInterface::Execute_GetCharacterClass(AiOwner) == ECharacterClass::Ranger;
 	}
 	
 	FName EnemyName = AiOwner->ActorHasTag(FName("Player")) ? FName("Enemy") : FName("Player");

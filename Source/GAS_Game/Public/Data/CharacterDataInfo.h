@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayEffect.h"
+#include "LevelInfo.h"
 #include "Engine/DataAsset.h"
 #include "CharacterDataInfo.generated.h"
 
@@ -27,6 +28,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>>StartingAbilities;
+
+	UPROPERTY(EditDefaultsOnly)
+	FScalableFloat ExpValue;
 };
 
 /**
@@ -58,9 +62,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCurveTable> AttributeCurve;
- 
-	// UPROPERTY(EditDefaultsOnly)
-	// TMap<FGameplayTag, FScalableFloat>DamageTypeData;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULevelInfo>LevelInfos;
 	
 	FCharacterDifDataInfo GetCharacterDataInfo(ECharacterClass CharaClass) const;
 

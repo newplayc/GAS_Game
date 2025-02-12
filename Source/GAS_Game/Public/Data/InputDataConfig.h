@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "InputAction.h"
 #include "Engine/DataAsset.h"
 #include "InputDataConfig.generated.h"
 

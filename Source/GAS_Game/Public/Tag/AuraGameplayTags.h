@@ -37,7 +37,7 @@ public:
 	FGameplayTag Attributes_Vital_Health;
 	FGameplayTag Attributes_Vital_Mana;
 
-
+	FGameplayTag Attributes_Meta_InComingExp;
 	
 	/*
 	 * 输入标签
@@ -88,7 +88,13 @@ public:
 	FGameplayTag Socket_RightTrail;
 
 	FGameplayTag Abilities_Fire_FireBolt;
+	
+	/*
+	 *CoolDown
+	 */
+	FGameplayTag CoolDown_Fire_FireBolt;
 
+	
 	
 private:
 	static  FAuraGameplayTags GameplayTags;

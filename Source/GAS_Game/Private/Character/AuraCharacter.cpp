@@ -62,6 +62,7 @@ void AAuraCharacter::IniAbilityInfo()
 {
 
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
+	
 	if (!PS)return;
 	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	check(ASC);
@@ -78,12 +79,15 @@ void AAuraCharacter::IniAbilityInfo()
 			AHUD->IniOverlayWidget(PS, PlayerController, ASC, AS);
 		}
 	}
-	
+	PS->InitXpAndLevel();
 	InitAttribute(this);
 	
 }
 void AAuraCharacter::GiveStartAbilities()
 {
 	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(AbilityComponent);
+	
 	ASC->GiveAbilitiesArray(StartAbilitys);
+
+	ASC->GiveBaseAbilitiesArray(BaseAbilitys);
 }

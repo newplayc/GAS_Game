@@ -208,3 +208,45 @@ const EAttackType & AttType)
 	}
 	return TypeMontage;
 }
+
+float UAuraBlueprintFunctionLibrary::GetCharacterExpValue(const UObject* WorldContext, ECharacterClass CharacterClass,
+	int32 Level)
+{
+	AAuraGameModeBase * GM  = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
+	if(!IsValid(GM))return 0.f;
+	
+	const UCharacterDataInfo* DataInfo = GM->CharacterDataInfo.Get();
+	check(DataInfo);
+	
+	return DataInfo->GetCharacterDataInfo(CharacterClass).ExpValue.GetValueAtLevel(Level);
+}
+
+float UAuraBlueprintFunctionLibrary::GetExpPercent(const UObject* WorldContext , int32 Level , float NowExp)
+{
+	
+	AAuraGameModeBase * GM  = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
+	const TArray<FChangeLeveInfo>  LevelArray = GM->CharacterDataInfo->LevelInfos->LevelInfos;
+	if(Level>= LevelArray.Num()-1)return 1;
+	float Percent = (NowExp - LevelArray[Level].NeedExp) / (LevelArray[Level+1].NeedExp - NowExp);
+	return Percent;
+	
+}
+
+TArray<float> UAuraBlueprintFunctionLibrary::GetExpFloat(const UObject* WorldContext, int32 Level)
+{
+	
+	AAuraGameModeBase * GM  = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
+	const TArray<FChangeLeveInfo>  LevelArray = GM->CharacterDataInfo->LevelInfos->LevelInfos;
+
+	TArray<float>ExpFLoat;
+	if(Level>= LevelArray.Num()-1)
+	{
+		ExpFLoat.Add(0); ExpFLoat.Add(0);
+		return ExpFLoat;
+	}
+	ExpFLoat.Add(LevelArray[Level].NeedExp);
+	ExpFLoat.Add(LevelArray[Level+1].NeedExp);
+	return ExpFLoat;
+	
+}
+ 

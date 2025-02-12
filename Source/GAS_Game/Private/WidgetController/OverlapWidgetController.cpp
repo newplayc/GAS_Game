@@ -3,10 +3,9 @@
 
 #include "WidgetController/OverlapWidgetController.h"
 
-#include "EntitySystem/MovieSceneEntitySystemRunner.h"
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "GAS/AuraAttributeSet.h"
-
+#include "PlayerState/AuraPlayerState.h"
 
 
 void UOverlapWidgetController::BroadcastInitailvalues()
@@ -53,7 +52,16 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 		OnAbilityBroadCast(Cast<UAuraAbilitySystemComponent>(AbilityComponent));
 	}
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAbilityDelegate.BindUObject(this ,&UOverlapWidgetController::OnAbilityBroadCast);
-	
+
+	if(AAuraPlayerState * Ps =  Cast<AAuraPlayerState>(PlayerState))
+	{
+		Ps->OnExpChangePs.BindUObject(this , &UOverlapWidgetController::OnPsExpBroadCast);
+	}
+}
+
+void UOverlapWidgetController::OnPsExpBroadCast(float Exp)
+{
+	ExpChanged.Broadcast(Exp);
 }
 
 void UOverlapWidgetController::OnAbilityBroadCast( UAuraAbilitySystemComponent* ASC)
@@ -66,6 +74,7 @@ void UOverlapWidgetController::OnAbilityBroadCast( UAuraAbilitySystemComponent* 
 		if(AbilitySpec.Ability.Get()->AbilityTags.HasTag(Ability))
 		{
 			FGameplayTag AbTag = UAuraAbilitySystemComponent::GetAbilityTag(AbilitySpec);
+			
 			FAbilityInfo AInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbTag);
 			for(auto tag : AbilitySpec.DynamicAbilityTags)
 				if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Input"))))

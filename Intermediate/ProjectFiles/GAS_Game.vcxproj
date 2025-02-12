@@ -295,6 +295,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AI\Task\BTT_Attack.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Async\CoolDownAsync.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Calculation\ExeCalDamage.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -326,6 +329,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Data\InputDataConfig.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\LevelInfo.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Game\AuraGameModeBase.cpp">
@@ -401,6 +407,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AI\FindNearstEnemy.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\AI\Task\BTT_Attack.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Async\CoolDownAsync.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Calculation\ExeCalDamage.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacter.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Character\AuraCharacterBase.h"/>
@@ -410,6 +417,7 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\AttributeInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\CharacterDataInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\InputDataConfig.h"/>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\LevelInfo.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Game\AuraGameModeBase.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAbilitySystemComponent.h"/>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\AuraAbilitySystemGlobals.h"/>

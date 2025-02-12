@@ -47,8 +47,9 @@ public:
 	
 
 	void GiveAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
-
-
+	
+	void GiveBaseAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
+	
 	void PressFunction(FGameplayTag ActionTag);
 
 

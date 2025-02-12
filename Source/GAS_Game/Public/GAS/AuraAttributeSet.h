@@ -78,6 +78,7 @@ public:
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EP) const;
 	void ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor);
+	void SendXp(AActor* SourceActor, AActor* TargetActor);
 
 
 	TMap<FGameplayTag, TAttributeFunptr> TagsToAttributes;
@@ -102,10 +103,14 @@ public:
 	FGameplayAttributeData Resilience;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience);
 
-	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Resilience, Category = "Attributes")
+	UPROPERTY()
 	FGameplayAttributeData IncomingDamage;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingDamage);
 
+	UPROPERTY()
+	FGameplayAttributeData IncomingExp;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingExp);
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_BlockChance, Category = "Attributes")
 	FGameplayAttributeData BlockChance;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, BlockChance);

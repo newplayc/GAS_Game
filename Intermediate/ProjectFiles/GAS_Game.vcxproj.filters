@@ -92,6 +92,12 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AI\Task\BTT_Attack.cpp">
       <Filter>Source\GAS_Game\Private\AI\Task</Filter>
     </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Async">
+      <UniqueIdentifier>{AA9B8315-9989-3A72-8101-FD32125182C8}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Async\CoolDownAsync.cpp">
+      <Filter>Source\GAS_Game\Private\Async</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Calculation">
       <UniqueIdentifier>{9A2C9E45-B04B-3A20-BF26-E63C4DB4030B}</UniqueIdentifier>
     </Filter>
@@ -138,6 +144,9 @@
       <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Data\InputDataConfig.cpp">
+      <Filter>Source\GAS_Game\Private\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Data\LevelInfo.cpp">
       <Filter>Source\GAS_Game\Private\Data</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Game">
@@ -272,6 +281,12 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AI\Task\BTT_Attack.h">
       <Filter>Source\GAS_Game\Public\AI\Task</Filter>
     </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Async">
+      <UniqueIdentifier>{56A5D9AE-A69F-3AD1-AFF8-98C2C5660DF3}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Async\CoolDownAsync.h">
+      <Filter>Source\GAS_Game\Public\Async</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Calculation">
       <UniqueIdentifier>{3D256216-47F2-3BDC-A439-D7363FE88262}</UniqueIdentifier>
     </Filter>
@@ -309,6 +324,9 @@
       <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Data\InputDataConfig.h">
+      <Filter>Source\GAS_Game\Public\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Data\LevelInfo.h">
       <Filter>Source\GAS_Game\Public\Data</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Game">

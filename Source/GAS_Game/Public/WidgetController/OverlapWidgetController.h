@@ -4,12 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "AuraUserWidgetController.h"
-#include "AbilitySystemComponent.h"
 #include "Data/AbilitiyInfo.h"
 #include "Widget/AuraUserWidget.h"
 #include "OverlapWidgetController.generated.h"
 
-
+class UAuraAbilitySystemComponent;
 
 
 USTRUCT(BlueprintType)
@@ -35,12 +34,13 @@ struct FUIWidgetRow : public FTableRowBase
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityAddDelegate , FAbilityInfo, AddInfo);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExpChanged, float , ExpPercent);
 
 
 /**
  * 
  */
+
 UCLASS(BlueprintType , Blueprintable)
 class GAS_GAME_API UOverlapWidgetController : public UAuraUserWidgetController
 {
@@ -74,6 +74,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityAddDelegate AbilitiyInfoDelegate;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnExpChanged ExpChanged;
+
+
+	void OnPsExpBroadCast(float Exp);
 	
 	void OnAbilityBroadCast(UAuraAbilitySystemComponent * ASC);
 

@@ -2,6 +2,9 @@
 
 
 #include "GAS/AuraAttributeSet.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AuraBlueprintFunctionLibrary.h"
 #include "Net/UnrealNetwork.h"
 #include "Tag/AuraGameplayTags.h"
 #include "PlayerController/AuraPlayerController.h"
@@ -9,6 +12,7 @@
 #include "GameFramework/Character.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayEffectExtension.h"
+#include "PlayerState/AuraPlayerState.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -154,6 +158,18 @@ void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AAc
 	}
 
 }
+
+void UAuraAttributeSet::SendXp(AActor* SourceActor, AActor* TargetActor)
+{
+	float Exp = UAuraBlueprintFunctionLibrary::GetCharacterExpValue(TargetActor,IICombatInterface::Execute_GetCharacterClass(TargetActor) ,IICombatInterface::Execute_GetPlayerLevel(TargetActor));
+
+	FGameplayTag ExpTag= FAuraGameplayTags::Get().Attributes_Meta_InComingExp;
+	FGameplayEventData EventData;
+	EventData.EventMagnitude = Exp;
+	EventData.EventTag = ExpTag;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(SourceActor , ExpTag ,EventData);
+}
+
 /*
  * 在Effect执行后执行的函数
  */
@@ -173,16 +189,15 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
+
+	AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
+	AActor * TargetActor = Data.Target.GetAvatarActor();
+	if(!SourceActor || !TargetActor)return;
+	
 	if(Data.EvaluatedData.Attribute==GetIncomingDamageAttribute())
 	{
 		const float NewHealth = GetHealth() - GetIncomingDamage();
 		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
-		
-	
-
-		AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
-		AActor * TargetActor = Data.Target.GetAvatarActor();
-		
 		ShowText(Data, SourceActor, TargetActor);
 		
 		const bool IsDied = NewHealth <=0;
@@ -195,18 +210,22 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 		else
 		{
-			if( Data.Target.GetAvatarActor()->Implements<UICombatInterface>())
+			if( TargetActor->Implements<UICombatInterface>())
 			{
-				AActor * Target  = Data.Target.GetAvatarActor();
-				IICombatInterface::Execute_SetDead(Target , true);
-				IICombatInterface::Execute_HasDied(Target);
+				
+				IICombatInterface::Execute_SetDead(TargetActor , true);
+				IICombatInterface::Execute_HasDied(TargetActor);
+				
+				SendXp(SourceActor, TargetActor);
 			}
 		}
-
-		
 	}
 
-	
+	if(Data.EvaluatedData.Attribute == GetIncomingExpAttribute())
+	{
+		AAuraPlayerState * PlayerState = Cast<AAuraPlayerState>(Cast<APawn>(SourceActor)->GetPlayerState());
+		PlayerState->AddExp(GetIncomingExp());
+	}
 }
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const

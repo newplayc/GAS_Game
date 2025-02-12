@@ -98,10 +98,8 @@ public:
 
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
 	void  ChangeSummonNum(int32 Num);
-	
-	virtual ECharacterClass GetCharacterClass()= 0;
-	
 
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	ECharacterClass GetCharacterClass();
 	
-
 };

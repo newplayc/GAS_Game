@@ -7,9 +7,7 @@
 #include "GAS/Ability/AuraGameplayDamageAbility.h"
 #include "ProjectileSpell.generated.h"
 
-
 class AProjectile;
-
 /**
  * 
  */
@@ -20,15 +18,11 @@ class GAS_GAME_API UProjectileSpell : public UAuraGameplayDamageAbility
 
 public:
 	
-	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AProjectile>ProjectileClass;
-
-
+	
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireBolt(const  FVector  & TargetLocation , FGameplayTag SocketTag) ;
-
-	
 	
 };

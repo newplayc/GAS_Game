@@ -136,7 +136,7 @@ FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation(FGameplayTag 
 	return FVector();
 }
 
-ECharacterClass AAuraCharacterBase::GetCharacterClass()
+ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
 {
 	return CharacterClass;
 }

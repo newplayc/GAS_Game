@@ -36,13 +36,23 @@ void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGamepla
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(SpecA.Ability))
 		{
 			SpecA.DynamicAbilityTags.AddTag(AuraAbility->ActiveTag);
+
 			GiveAbility(SpecA);
 		}
 	}
 	InitAbility = true;
 	FAbilityDelegate.ExecuteIfBound(this);
+	
 }
 
+void UAuraAbilitySystemComponent::GiveBaseAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities)
+{
+	for (auto& Abi : Abilities)
+	{
+		FGameplayAbilitySpec SpecA = FGameplayAbilitySpec(Abi, 1);
+		GiveAbilityAndActivateOnce(SpecA);
+	}
+}
 
 
 /*
@@ -125,3 +135,5 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 	FAbilityDelegate.ExecuteIfBound(this);
 
 }
+
+

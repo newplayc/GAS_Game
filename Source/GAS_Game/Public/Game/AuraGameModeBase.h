@@ -15,8 +15,10 @@ class GAS_GAME_API AAuraGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
+	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCharacterDataInfo>CharacterDataInfo;
+
 	
 	
 };

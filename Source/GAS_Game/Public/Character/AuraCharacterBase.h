@@ -127,7 +127,7 @@ protected:
 
 	FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
 	
-	virtual ECharacterClass GetCharacterClass() override;
+	ECharacterClass GetCharacterClass_Implementation() ;
 
 	bool IsDead_Implementation();
 

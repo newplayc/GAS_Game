@@ -62,4 +62,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static  TArray<FTagMontage> GetTagMontageTypeWithType(const TArray<FTagMontage>& TagMontages,const EAttackType& AttType);
 
+	UFUNCTION(BlueprintCallable)
+	static float GetCharacterExpValue(const UObject * WorldContext , ECharacterClass CharacterClass , int32 Level);
+
+	UFUNCTION(BlueprintCallable)
+	static float GetExpPercent(const UObject* WorldContext , int32 Level , float NowExp);
+
+	UFUNCTION(BlueprintCallable)
+	static TArray<float> GetExpFloat(const UObject* WorldContext , int32 Level);
 };

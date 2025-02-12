@@ -8,8 +8,12 @@
 #include "AuraPlayerState.generated.h"
 
 
+DECLARE_DELEGATE_OneParam(FOnExpChange , float);
+
 class UAuraAbilitySystemComponent;
 class UAuraAttributeSet;
+
+
 
 /**
  * 
@@ -28,6 +32,20 @@ public:
 	int32 GetPlayerLevel(){ return Level; }
 
 	virtual void  GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	UFUNCTION(BlueprintCallable)
+	void SetExp(float InExp);
+	UFUNCTION(BlueprintCallable)
+	void SetLevel(int InLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void AddExp(float InExp);
+	UFUNCTION(BlueprintCallable)
+	void AddLevel(int InLevel);
+
+	void InitXpAndLevel();
+	
+	FOnExpChange OnExpChangePs;
 protected:
 
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
@@ -39,7 +57,14 @@ protected:
 	UPROPERTY(EditAnywhere ,  BlueprintReadOnly , ReplicatedUsing = On_RepLevel , Category = "Attribute")
 	int32 Level = 1;
 
+	UPROPERTY(EditAnywhere ,  BlueprintReadOnly , ReplicatedUsing = On_RepExp , Category = "Attribute")
+	int32 Experience = 10;
+
+
+
+	
 	UFUNCTION()
 	void On_RepLevel();
-	
+	UFUNCTION()
+	void On_RepExp();
 };
