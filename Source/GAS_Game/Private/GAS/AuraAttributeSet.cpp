@@ -12,7 +12,7 @@
 #include "GameFramework/Character.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayEffectExtension.h"
-#include "PlayerState/AuraPlayerState.h"
+#include "Interface/PlayerInterface.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -70,7 +70,8 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, LightningResistance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, ArcaneResistance, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet, PhysicsResistance, COND_None, REPNOTIFY_Always);
-	
+
+
 }
 
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -109,7 +110,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		}
 		if(EP.SourceController!=nullptr)
 		{
-			UE_LOG(LogTemp, Warning , TEXT("Im Here"));
+
 			EP.SourceCharacter =  EP.SourceController->GetCharacter();
 		}
 
@@ -167,6 +168,7 @@ void UAuraAttributeSet::SendXp(AActor* SourceActor, AActor* TargetActor)
 	FGameplayEventData EventData;
 	EventData.EventMagnitude = Exp;
 	EventData.EventTag = ExpTag;
+	
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(SourceActor , ExpTag ,EventData);
 }
 
@@ -220,13 +222,19 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			}
 		}
 	}
-
 	if(Data.EvaluatedData.Attribute == GetIncomingExpAttribute())
 	{
-		AAuraPlayerState * PlayerState = Cast<AAuraPlayerState>(Cast<APawn>(SourceActor)->GetPlayerState());
-		PlayerState->AddExp(GetIncomingExp());
+		if(SourceActor->Implements<UPlayerInterface>())
+		{
+			IPlayerInterface::Execute_AddExp(SourceActor , GetIncomingExp());
+		}
 	}
+
+	
 }
+
+
+
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {

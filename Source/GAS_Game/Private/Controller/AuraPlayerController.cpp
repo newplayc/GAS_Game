@@ -127,7 +127,7 @@ void AAuraPlayerController::ShiftEnd()
 void AAuraPlayerController::CheckUnderCursor()
 {
 
-	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult);
+	GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
 	if (!HitResult.bBlockingHit)return;
 	IEnemyInterface* HitActor = Cast<IEnemyInterface>(HitResult.GetActor());
 	if (HeightActor != HitActor)
@@ -167,7 +167,7 @@ void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 		GetGAS()->ReleaseFunction(ActionTag);
 	}
 
-	if (!bTargeting && !bShift)
+	if (!bTargeting && !bShift && FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) )
 	{
 		if (FollowTime <= ShortPressThreshold)
 		{

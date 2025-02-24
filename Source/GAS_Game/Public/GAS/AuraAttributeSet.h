@@ -189,9 +189,12 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, LightningResistance);
 
 
+
 	
 protected:
 
+
+	
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData & OldHealth)const;
 

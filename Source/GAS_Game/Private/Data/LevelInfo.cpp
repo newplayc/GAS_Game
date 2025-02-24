@@ -20,4 +20,14 @@ int32 ULevelInfo::FindExpForLevel(float NowExp)
      	return 1;
 }
 
+int32 ULevelInfo::GetAwardSpellPoints(int32 Level)
+{
+	return LevelInfos[Level].AwardSpellPoints;
+}
+
+int32 ULevelInfo::GetAwardTalentPoints(int32 Level)
+{
+	return LevelInfos[Level].AwardTalentPoints;
+}
+
 

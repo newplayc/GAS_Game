@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "AuraUserWidgetController.generated.h"
 
-
 class UAbilitySystemComponent;
+class UAuraAbilitySystemComponent;
+class UAuraAttributeSet;
+class AAuraPlayerController;
+class AAuraPlayerState;
 class UAttributeSet;
 
 USTRUCT(BlueprintType)
@@ -30,6 +33,14 @@ struct FWidgetContollerParams
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UAttributeSet>AttributeSet;
+
+	void SetParams(APlayerState* PS, APlayerController* PC, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+	{
+		PlayerState = PS;
+		PlayerController = PC;
+		AbilitySystemComponent = ASC;
+		AttributeSet = AS;
+	}
 };
 /**
  * 
@@ -60,4 +71,22 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UAttributeSet>AttributeSet;
+
+	
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent>AuraASC;
+	UAuraAbilitySystemComponent * GetAuraASC();
+
+	UPROPERTY()
+	TObjectPtr<UAuraAttributeSet>AuraAttribute;
+	UAuraAttributeSet * GetAuraAttriute();
+
+	UPROPERTY()
+	TObjectPtr<AAuraPlayerController> AuraPlayerController;
+	AAuraPlayerController * GetAuraPlayerController();
+
+	UPROPERTY()
+	TObjectPtr<AAuraPlayerState>AuraPlayerState;
+	AAuraPlayerState * GetAuraPlayerState();
+
 };

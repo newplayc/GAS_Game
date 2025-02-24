@@ -16,7 +16,17 @@ struct FChangeLeveInfo
 	int32 Level;
 
 	UPROPERTY(EditDefaultsOnly)
+	int32 AwardSpellPoints;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 AwardTalentPoints;
+	
+	UPROPERTY(EditDefaultsOnly)
 	float NeedExp;
+
+
+
+	
 	
 };
 /**
@@ -35,4 +45,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int32 FindExpForLevel(float NowExp);
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetAwardSpellPoints(int32 Level);
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetAwardTalentPoints(int32 Level);
+	
 };

@@ -8,8 +8,6 @@
 #include "Widget/AuraUserWidget.h"
 #include "OverlapWidgetController.generated.h"
 
-class UAuraAbilitySystemComponent;
-
 
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
@@ -34,8 +32,7 @@ struct FUIWidgetRow : public FTableRowBase
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float, NewValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityAddDelegate , FAbilityInfo, AddInfo);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnExpChanged, float , ExpPercent);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChanged, int32 , ChnageValue);
 
 /**
  * 
@@ -76,12 +73,40 @@ public:
 	FOnAbilityAddDelegate AbilitiyInfoDelegate;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnExpChanged ExpChanged;
+	FOnStateChanged ExpChanged;
 
-
-	void OnPsExpBroadCast(float Exp);
+	UPROPERTY(BlueprintAssignable)
+	FOnStateChanged LevelChanged;
 	
-	void OnAbilityBroadCast(UAuraAbilitySystemComponent * ASC);
+	UFUNCTION()
+	void OnPsExpBroadCast( int32 Exp);
+		
+	UFUNCTION()
+	void OnPsLevelBroadCast( int32 Level);
 
+	void OnAbilityBroadCast();
+	
+	void GetAbilityTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& AbilityContainer);
+
+	void DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec);
+
+	UFUNCTION(BlueprintCallable)
+	void DeleteAbility(const FGameplayTag& AbilityInput);
+	
+	void GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer);
+
+	UFUNCTION(BlueprintCallable)
+	void LevelChangeSpell(float Level , FGameplayTag AbilityTag);
+	
+	UFUNCTION( Server, BlueprintCallable ,Reliable)
+	void AddAbility(FAbilityInfo AbilityInfo);
+	
+	void ChangeAbility(FGameplayTag AbilityTag);
+
+	void DeleteInput(FGameplayTag InputTag);
+	
+	
+	
+	
 };
 

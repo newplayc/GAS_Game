@@ -17,14 +17,7 @@ class GAS_GAME_API UMaxHealthMagnitudeCalculation : public UGameplayModMagnitude
 public:
 	UMaxHealthMagnitudeCalculation();
 	
-	
-	
 	virtual float CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec)const override;
 	
-	
-	
 	FGameplayEffectAttributeCaptureDefinition VigorDef;
-
-	
-
 };

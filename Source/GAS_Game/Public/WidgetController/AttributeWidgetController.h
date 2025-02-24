@@ -9,7 +9,7 @@
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeDelegateClass,FAttributeInfos,AttriInfo);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTalentChanged , int32 ,TalentPoints);
 /**
  * 
  */
@@ -20,17 +20,21 @@ class GAS_GAME_API UAttributeWidgetController : public UAuraUserWidgetController
 
 public:
 	virtual void BroadcastInitailvalues()override;
-
 	
 	virtual void BindCallbacksToDependences() override;
-
 	
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TObjectPtr<UAttributeInfo> AttributeInfoData;
-
 	
 	UPROPERTY(BlueprintAssignable , Category = "Delegate")
 	FAttributeDelegateClass FAttributeDelegate;
 
+	UPROPERTY(BlueprintAssignable);
+	FOnTalentChanged OnTalentChangedDelegate;
+	
+	UFUNCTION()
+	void OnTalentPointsChanegd(int32 TalentPoints);
 
+	UFUNCTION(BlueprintCallable)
+	void AddAtttribute(const FGameplayTag& AttributeTag);
 };

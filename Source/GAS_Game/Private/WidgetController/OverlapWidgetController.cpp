@@ -2,36 +2,36 @@
 
 
 #include "WidgetController/OverlapWidgetController.h"
-
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "GAS/AuraAttributeSet.h"
+#include "PlayerController/AuraPlayerController.h"
 #include "PlayerState/AuraPlayerState.h"
 
 
 void UOverlapWidgetController::BroadcastInitailvalues()
 {
-	OnHealthChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetHealth());
+	OnHealthChanged.Broadcast(GetAuraAttriute()->GetHealth());
 
-	OnMaxHealthChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetMaxHealth());
+	OnMaxHealthChanged.Broadcast(GetAuraAttriute()->GetMaxHealth());
 
 
-	OnManaChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetMana());
+	OnManaChanged.Broadcast(GetAuraAttriute()->GetMana());
 
-	OnMaxManaChanged.Broadcast(Cast<UAuraAttributeSet>(AttributeSet)->GetMaxMana());
+	OnMaxManaChanged.Broadcast(GetAuraAttriute()->GetMaxMana());
 }
 
 
 void UOverlapWidgetController::BindCallbacksToDependences()
 {
-	UAuraAttributeSet* Attribute = CastChecked<UAuraAttributeSet>(AttributeSet);
+	
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnHealthChanged.Broadcast(Data.NewValue);});
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnHealthChanged.Broadcast(Data.NewValue);});
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxHealthChanged.Broadcast(Data.NewValue); });
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxHealthChanged.Broadcast(Data.NewValue); });
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) { OnManaChanged.Broadcast(Data.NewValue); });
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) { OnManaChanged.Broadcast(Data.NewValue); });
 
-	AbilityComponent->GetGameplayAttributeValueChangeDelegate(Attribute->GetMaxManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxManaChanged.Broadcast(Data.NewValue); });
+	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetMaxManaAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxManaChanged.Broadcast(Data.NewValue); });
 
 
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAppliedAllTags.AddLambda([this](const FGameplayTagContainer& TagContainer) {
@@ -47,43 +47,167 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 	   }
 	);
 
-	if(Cast<UAuraAbilitySystemComponent>(AbilityComponent)->InitAbility == true)
+	if(GetAuraASC()->InitAbility == true)
 	{
-		OnAbilityBroadCast(Cast<UAuraAbilitySystemComponent>(AbilityComponent));
+		OnAbilityBroadCast();
 	}
-	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FAbilityDelegate.BindUObject(this ,&UOverlapWidgetController::OnAbilityBroadCast);
-
-	if(AAuraPlayerState * Ps =  Cast<AAuraPlayerState>(PlayerState))
-	{
-		Ps->OnExpChangePs.BindUObject(this , &UOverlapWidgetController::OnPsExpBroadCast);
-	}
+	GetAuraASC()->FAbilityDelegate.BindUObject(this ,&UOverlapWidgetController::OnAbilityBroadCast);
+	
+	GetAuraPlayerState()->OnExpChangePs.AddDynamic(this,&UOverlapWidgetController::OnPsExpBroadCast);
+	GetAuraPlayerState()->OnLevelChangePs.AddDynamic(this,&UOverlapWidgetController::OnPsLevelBroadCast);
+	
+	
 }
 
-void UOverlapWidgetController::OnPsExpBroadCast(float Exp)
+void UOverlapWidgetController::OnPsExpBroadCast(int32 Exp) 
 {
+	
 	ExpChanged.Broadcast(Exp);
 }
 
-void UOverlapWidgetController::OnAbilityBroadCast( UAuraAbilitySystemComponent* ASC)
+void UOverlapWidgetController::OnPsLevelBroadCast(int32 Level)
 {
-	if(Cast<UAuraAbilitySystemComponent>(AbilityComponent)->InitAbility == false)return;
-	const FGameplayTag Ability =  FGameplayTag::RequestGameplayTag(FName("Abilities"));
-	FScopedAbilityListLock SAL(*AbilityComponent.Get());
-	for(auto AbilitySpec :  ASC->GetActivatableAbilities())
+	LevelChanged.Broadcast(Level);
+}
+
+void UOverlapWidgetController::OnAbilityBroadCast()
+{
+
+	if(GetAuraASC()->InitAbility == false)return;
+	const FGameplayTag Ability =  FGameplayTag::RequestGameplayTag(FName("Ability"));
+	for(auto AbilitySpec :  GetAuraASC()->GetActivatableAbilities())
 	{
 		if(AbilitySpec.Ability.Get()->AbilityTags.HasTag(Ability))
 		{
-			FGameplayTag AbTag = UAuraAbilitySystemComponent::GetAbilityTag(AbilitySpec);
-			
+			FGameplayTag AbTag = UAuraAbilitySystemComponent::GetSpellAbilityTag(AbilitySpec);
 			FAbilityInfo AInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbTag);
 			for(auto tag : AbilitySpec.DynamicAbilityTags)
+			{
+				if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Ability.State"))))
+				{
+					AInfo.StateTag = tag;
+				}
 				if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Input"))))
 				{
 					AInfo.InputTag = tag;
-					break;
 				}
-			AbilitiyInfoDelegate.Broadcast(AInfo);
+			}
+
+	AbilitiyInfoDelegate.Broadcast(AInfo);
 		}
 	}
 }
+
+void UOverlapWidgetController::GetAbilityTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& AbilityContainer)
+{
+	FGameplayTagContainer AbilityTag;
+	AbilityTag.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability")));
+	AbilityContainer = Spec.Ability.Get()->AbilityTags.Filter(AbilityTag);
+}
+
+void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec)
+{
+	Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
+	Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
+	Spec.DynamicAbilityTags.RemoveTag(AbilityInput);
+	FGameplayTagContainer AbilityContainer;
+	GetAbilityTagFromSpec(Spec, AbilityContainer);
+	ChangeAbility(AbilityContainer.First());
+}
+
+void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput)
+{
+	for(FGameplayAbilitySpec& Spec :GetAuraASC()->GetActivatableAbilities())
+	{
+		if(Spec.DynamicAbilityTags.HasTagExact(AbilityInput))
+		{
+			Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
+			Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
+			Spec.DynamicAbilityTags.RemoveTag(AbilityInput);
+			FGameplayTagContainer AbilityContainer;
+			GetAbilityTagFromSpec(Spec, AbilityContainer);
+			ChangeAbility(AbilityContainer.First());
+			DeleteInput(AbilityInput);
+		}
+	}
+
+}
+
+void UOverlapWidgetController::GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer)
+{
+	FGameplayTagContainer InputTag;
+	InputTag.AddTag(FGameplayTag::RequestGameplayTag(FName("Input")));
+	InputContainer = Spec.DynamicAbilityTags.Filter(InputTag);
+}
+
+void UOverlapWidgetController::AddAbility_Implementation(FAbilityInfo AbilityInfo)
+{
+	
+	AbilityInfo.StateTag = FAuraGameplayTags::Get().Ability_State_Equipped;
+	
+	for(FGameplayAbilitySpec& Spec :GetAuraASC()->GetActivatableAbilities())
+	{
+		
+		if(Spec.DynamicAbilityTags.HasTagExact(AbilityInfo.InputTag))
+		{
+			/** 当前位置有能力  先卸掉当前位置能力*/
+			DeleteAbility(AbilityInfo.InputTag, Spec);
+		}
+		if(Spec.Ability.Get()->AbilityTags.HasTagExact(AbilityInfo.AbilityTag))
+		{
+			/**当前能力在其他位置上 */
+			if(Spec.DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Ability_State_Equipped))
+			{
+				Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
+				FGameplayTagContainer InputContainer;
+				GetInputTagFromSpec(Spec, InputContainer);
+				Spec.DynamicAbilityTags.RemoveTags(InputContainer);
+				DeleteInput(InputContainer.First());
+			}
+				Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Eligible);
+				Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Equipped);
+				Spec.DynamicAbilityTags.AddTag(AbilityInfo.InputTag);
+		}
+	}
+	AbilitiyInfoDelegate.Broadcast(AbilityInfo);
+}
+
+
+
+void UOverlapWidgetController::LevelChangeSpell(float Level, FGameplayTag AbilityTag)
+{
+
+
+	FAbilityInfo AbilityInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbilityTag);
+	if(GetAuraASC()->FindSpecWithTag(AbilityTag) ==nullptr)
+	{
+		if(AbilityInfo.OpenLevel <= Level)
+		{
+			AbilityInfo.StateTag = FAuraGameplayTags::Get().Ability_State_Eligible;
+			FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityInfo.AbilityClass , 1);
+			AbilitySpec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
+			GetAuraASC()->AddAbilityFromSpec(AbilitySpec);
+			AbilitiyInfoDelegate.Broadcast(AbilityInfo);
+		}
+	}
+}
+
+void UOverlapWidgetController::ChangeAbility(FGameplayTag AbilityTag)
+{
+	FAbilityInfo AInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbilityTag);
+	AInfo.InputTag = FGameplayTag();
+	AInfo.StateTag = FAuraGameplayTags::Get().Ability_State_Eligible;
+	AbilitiyInfoDelegate.Broadcast(AInfo);
+}
+
+void UOverlapWidgetController::DeleteInput(FGameplayTag InputTag)
+{
+	FAbilityInfo AInfo;
+	AInfo.InputTag = InputTag;
+	AInfo.StateTag = FAuraGameplayTags::Get().Ability_State_None;
+	AbilitiyInfoDelegate.Broadcast(AInfo);
+}
+
+
+
 

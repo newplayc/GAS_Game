@@ -63,8 +63,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCurveTable> AttributeCurve;
 
-	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<ULevelInfo>LevelInfos;
+
 	
 	FCharacterDifDataInfo GetCharacterDataInfo(ECharacterClass CharaClass) const;
 

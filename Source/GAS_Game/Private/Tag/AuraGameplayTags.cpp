@@ -3,7 +3,6 @@
 
 #include "Tag/AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
-#include "Kismet/GameplayStatics.h"
 
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
@@ -55,7 +54,9 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Physics	 , GameplayTags.Attributes_Resistance_PhysicsResistance);
 
 	GameplayTags.Attributes_Meta_InComingExp = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Meta.IncomingExp"), FString("IncomExp"));
-
+	GameplayTags.Attributes_Extra_SpellPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.SpellPoints") , FString("法术技能点"));
+	GameplayTags.Attributes_Extra_TalentPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.TalentPoints") , FString("天赋点"));
+	
 	GameplayTags.Attack_MeleeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.MeleeAttack"), FString("激活 AI 近战攻击的标签"));
 	GameplayTags.Attack_RangeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.RangeAttack") , FString("激活 AI 远程攻击"));
 	GameplayTags.Attack_Summmon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.Summon"), FString("激活 AI 召唤的标签"));
@@ -80,15 +81,45 @@ void FAuraGameplayTags::AddGameplayTag()
 	/*
 	 * Ability
 	 */
-	GameplayTags.Abilities_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Fire.FireBolt"), FString("Abilities_Fire_FireBolt"));
+	GameplayTags.Ability_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Fire.FireBolt"), FString("火球能力标签"));
+	GameplayTags.Ability_Fire_FireWall = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Fire.FireWall"), FString("火墙能力标签"));
+	GameplayTags.Ability_Fire_FireRain = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Fire.FireRain"), FString("火雨能力标签"));
+	GameplayTags.Ability_Arcane_ArcaneArrow = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Arcane.ArcaneArrow"), FString("奥术箭能力标签"));
+	GameplayTags.Ability_Arcane_ArcaneShield = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Arcane.ArcaneShield"), FString("奥术盾能力标签"));
+	GameplayTags.Ability_Arcane_ArcaneHeal = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Arcane.ArcaneHeal"), FString("奥术治愈能力标签"));
 
+	GameplayTags.Ability_Lightning_Flash = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningFlash"), FString("闪电闪现能力标签"));
+	GameplayTags.Ability_Lightning_Speed = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningSpeed"), FString("闪电速度能力标签"));
+	GameplayTags.Ability_Lightning_Link = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningLink"), FString("闪电链接能力标签"));
+	GameplayTags.Ability_None = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningLink") ,FString("空能力标签"));
+	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Fire"));
+	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Arcane"));
+	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Lightning"));
 	/*
 	 * CoolDown
 	 */
-	GameplayTags.CoolDown_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Fire.FireBolt"),FString("Cooldown_Fire_FireBolt"));
+	GameplayTags.CoolDown_Fire_FireBolt = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Fire.FireBolt"),FString("火球冷却标签"));
+	GameplayTags.CoolDown_Fire_FireRain = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Fire.FireRain"),FString("火雨冷却标签"));
+	GameplayTags.CoolDown_Fire_FireWall = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Fire.FireWall"),FString("火墙冷却标签"));
+
+	GameplayTags.CoolDown_Arcane_ArcaneArrow = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Arcane.ArcaneArrow"),FString("奥术箭冷却标签"));
+	GameplayTags.CoolDown_Arcane_ArcaneShield = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Arcane.ArcaneShield"),FString("奥术盾冷却标签"));
+	GameplayTags.CoolDown_Arcane_ArcaneHeal = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Arcane.ArcaneHeal") ,FString("奥术治疗冷却标签"));
+
+	GameplayTags.CoolDown_Lightning_Flash = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.LightningFlash"),FString("闪电闪现冷却标签"));
+	GameplayTags.CoolDown_Lightning_Link = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.LightningLink"),FString("闪电链接冷却"));
+	GameplayTags.CoolDown_Lightning_Speed = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.LightningSpeed") ,FString("闪电速度冷却标签"));
+
+
 
 	
+	
 
+	GameplayTags.Ability_State_Eligible = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Eligible"),FString("能力状态解锁标签"));
+	GameplayTags.Ability_State_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Equipped"),FString("能力状态装备标签"));
+	GameplayTags.Ability_State_None = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.None"),FString("能力状态空标签"));
+	GameplayTags.Ability_State_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Lock"),FString("能力状态未解锁标签"));
+	
 
 
 	

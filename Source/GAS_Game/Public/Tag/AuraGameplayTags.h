@@ -38,6 +38,8 @@ public:
 	FGameplayTag Attributes_Vital_Mana;
 
 	FGameplayTag Attributes_Meta_InComingExp;
+	FGameplayTag Attributes_Extra_SpellPoints;
+	FGameplayTag Attributes_Extra_TalentPoints;
 	
 	/*
 	 * 输入标签
@@ -87,14 +89,42 @@ public:
 	FGameplayTag Socket_LeftTrail;
 	FGameplayTag Socket_RightTrail;
 
-	FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Ability_Fire_FireBolt;
+	FGameplayTag Ability_Fire_FireWall;
+	FGameplayTag Ability_Fire_FireRain;
+
+	FGameplayTag Ability_Arcane_ArcaneArrow;
+	FGameplayTag Ability_Arcane_ArcaneShield;
+	FGameplayTag Ability_Arcane_ArcaneHeal;
+
+	FGameplayTag Ability_Lightning_Flash;
+	FGameplayTag Ability_Lightning_Speed;
+	FGameplayTag Ability_Lightning_Link;
+	FGameplayTag Ability_None;
+	FGameplayTagContainer AbilitySpellTag;
+
+	
+	FGameplayTag Ability_State_Eligible; 
+	FGameplayTag Ability_State_Locked;
+	FGameplayTag Ability_State_Equipped;
+	FGameplayTag Ability_State_None;
 	
 	/*
 	 *CoolDown
 	 */
 	FGameplayTag CoolDown_Fire_FireBolt;
+	FGameplayTag CoolDown_Fire_FireRain;
+	FGameplayTag CoolDown_Fire_FireWall;
 
-	
+	FGameplayTag CoolDown_Arcane_ArcaneArrow;
+	FGameplayTag CoolDown_Arcane_ArcaneShield;
+	FGameplayTag CoolDown_Arcane_ArcaneHeal;
+
+	FGameplayTag CoolDown_Lightning_Flash;
+	FGameplayTag CoolDown_Lightning_Speed;
+	FGameplayTag CoolDown_Lightning_Link;
+
+
 	
 private:
 	static  FAuraGameplayTags GameplayTags;

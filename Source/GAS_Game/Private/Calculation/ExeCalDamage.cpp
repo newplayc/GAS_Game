@@ -84,6 +84,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_ArcaneResistance , GetDefinitionStatic().ArcaneResistanceDef);
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_LightningResistance ,GetDefinitionStatic().LightningResistanceDef);
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_PhysicsResistance ,GetDefinitionStatic().PhysicsResistanceDef);
+
 	
 	const FGameplayEffectSpec Effectspec = ExecutionParams.GetOwningSpec();
 	const UAbilitySystemComponent *  SourceASC = ExecutionParams.GetSourceAbilitySystemComponent();

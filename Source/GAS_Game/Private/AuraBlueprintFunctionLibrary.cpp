@@ -16,52 +16,59 @@
 #include "PlayerState/AuraPlayerState.h"
 #include "Tag/AuraGameplayTags.h"
 
-UOverlapWidgetController* UAuraBlueprintFunctionLibrary::GetOverlayWidgetController(UObject * WorldContext)
+
+bool UAuraBlueprintFunctionLibrary::GetUserControllerParams(const UObject* WorldContext ,FWidgetContollerParams & WidgetContollerParams)
 {
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContext , 0))
 	{
 		AAuraPlayerState* PS = Cast<AAuraPlayerState>(PC->GetPlayerState<APlayerState>());
 		UAbilitySystemComponent* Asc = PS->GetAbilitySystemComponent();
 		UAttributeSet* As = PS->GetAttributeSet();
-		const FWidgetContollerParams Wcp(PS, PC, Asc, As);
-		if (AAuraHUD* HUD = Cast<AAuraHUD>(PC->GetHUD()))
-			return HUD->GetOverlayWidgetController(Wcp);
-	
-		
+		WidgetContollerParams.SetParams(PS , PC , Asc ,As);
+		return true;
 	}
-
-	return nullptr;
+	return false;
 }
 
-UAttributeWidgetController* UAuraBlueprintFunctionLibrary::GetAttributeWidgetController(UObject* WorldContext)
+UOverlapWidgetController* UAuraBlueprintFunctionLibrary::GetOverlayWidgetController(const UObject * WorldContext)
 {
-	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContext, 0))
+	FWidgetContollerParams WidgetControllerParams;
+	if(GetUserControllerParams(WorldContext , WidgetControllerParams))
 	{
-		AAuraPlayerState* PS = Cast<AAuraPlayerState>(PC->GetPlayerState<APlayerState>());
+		return Cast<AAuraHUD>(WidgetControllerParams.PlayerController->GetHUD())->GetOverlayWidgetController(WidgetControllerParams);
+	}
+	return nullptr;
+}
 
+UAttributeWidgetController* UAuraBlueprintFunctionLibrary::GetAttributeWidgetController(const UObject* WorldContext)
+{
+	FWidgetContollerParams WidgetControllerParams;
+	if(GetUserControllerParams(WorldContext , WidgetControllerParams))
+	{
+		return Cast<AAuraHUD>(WidgetControllerParams.PlayerController->GetHUD())->GetAttributeWidgetController(WidgetControllerParams);
+	}
+	return nullptr;
+}
 
-		UAbilitySystemComponent* Asc = PS->GetAbilitySystemComponent();
-		UAttributeSet* As = PS->GetAttributeSet();
-		const FWidgetContollerParams Wcp(PS, PC, Asc, As);
-		if (AAuraHUD* HUD = Cast<AAuraHUD>(PC->GetHUD()))
-			return HUD->GetAttributeWidgetController(Wcp);
-
-
+USpellMenuWidgetController* UAuraBlueprintFunctionLibrary::GetSpellMenuWidgetController(const UObject* WorldContext)
+{
+	FWidgetContollerParams WidgetControllerParams;
+	if(GetUserControllerParams(WorldContext , WidgetControllerParams))
+	{
+		return Cast<AAuraHUD>(WidgetControllerParams.PlayerController->GetHUD())->GetSpellMenuWidgetController(WidgetControllerParams);
 	}
 	return nullptr;
 }
 
 
-void UAuraBlueprintFunctionLibrary::SetAttributeInfo(ECharacterClass CharacterClass, UObject* WorldContext,
-	UAbilitySystemComponent* AbilitySystemComponent , float Level)
+void UAuraBlueprintFunctionLibrary::SetAttributeInfo(ECharacterClass CharacterClass,const  UObject* WorldContext,
+                                                     UAbilitySystemComponent* AbilitySystemComponent , float Level)
 {
 	const AAuraGameModeBase * Gmb =  Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
 	if(!Gmb)return;
 	
 	const UCharacterDataInfo* DataInfo = Gmb->CharacterDataInfo.Get();
 	check(DataInfo);
-	
-
 	
 	const FCharacterDifDataInfo FDataInfo =  DataInfo->GetCharacterDataInfo(CharacterClass);
 
@@ -101,7 +108,6 @@ void UAuraBlueprintFunctionLibrary::AddStartingAbilities(UObject * WorldContext 
 		FGameplayAbilitySpec Aspec = FGameplayAbilitySpec(Ability ,Level);
 		AbilitySystemComponent->GiveAbility(Aspec);
 	}
-
 }
 
 UCurveTable* UAuraBlueprintFunctionLibrary::GetAttributeCurveTable(UObject* WorldContext)
@@ -220,33 +226,3 @@ float UAuraBlueprintFunctionLibrary::GetCharacterExpValue(const UObject* WorldCo
 	
 	return DataInfo->GetCharacterDataInfo(CharacterClass).ExpValue.GetValueAtLevel(Level);
 }
-
-float UAuraBlueprintFunctionLibrary::GetExpPercent(const UObject* WorldContext , int32 Level , float NowExp)
-{
-	
-	AAuraGameModeBase * GM  = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
-	const TArray<FChangeLeveInfo>  LevelArray = GM->CharacterDataInfo->LevelInfos->LevelInfos;
-	if(Level>= LevelArray.Num()-1)return 1;
-	float Percent = (NowExp - LevelArray[Level].NeedExp) / (LevelArray[Level+1].NeedExp - NowExp);
-	return Percent;
-	
-}
-
-TArray<float> UAuraBlueprintFunctionLibrary::GetExpFloat(const UObject* WorldContext, int32 Level)
-{
-	
-	AAuraGameModeBase * GM  = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContext));
-	const TArray<FChangeLeveInfo>  LevelArray = GM->CharacterDataInfo->LevelInfos->LevelInfos;
-
-	TArray<float>ExpFLoat;
-	if(Level>= LevelArray.Num()-1)
-	{
-		ExpFLoat.Add(0); ExpFLoat.Add(0);
-		return ExpFLoat;
-	}
-	ExpFLoat.Add(LevelArray[Level].NeedExp);
-	ExpFLoat.Add(LevelArray[Level+1].NeedExp);
-	return ExpFLoat;
-	
-}
- 

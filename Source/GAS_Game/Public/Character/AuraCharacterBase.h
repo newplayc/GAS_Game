@@ -25,7 +25,8 @@ class GAS_GAME_API AAuraCharacterBase : public ACharacter, public IAbilitySystem
 public:
 	// Sets default values for this character's properties
 	AAuraCharacterBase();
-
+	
+	virtual void InitAttribute(UObject * Source);
 	
 
 protected:
@@ -123,7 +124,7 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void NetDeath();
 	
-	virtual void InitAttribute(UObject * Source);
+
 
 	FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
 	

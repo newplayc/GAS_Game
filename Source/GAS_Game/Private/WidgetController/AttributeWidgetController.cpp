@@ -2,20 +2,22 @@
 
 
 #include "WidgetController/AttributeWidgetController.h"
+
+#include "GAS/AuraAbilitySystemComponent.h"
 #include "GAS/AuraAttributeSet.h"
+#include "PlayerState/AuraPlayerState.h"
 
 
 void UAttributeWidgetController::BroadcastInitailvalues()
 {
-	UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(AttributeSet);
-	check(AttributeInfoData);
 
-	for (auto& Pair : AS->TagsToAttributes)
+	check(AttributeInfoData); 
+
+	for (auto& Pair : GetAuraAttriute()->TagsToAttributes)
 	{
 		FAttributeInfos Att = AttributeInfoData->FindAttributeInfo(Pair.Key);
-		Att.Value = Pair.Value().GetNumericValue(AS);
+		Att.Value = Pair.Value().GetNumericValue(GetAuraAttriute());
 		FAttributeDelegate.Broadcast(Att);
-
 	}
 }
 
@@ -23,19 +25,28 @@ void UAttributeWidgetController::BroadcastInitailvalues()
 
 void UAttributeWidgetController::BindCallbacksToDependences()
 {
-	UAuraAttributeSet* AS = Cast<UAuraAttributeSet>(AttributeSet);
+
 	check(AttributeInfoData);
-	for (auto& Pair : AS->TagsToAttributes)
+	GetAuraPlayerState()->OnTalentPointsChnagePs.AddDynamic(this , &UAttributeWidgetController::OnTalentPointsChanegd);
+	for (auto& Pair : GetAuraAttriute()->TagsToAttributes)
 	{
-		AbilityComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda([this , Pair , AS](const FOnAttributeChangeData& Data)
+		AbilityComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda([this , Pair](const FOnAttributeChangeData& Data)
 			{
 				FAttributeInfos  Att = AttributeInfoData->FindAttributeInfo(Pair.Key);
-				Att.Value = Pair.Value().GetNumericValue(AS);
+				Att.Value = Pair.Value().GetNumericValue(GetAuraAttriute());
 				FAttributeDelegate.Broadcast(Att);
 			}
 		);
 
 	}
+}
 
+void UAttributeWidgetController::OnTalentPointsChanegd(int32 TalentPoints)
+{
+	OnTalentChangedDelegate.Broadcast(TalentPoints);
+}
 
+void UAttributeWidgetController::AddAtttribute(const FGameplayTag& AttributeTag)
+{
+	GetAuraASC()->AddAttribute(AttributeTag);
 }

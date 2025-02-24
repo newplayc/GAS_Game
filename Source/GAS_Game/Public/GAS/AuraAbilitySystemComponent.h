@@ -9,7 +9,7 @@
 
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FGamplayAllTags,const  FGameplayTagContainer);
-DECLARE_DELEGATE_OneParam(FAbilityDelegate, UAuraAbilitySystemComponent * );
+DECLARE_DELEGATE(FAbilityDelegate);
 
 class UGameplayEffect;
 
@@ -29,7 +29,7 @@ public:
 
 	bool InitAbility = false;
 	
-	static FGameplayTag GetAbilityTag(const FGameplayAbilitySpec& AbilitySpec);
+	static FGameplayTag GetSpellAbilityTag(const FGameplayAbilitySpec& AbilitySpec);
 
 	
 	void ApplyEffectToInit(TSubclassOf<UGameplayEffect>&GE, float level ,UObject * Source);
@@ -51,12 +51,19 @@ public:
 	void GiveBaseAbilitiesArray(TArray<TSubclassOf<UGameplayAbility>>& Abilities);
 	
 	void PressFunction(FGameplayTag ActionTag);
-
-
+	
 	void ReleaseFunction(FGameplayTag ActionTag);
 
 
 	void HeldFunction(FGameplayTag ActionTag);
 
+	void AddAttribute(const FGameplayTag& AttributeTag);
 
+	UFUNCTION(Server , Reliable)
+	void AddAbilityFromSpec( const FGameplayAbilitySpec & Spec);
+	
+	UFUNCTION(Server,Reliable)
+	void ServerUpdateAttribute(const FGameplayTag & AttributeTag);
+
+	FGameplayAbilitySpec*  FindSpecWithTag(const FGameplayTag AbilityTag);
 };

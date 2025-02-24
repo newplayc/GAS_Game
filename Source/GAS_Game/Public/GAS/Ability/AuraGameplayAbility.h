@@ -13,10 +13,12 @@ UCLASS()
 class GAS_GAME_API UAuraGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-
 public:
+	
 	UPROPERTY(EditAnywhere)
 	FGameplayTag ActiveTag;
+
+	
 	
 
 

@@ -8,6 +8,7 @@
 #include "WidgetController/AttributeWidgetController.h"
 #include "Data/CharacterDataInfo.h"
 #include "Interface/ICombatInterface.h"
+#include "WidgetController/SpellMenuWidgetController.h"
 #include "AuraBlueprintFunctionLibrary.generated.h"
 
 
@@ -22,15 +23,21 @@ class GAS_GAME_API UAuraBlueprintFunctionLibrary : public UBlueprintFunctionLibr
 
 public:
 
-	UFUNCTION(BlueprintPure , BlueprintCallable)
-	static UOverlapWidgetController* GetOverlayWidgetController(UObject * WorldContext);
+	UFUNCTION()
+	static bool GetUserControllerParams(const UObject * WorldContext , FWidgetContollerParams & WidgetContollerParams);
+	UFUNCTION(BlueprintPure , BlueprintCallable ,meta=(DefaultToSelf="WorldContext"))
+	static UOverlapWidgetController* GetOverlayWidgetController(const UObject * WorldContext);
 
 
-	UFUNCTION(BlueprintPure, BlueprintCallable)
-	static UAttributeWidgetController* GetAttributeWidgetController(UObject* WorldContext);
+	UFUNCTION(BlueprintPure, BlueprintCallable,meta=(DefaultToSelf="WorldContext"))
+	static UAttributeWidgetController* GetAttributeWidgetController(const UObject* WorldContext);
 
+	UFUNCTION(BlueprintPure, BlueprintCallable,meta=(DefaultToSelf="WorldContext"))
+	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContext);
+
+	
 	UFUNCTION(BlueprintCallable)
-	static void SetAttributeInfo(ECharacterClass  CharacterClass , UObject* WorldContext , UAbilitySystemComponent* AbilitySystemComponent ,float Level);
+	static void SetAttributeInfo(ECharacterClass  CharacterClass , const UObject* WorldContext , UAbilitySystemComponent* AbilitySystemComponent ,float Level);
 
 	UFUNCTION(BlueprintCallable)
 	static void AddStartingAbilities(UObject * WorldContext , UAbilitySystemComponent* AbilitySystemComponent ,ECharacterClass CharacterClass , int32 Level);
@@ -64,10 +71,5 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static float GetCharacterExpValue(const UObject * WorldContext , ECharacterClass CharacterClass , int32 Level);
-
-	UFUNCTION(BlueprintCallable)
-	static float GetExpPercent(const UObject* WorldContext , int32 Level , float NowExp);
-
-	UFUNCTION(BlueprintCallable)
-	static TArray<float> GetExpFloat(const UObject* WorldContext , int32 Level);
+	
 };
