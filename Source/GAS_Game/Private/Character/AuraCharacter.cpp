@@ -47,6 +47,7 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 	IniAbilityInfo();
 	GiveStartAbilities();
+	
 	GetPlayerState<AAuraPlayerState>()->InitXpAndLevel();
 }
 

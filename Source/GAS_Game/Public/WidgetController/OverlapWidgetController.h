@@ -97,16 +97,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void LevelChangeSpell(float Level , FGameplayTag AbilityTag);
+
+	UFUNCTION(Client , Reliable)
+	void ClientBroadcastAbility(const FAbilityInfo & AbilityInfo);
 	
-	UFUNCTION( Server, BlueprintCallable ,Reliable)
+	UFUNCTION(Server, BlueprintCallable ,Reliable)
 	void AddAbility(FAbilityInfo AbilityInfo);
 	
 	void ChangeAbility(FGameplayTag AbilityTag);
-
+	
 	void DeleteInput(FGameplayTag InputTag);
-	
-	
-	
 	
 };
 

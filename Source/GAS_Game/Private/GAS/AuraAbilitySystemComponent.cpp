@@ -46,8 +46,8 @@ void UAuraAbilitySystemComponent::GiveAbilitiesArray(TArray<TSubclassOf<UGamepla
 			GiveAbility(SpecA);
 		}
 	}
-	InitAbility = true;
-	FAbilityDelegate.ExecuteIfBound();
+	//InitAbility = true;
+	//FAbilityDelegate.ExecuteIfBound();
 	
 }
 
