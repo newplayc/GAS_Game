@@ -70,6 +70,7 @@ void UAuraAbilitySystemComponent::PressFunction(FGameplayTag ActionTag)
 	if (!ActionTag.IsValid())return;
 	for (FGameplayAbilitySpec& ASpec : GetActivatableAbilities())
 	{
+
 		if (ASpec.DynamicAbilityTags.HasTagExact(ActionTag))
 		{
  
@@ -92,6 +93,7 @@ void UAuraAbilitySystemComponent::ReleaseFunction(FGameplayTag ActionTag)
 	if (!ActionTag.IsValid())return;
 	for (FGameplayAbilitySpec& ASpec : GetActivatableAbilities())
 	{
+		
 		if (ASpec.DynamicAbilityTags.HasTagExact(ActionTag))
 		{
 			AbilitySpecInputReleased(ASpec);
@@ -112,11 +114,31 @@ void UAuraAbilitySystemComponent::AddAttribute(const FGameplayTag& AttributeTag)
 	}
 }
 
+void UAuraAbilitySystemComponent::ActiveAbilityFromSpec_Implementation(const FGameplayAbilitySpec& Spec)
+{
+	TryActivateAbility(Spec.Handle);
+}
+
+void UAuraAbilitySystemComponent::CancelAbilityFromSpec_Implementation(const FGameplayAbilitySpec& Spec)
+{
+	CancelAbilitySpec(const_cast<FGameplayAbilitySpec&>(Spec) , nullptr);
+}
+
 void UAuraAbilitySystemComponent::AddAbilityFromSpec_Implementation(const FGameplayAbilitySpec& Spec)
 {
 	GiveAbility(Spec);
 }
 
+void UAuraAbilitySystemComponent::ServerUpdateSpell_Implementation(const FGameplayTag AbilityTag)
+{
+	if(FGameplayAbilitySpec * AbilitySpec = FindSpecWithTag(AbilityTag))
+	{
+		AbilitySpec->Level += 1;
+		MarkAbilitySpecDirty(*AbilitySpec);
+		IPlayerInterface::Execute_AddSpellPoints(GetAvatarActor() , -1);
+	}
+	
+}
 
 FGameplayAbilitySpec* UAuraAbilitySystemComponent::FindSpecWithTag(const FGameplayTag AbilityTag)
 {
@@ -146,8 +168,7 @@ void UAuraAbilitySystemComponent::ServerUpdateAttribute_Implementation(const FGa
 
 FGameplayTag UAuraAbilitySystemComponent::GetSpellAbilityTag(const FGameplayAbilitySpec& AbilitySpec)
 {
-
-
+	
 	for(auto tag : AbilitySpec.Ability.Get()->AbilityTags)
 	{
 		if(tag.MatchesAny(FAuraGameplayTags::Get().AbilitySpellTag))
@@ -163,7 +184,6 @@ FGameplayTag UAuraAbilitySystemComponent::GetSpellAbilityTag(const FGameplayAbil
  */
 void UAuraAbilitySystemComponent::ApplyEffectToInit(TSubclassOf<UGameplayEffect>& GE, float level , UObject * Source)
 {
-	
 	check(GE);
 	 FGameplayEffectContextHandle ContextHandle = MakeEffectContext();
 

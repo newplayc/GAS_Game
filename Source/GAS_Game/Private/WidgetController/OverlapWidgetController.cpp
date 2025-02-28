@@ -46,7 +46,7 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 			}
 	   }
 	);
-
+	
 	// if(GetAuraASC()->InitAbility == true)
 	// {
 	// 	OnAbilityBroadCast();
@@ -104,17 +104,23 @@ void UOverlapWidgetController::GetAbilityTagFromSpec(FGameplayAbilitySpec& Spec,
 	AbilityContainer = Spec.Ability.Get()->AbilityTags.Filter(AbilityTag);
 }
 
-void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec)
+void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec, const FGameplayTag& AbilityType)
 {
 	Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
 	Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
 	Spec.DynamicAbilityTags.RemoveTag(AbilityInput);
 	FGameplayTagContainer AbilityContainer;
 	GetAbilityTagFromSpec(Spec, AbilityContainer);
+	
 	ChangeAbility(AbilityContainer.First());
+	/** 被动需要取消激活*/
+	if(AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
+	{
+		GetAuraASC()->CancelAbilityHandle(Spec.Handle);
+	}
 }
 
-void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput)
+void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType)
 {
 	for(FGameplayAbilitySpec& Spec :GetAuraASC()->GetActivatableAbilities())
 	{
@@ -125,12 +131,18 @@ void UOverlapWidgetController::DeleteAbility(const FGameplayTag& AbilityInput)
 			Spec.DynamicAbilityTags.RemoveTag(AbilityInput);
 			FGameplayTagContainer AbilityContainer;
 			GetAbilityTagFromSpec(Spec, AbilityContainer);
+	
+			
 			ChangeAbility(AbilityContainer.First());
 			DeleteInput(AbilityInput);
+			// 被动取消
+			if(AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
+			{
+				GetAuraASC()->CancelAbilityHandle(Spec.Handle);
+			}
 			return;
 		}
 	}
-
 }
 
 void UOverlapWidgetController::GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer)
@@ -150,7 +162,7 @@ void UOverlapWidgetController::AddAbility_Implementation(FAbilityInfo AbilityInf
 		if(Spec.DynamicAbilityTags.HasTagExact(AbilityInfo.InputTag))
 		{
 			/** 当前位置有能力  先卸掉当前位置能力*/
-			DeleteAbility(AbilityInfo.InputTag, Spec);
+			DeleteAbility(AbilityInfo.InputTag, Spec, AbilityInfo.AbilityType);
 			if(IsPass)break;
 			IsPass = true;
 		}
@@ -159,17 +171,23 @@ void UOverlapWidgetController::AddAbility_Implementation(FAbilityInfo AbilityInf
 			/**当前能力在其他位置上 */
 			if(Spec.DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Ability_State_Equipped))
 			{
+				Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
 				Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
 				FGameplayTagContainer InputContainer;
 				GetInputTagFromSpec(Spec, InputContainer);
 				Spec.DynamicAbilityTags.RemoveTags(InputContainer);
 				DeleteInput(InputContainer.First());
 			}
-				Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Eligible);
-				Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Equipped);
-				Spec.DynamicAbilityTags.AddTag(AbilityInfo.InputTag);
-				if(IsPass)break;
-				IsPass = true;
+			/* 安装能力*/
+			Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Eligible);
+			Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Equipped);
+			Spec.DynamicAbilityTags.AddTag(AbilityInfo.InputTag);
+			if(AbilityInfo.AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
+			{
+				GetAuraASC()->ActiveAbilityFromSpec(Spec);
+			}
+			if(IsPass)break;
+			IsPass = true;
 		}
 	}
 	AbilitiyInfoDelegate.Broadcast(AbilityInfo);
@@ -224,7 +242,7 @@ void UOverlapWidgetController::ClientBroadcastAbility_Implementation(const FAbil
 	
 }
 
-void UOverlapWidgetController::ChangeAbility(FGameplayTag AbilityTag)
+void UOverlapWidgetController::ChangeAbility(const FGameplayTag& AbilityTag)const 
 {
 	FAbilityInfo AInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbilityTag);
 	AInfo.InputTag = FGameplayTag();
@@ -232,7 +250,7 @@ void UOverlapWidgetController::ChangeAbility(FGameplayTag AbilityTag)
 	AbilitiyInfoDelegate.Broadcast(AInfo);
 }
 
-void UOverlapWidgetController::DeleteInput(FGameplayTag InputTag)
+void UOverlapWidgetController::DeleteInput(const FGameplayTag& InputTag)const 
 {
 	FAbilityInfo AInfo;
 	AInfo.InputTag = InputTag;

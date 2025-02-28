@@ -34,6 +34,8 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Input_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Input.2"), FString("2"));
 	GameplayTags.Input_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Input.3"), FString("3"));
 	GameplayTags.Input_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Input.4"), FString("4"));
+	GameplayTags.Input_P1 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Input.P1"), FString("被动第一栏"));
+	GameplayTags.Input_P2 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Input.P2"), FString("被动第二栏"));
 	
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Damage") , FString("Damage"));
 	GameplayTags.Effects_React = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Effects.React"));
@@ -59,7 +61,7 @@ void FAuraGameplayTags::AddGameplayTag()
 	
 	GameplayTags.Attack_MeleeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.MeleeAttack"), FString("激活 AI 近战攻击的标签"));
 	GameplayTags.Attack_RangeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.RangeAttack") , FString("激活 AI 远程攻击"));
-	GameplayTags.Attack_Summmon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.Summon"), FString("激活 AI 召唤的标签"));
+	GameplayTags.Attack_Summon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.Summon"), FString("激活 AI 召唤的标签"));
 	/*
 	 * Socket
 	 */
@@ -95,6 +97,14 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Fire"));
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Arcane"));
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Lightning"));
+
+	/* Passive*/
+	GameplayTags.Ability_IncreaseCriticalChance =  UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseCriticalChance"), FString("提高暴击率被动技能能力标签"));
+	GameplayTags.Ability_IncreaseHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseHealth"), FString("提高生命技能能力标签"));
+	GameplayTags.Ability_IncreaseMana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseMana"), FString("提高魔法技能能力标签"));
+	
+	GameplayTags.Ability_Active = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Active"), FString("主动技能能力标签"));
+	GameplayTags.Ability_Passive  = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Passive"), FString("被动技能能力标签"));
 	/*
 	 * CoolDown
 	 */

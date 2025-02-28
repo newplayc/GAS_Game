@@ -24,6 +24,8 @@ class GAS_GAME_API UAuraBlueprintFunctionLibrary : public UBlueprintFunctionLibr
 public:
 
 	UFUNCTION()
+	static UAbilitiyInfo * GetAbilityInfo(const UObject * WorldContext);
+	UFUNCTION()
 	static bool GetUserControllerParams(const UObject * WorldContext , FWidgetContollerParams & WidgetContollerParams);
 	UFUNCTION(BlueprintPure , BlueprintCallable ,meta=(DefaultToSelf="WorldContext"))
 	static UOverlapWidgetController* GetOverlayWidgetController(const UObject * WorldContext);
@@ -71,5 +73,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static float GetCharacterExpValue(const UObject * WorldContext , ECharacterClass CharacterClass , int32 Level);
+
 	
 };

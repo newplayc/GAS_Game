@@ -8,7 +8,6 @@
 #include "Components/SphereComponent.h"
 #include "Kismet\GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
-#include "Chaos/Deformable/ChaosDeformableCollisionsProxy.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
@@ -71,7 +70,7 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		AActor * Causer = SpecHandle.Data.Get()->GetContext().GetEffectCauser();
 		if(OtherActor == Causer || UAuraBlueprintFunctionLibrary::IsFriend(Causer , OtherActor))return;
 	}
-	else
+	else 
 	{
 		return;
 	}
@@ -87,6 +86,7 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+			
 		}
 		Destroy();
 	}

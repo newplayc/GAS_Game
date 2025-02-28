@@ -134,6 +134,8 @@ FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation(FGameplayTag 
 		return GetMesh()->GetSocketLocation(LeftTrailSocketName);
 	}
 	return FVector();
+
+	
 }
 
 ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()

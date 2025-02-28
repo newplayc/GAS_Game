@@ -26,6 +26,9 @@ struct FAbilityInfo
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	FGameplayTag CoolDownTag;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	FGameplayTag AbilityType;
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TObjectPtr<UTexture>SpellIcon;

@@ -50,13 +50,16 @@ public:
 	FGameplayTag Input_2;
 	FGameplayTag Input_3;
 	FGameplayTag Input_4;
-
+	FGameplayTag Input_P1;
+	FGameplayTag Input_P2;
+	
 	FGameplayTag Damage;
 	FGameplayTag Effects_React;
 	
 	/*
 	* 伤害类型
 	*/
+	 
 	FGameplayTag Attributes_DamageType_Fire;
 	FGameplayTag Attributes_DamageType_Arcane;
 	FGameplayTag Attributes_DamageType_Lightning;
@@ -75,7 +78,7 @@ public:
 
 	FGameplayTag Attack_MeleeAttack;
 	FGameplayTag Attack_RangeAttack;
-	FGameplayTag Attack_Summmon;
+	FGameplayTag Attack_Summon;
 	
 	FGameplayTag Montage_Attack_1;
 	FGameplayTag Montage_Attack_2;
@@ -89,6 +92,11 @@ public:
 	FGameplayTag Socket_LeftTrail;
 	FGameplayTag Socket_RightTrail;
 
+
+	FGameplayTag Ability_Passive;
+	FGameplayTag Ability_Active;
+	FGameplayTag Ability_None;
+	/** Active Tag*/
 	FGameplayTag Ability_Fire_FireBolt;
 	FGameplayTag Ability_Fire_FireWall;
 	FGameplayTag Ability_Fire_FireRain;
@@ -100,7 +108,13 @@ public:
 	FGameplayTag Ability_Lightning_Flash;
 	FGameplayTag Ability_Lightning_Speed;
 	FGameplayTag Ability_Lightning_Link;
-	FGameplayTag Ability_None;
+
+
+	/** Passive Tag*/
+	FGameplayTag Ability_IncreaseCriticalChance;
+	FGameplayTag Ability_IncreaseHealth;
+	FGameplayTag Ability_IncreaseMana;
+
 	FGameplayTagContainer AbilitySpellTag;
 
 	

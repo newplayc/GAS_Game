@@ -61,9 +61,19 @@ public:
 
 	UFUNCTION(Server , Reliable)
 	void AddAbilityFromSpec( const FGameplayAbilitySpec & Spec);
+
+	UFUNCTION(Server , Reliable)
+	void ActiveAbilityFromSpec(const FGameplayAbilitySpec & Spec);
+	
+	UFUNCTION(Server , Reliable)
+	void CancelAbilityFromSpec(const FGameplayAbilitySpec & Spec);
 	
 	UFUNCTION(Server,Reliable)
 	void ServerUpdateAttribute(const FGameplayTag & AttributeTag);
 
+	UFUNCTION(Server , Reliable)
+	void ServerUpdateSpell(const FGameplayTag AbilityTag);
+
+	
 	FGameplayAbilitySpec*  FindSpecWithTag(const FGameplayTag AbilityTag);
 };

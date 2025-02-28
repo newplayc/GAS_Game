@@ -33,6 +33,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChanged, float, NewValue
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageWidgetRowDelegate, FUIWidgetRow , WidgetRow);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityAddDelegate , FAbilityInfo, AddInfo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChanged, int32 , ChnageValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowSpellDescription , FString, NowLevelDesription , FString, NextLevelDesription/**Now兼职 激活能力条件  */); 
 
 /**
  * 
@@ -77,6 +78,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnStateChanged LevelChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnShowSpellDescription ShowSpellDescriptionDelegate;
 	
 	UFUNCTION()
 	void OnPsExpBroadCast( int32 Exp);
@@ -88,10 +92,10 @@ public:
 	
 	void GetAbilityTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& AbilityContainer);
 
-	void DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec);
+	void DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec,const  FGameplayTag& AbilityType);
 
 	UFUNCTION(BlueprintCallable)
-	void DeleteAbility(const FGameplayTag& AbilityInput);
+	void DeleteAbility(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType);
 	
 	void GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer);
 
@@ -104,9 +108,9 @@ public:
 	UFUNCTION(Server, BlueprintCallable ,Reliable)
 	void AddAbility(FAbilityInfo AbilityInfo);
 	
-	void ChangeAbility(FGameplayTag AbilityTag);
+	void ChangeAbility(const FGameplayTag& AbilityTag)const ;
 	
-	void DeleteInput(FGameplayTag InputTag);
+	void DeleteInput(const FGameplayTag& InputTag)const ;
 	
-};
+}; 
 

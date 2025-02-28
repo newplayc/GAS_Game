@@ -222,6 +222,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			}
 		}
 	}
+	
 	if(Data.EvaluatedData.Attribute == GetIncomingExpAttribute())
 	{
 		if(SourceActor->Implements<UPlayerInterface>())
@@ -230,6 +231,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 	}
 
+	
+	
 	
 }
 

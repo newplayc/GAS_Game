@@ -41,10 +41,12 @@ void UAttributeWidgetController::BindCallbacksToDependences()
 	}
 }
 
+
 void UAttributeWidgetController::OnTalentPointsChanegd(int32 TalentPoints)
 {
 	OnTalentChangedDelegate.Broadcast(TalentPoints);
 }
+
 
 void UAttributeWidgetController::AddAtttribute(const FGameplayTag& AttributeTag)
 {

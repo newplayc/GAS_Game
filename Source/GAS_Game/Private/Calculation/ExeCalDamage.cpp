@@ -79,6 +79,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitChance , GetDefinitionStatic().CriticalHitChanceDef);
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Secondary_CriticalHitResistance , GetDefinitionStatic().CriticalHitResistanceDef);
 
+	
 	/* 抵御类型  */
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_FireResistance , GetDefinitionStatic().FireResistanceDef);
 	AttributeDefinitions.Add(AuraGameplayTags.Attributes_Resistance_ArcaneResistance , GetDefinitionStatic().ArcaneResistanceDef);
@@ -94,6 +95,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	AActor * TargetActor = TargetASC->GetAvatarActor();
 	const FGameplayTagContainer * SourceTags =   Effectspec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer * TargetTags =   Effectspec.CapturedTargetTags.GetAggregatedTags();
+
 	
 	FAggregatorEvaluateParameters AggregatorParameters;
 	AggregatorParameters.SourceTags = SourceTags;
@@ -128,6 +130,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType);
 		checkf(AttributeDefinitions.Contains(DamageResistance) , TEXT("TagsCapture Not Found %s"),*DamageResistance.ToString());
 		const FGameplayEffectAttributeCaptureDefinition CaptureDefinition = AttributeDefinitions[DamageResistance];
+		
 		float DamageResistanceValue  = 0.f;
 		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDefinition, AggregatorParameters , DamageResistanceValue);
 		DamageResistanceValue  = FMath::Clamp(DamageResistanceValue, 0.f, 100.f);
@@ -136,7 +139,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	
 		Damage += DamageTypeValue;
 	}
-	/***********************/
+	/************                                     ***********/
 
 	
 	SourceCriticalHitChance = SourceCriticalHitChance * (100 - TargetCriticalHitResistance * 0.25) /100.f;
@@ -145,7 +148,6 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	FRealCurve * ArPenCurve = AttCt->FindCurve("ArmorPenetration" , FString());
 	float EffArmor = TargetArmor  * (100 - SourceArmorPenetration * ArPenCurve->Eval(IICombatInterface::Execute_GetPlayerLevel(SourceActor))) / 100.f;
 	
-
 	
 	const bool bCritical = FMath::RandRange(0 , 100)<=SourceCriticalHitChance;
 	

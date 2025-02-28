@@ -14,8 +14,17 @@
 #include "Interface/ICombatInterface.h"
 #include "kismet/GameplayStatics.h"
 #include "PlayerState/AuraPlayerState.h"
-#include "Tag/AuraGameplayTags.h"
 
+
+
+UAbilitiyInfo* UAuraBlueprintFunctionLibrary::GetAbilityInfo(const UObject* WorldContext)
+{
+	if(UOverlapWidgetController * OverlayController = GetOverlayWidgetController(WorldContext))
+	{
+		return OverlayController->AbilityInfos;
+	}
+	return nullptr;
+}
 
 bool UAuraBlueprintFunctionLibrary::GetUserControllerParams(const UObject* WorldContext ,FWidgetContollerParams & WidgetContollerParams)
 {
@@ -205,11 +214,11 @@ bool UAuraBlueprintFunctionLibrary::IsFriend(AActor* a1, AActor* a2)
 const EAttackType & AttType)
 {
 	TArray<FTagMontage>TypeMontage;
-	for( const FTagMontage& it : TagMontages)
+	for( const FTagMontage& It : TagMontages)
 	{
-		if(it.AttType == AttType)
+		if(It.AttType == AttType)
 		{
-			TypeMontage.AddUnique(it);
+			TypeMontage.AddUnique(It);
 		}
 	}
 	return TypeMontage;

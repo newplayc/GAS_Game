@@ -21,8 +21,9 @@ public:
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AProjectile>ProjectileClass;
 	
-
+	
 	UFUNCTION(BlueprintCallable)
 	void SpawnFireBolt(const  FVector  & TargetLocation , FGameplayTag SocketTag) ;
-	
+
+	int32 SpawnCount = 1;
 };

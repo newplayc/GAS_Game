@@ -6,7 +6,6 @@
 #include "AbilitySystemComponent.h"
 #include "Projectile/Projectile.h"
 #include "Interface/ICombatInterface.h"
-#include "Tag/AuraGameplayTags.h"
 
 
 void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation , FGameplayTag SocketTag)

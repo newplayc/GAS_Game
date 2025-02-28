@@ -21,9 +21,16 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FSpellChange OnSpellChange;
+
+	UFUNCTION(BlueprintCallable)
+	void AddSpellLevel(const FGameplayTag & AbilityTag);
+
+	UFUNCTION(BlueprintCallable)
+	void ClickSpellButtonShowDescription(const FGameplayTag AbilityTag);
 protected:
 	UFUNCTION()
 	void OnSpellPointChange(int32 SpellPoints);
 
+	
 
 };
