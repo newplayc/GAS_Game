@@ -49,12 +49,15 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Attributes_Resistance_FireResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Resistance.FireResistance"), FString("FireResistance"));
 	GameplayTags.Attributes_Resistance_LightningResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Resistance.LightningResistance"), FString("LightningResistance"));
 	GameplayTags.Attributes_Resistance_PhysicsResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Resistance.PhysicsResistance"), FString("PhysicsResistance"));
-	
+
+	// 抵抗Map
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Fire , GameplayTags.Attributes_Resistance_FireResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Arcane , GameplayTags.Attributes_Resistance_ArcaneResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Lightning , GameplayTags.Attributes_Resistance_LightningResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Physics	 , GameplayTags.Attributes_Resistance_PhysicsResistance);
 
+
+	
 	GameplayTags.Attributes_Meta_InComingExp = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Meta.IncomingExp"), FString("IncomExp"));
 	GameplayTags.Attributes_Extra_SpellPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.SpellPoints") , FString("法术技能点"));
 	GameplayTags.Attributes_Extra_TalentPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.TalentPoints") , FString("天赋点"));
@@ -120,10 +123,21 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.CoolDown_Lightning_Link = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.LightningLink"),FString("闪电链接冷却"));
 	GameplayTags.CoolDown_Lightning_Speed = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Cooldown.Lightning.LightningSpeed") ,FString("闪电速度冷却标签"));
 
+	/* Debuff*/
+	GameplayTags.Debuff_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Arcane") ,FString("奥术Debuff"));
+	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Burn") ,FString("燃烧Debuff"));
+	GameplayTags.Debuff_ElectricShock = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.ElectricShock") ,FString("感电Debuff"));
 
+	// Debuff Map
+	GameplayTags.DamageTypeToDebuff.Add(GameplayTags.Attributes_DamageType_Fire , GameplayTags.Debuff_Burn);
+	GameplayTags.DamageTypeToDebuff.Add(GameplayTags.Attributes_DamageType_Lightning , GameplayTags.Debuff_ElectricShock);
+	GameplayTags.DamageTypeToDebuff.Add(GameplayTags.Attributes_DamageType_Arcane , GameplayTags.Debuff_Arcane);
 
 	
-	
+	GameplayTags.Debuff_Chance = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Chance"), FString("Debuff几率"));
+	GameplayTags.Debuff_Duration = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Duration"), FString("Debuff持续时间"));
+	GameplayTags.Debuff_Frequency = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Frequency"), FString("Debuff 频率时间"));
+	GameplayTags.Debuff_Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Debuff.Damage"), FString("Debuff 伤害"));
 
 	GameplayTags.Ability_State_Eligible = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Eligible"),FString("能力状态解锁标签"));
 	GameplayTags.Ability_State_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Equipped"),FString("能力状态装备标签"));

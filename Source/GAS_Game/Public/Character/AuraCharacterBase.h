@@ -13,7 +13,7 @@
 class UAuraAbilitySystemComponent;
 class UAuraAttributeSet;
 class UAttributeSet;
-
+class UDebuffNiagaraComponent;
 
 
 
@@ -53,6 +53,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAuraAttributeSet>AttributeSet;
 
+	UPROPERTY(VisibleAnywhere ,BlueprintReadOnly)
+	TObjectPtr<UDebuffNiagaraComponent>FireDebuffNiagaraComponent;
+	
 	UPROPERTY(EditDefaultsOnly)
 	ECharacterClass CharacterClass;
 

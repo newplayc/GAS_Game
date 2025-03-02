@@ -73,8 +73,18 @@ public:
 	FGameplayTag Attributes_Resistance_LightningResistance;
 	FGameplayTag Attributes_Resistance_PhysicsResistance;
 
+	
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_ElectricShock;
+	FGameplayTag Debuff_Arcane;
+	
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Duration;
+	FGameplayTag Debuff_Frequency;
+	FGameplayTag Debuff_Damage;
+	
 	TMap<FGameplayTag, FGameplayTag> DamageTypeToResistance;
-
+	TMap<FGameplayTag, FGameplayTag> DamageTypeToDebuff;
 
 	FGameplayTag Attack_MeleeAttack;
 	FGameplayTag Attack_RangeAttack;
@@ -96,6 +106,7 @@ public:
 	FGameplayTag Ability_Passive;
 	FGameplayTag Ability_Active;
 	FGameplayTag Ability_None;
+	
 	/** Active Tag*/
 	FGameplayTag Ability_Fire_FireBolt;
 	FGameplayTag Ability_Fire_FireWall;
@@ -110,11 +121,13 @@ public:
 	FGameplayTag Ability_Lightning_Link;
 
 
+	
 	/** Passive Tag*/
+	
 	FGameplayTag Ability_IncreaseCriticalChance;
 	FGameplayTag Ability_IncreaseHealth;
 	FGameplayTag Ability_IncreaseMana;
-
+	
 	FGameplayTagContainer AbilitySpellTag;
 
 	

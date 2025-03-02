@@ -31,12 +31,13 @@ class GAS_GAME_API AAuraPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	AAuraPlayerController();
+
 
 	UFUNCTION(Client , Reliable)
-	void SetDamageText(float Damage, ACharacter * ECharacter , FGameplayEffectContextHandle ContextHandle);
+	void SetDamageText(float Damage, ACharacter * ECharacter ,const FGameplayEffectContextHandle& EffectContextHandle);
 	
 protected:
+	AAuraPlayerController();
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent()override;
 	virtual void PlayerTick(float DeltaTime)override;

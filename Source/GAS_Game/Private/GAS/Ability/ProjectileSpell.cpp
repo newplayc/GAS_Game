@@ -29,19 +29,8 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation , FGameplayT
 		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 	
 	
-	if(UAbilitySystemComponent* ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo()))
-	{
-		FGameplayEffectContextHandle EffContextHanle =  ASC->MakeEffectContext();
-		EffContextHanle.SetAbility(this);
-		EffContextHanle.AddSourceObject(GetAvatarActorFromActorInfo());
-		Projectile->SpecHandle =  ASC->MakeOutgoingSpec(DamageEffect , GetAbilityLevel() , EffContextHanle);
-	}
-		
-	for(auto Data : DamageTypes)
-	{
-		float DataValue = Data.Value.GetValueAtLevel(GetAbilityLevel());
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(Projectile->SpecHandle ,Data.Key , DataValue);
-	}
+	Projectile->EffectParams = MakeDefaultEffectParams();
+    
 	Projectile->FinishSpawning(SpawnTransform);
 
 

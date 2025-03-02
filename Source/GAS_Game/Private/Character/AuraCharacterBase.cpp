@@ -2,10 +2,11 @@
 
 
 #include "Character/AuraCharacterBase.h"
+
+#include "Component/DebuffNiagaraComponent.h"
 #include "GAS/AuraAbilitySystemComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GAS/AuraAttributeSet.h"
-#include "GAS/Ability/AuraGameplayAbility.h"
 #include "GAS_Game/GAS_Game.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMaterialLibrary.h"
@@ -19,6 +20,8 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), "WeaponHandSocket");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	FireDebuffNiagaraComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("DebuffEffectComponent");
 	
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
@@ -99,7 +102,6 @@ void AAuraCharacterBase::NetDeath_Implementation()
 	GetMesh()->SetAllBodiesSimulatePhysics(true);
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound ,GetActorLocation());
 	DissolveMesh();
-	
 }
 
 

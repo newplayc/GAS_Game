@@ -6,6 +6,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
+#include "GAS/Effect/AuraGameplayEffectTypes.h"
 #include "Projectile.generated.h"
 
 
@@ -23,9 +24,9 @@ class GAS_GAME_API AProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
-
-	UPROPERTY(BlueprintReadOnly ,  meta = (ExposeOnSpawn = true))
-	FGameplayEffectSpecHandle SpecHandle = nullptr;
+	
+	UPROPERTY()
+	FEffectParams EffectParams;
 
 protected:
 	// Called when the game starts or when spawned
@@ -33,6 +34,9 @@ protected:
 	
 	virtual void Destroyed()override;
 
+	
+
+	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent>ProjectileMoveCom;
 

@@ -77,7 +77,7 @@ public:
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EP) const;
-	void ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor);
+	void ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor) const;
 	void SendXp(AActor* SourceActor, AActor* TargetActor);
 
 

@@ -7,7 +7,25 @@
 #include "AuraBlueprintFunctionLibrary.h"
 
 
-
+FEffectParams UAuraGameplayDamageAbility::MakeDefaultEffectParams(AActor* TargetActor)
+{
+	FEffectParams EffectParams;
+	EffectParams.DebuffChance = DebuffChance;
+	EffectParams.DebuffDamage = DebuffDamage;
+	EffectParams.DebuffDuration = DebuffDuration;
+	EffectParams.DebuffFrequency = DebuffFrenquency;
+	EffectParams.DamageTypeTag = DamageTypeTag;
+	EffectParams.AbilityLevel =  GetAbilityLevel();
+	EffectParams.BaseDamage = DamageValue.GetValueAtLevel(EffectParams.AbilityLevel);
+	EffectParams.SourceAbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
+	EffectParams.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	FGameplayEffectContextHandle EffectContextHandle = EffectParams.SourceAbilitySystemComponent->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
+	EffectContextHandle.SetAbility(this);
+	FGameplayEffectSpecHandle SeSpecHandle = EffectParams.SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffect , GetAbilityLevel() , EffectContextHandle);
+	EffectParams.EffectSpecHandle = SeSpecHandle;
+	return EffectParams;
+}
 
 void UAuraGameplayDamageAbility::CauseDamage(AActor* Target)
 {
@@ -15,10 +33,7 @@ void UAuraGameplayDamageAbility::CauseDamage(AActor* Target)
 	if(GetAvatarActorFromActorInfo()->HasAuthority())
 	{
 		FGameplayEffectSpecHandle SpecHandle =  MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());
-		for(auto Dam : DamageTypes)
-		{
-			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle , Dam.Key, Dam.Value.GetValueAtLevel(GetAbilityLevel()));
-		}
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle ,DamageTypeTag, DamageValue.GetValueAtLevel(GetAbilityLevel()));
 		GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get() , UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target));
 	}
 }

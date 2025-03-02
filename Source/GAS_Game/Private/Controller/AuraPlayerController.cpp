@@ -18,12 +18,15 @@
 
 
 
+
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
 	HeightActor = nullptr;
 	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
+
+
 
 void AAuraPlayerController::BeginPlay()
 {
@@ -85,7 +88,8 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	AutoRun();
 }
 
-void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacter * ECharacter ,FGameplayEffectContextHandle EffectContextHandle)
+void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacter* ECharacter,
+	const FGameplayEffectContextHandle& EffectContextHandle)
 {
 	if(IsValid(DamageTextWidgetClass))
 	{
@@ -94,9 +98,14 @@ void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacte
 		DamageWidget->AttachToComponent(ECharacter->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform);
 		bool Block = UAuraBlueprintFunctionLibrary::GetGameContextBlock(EffectContextHandle);
 		bool Critical = UAuraBlueprintFunctionLibrary::GetGameContextCritical(EffectContextHandle);
-		DamageWidget->SetDamageText(Damage , Block ,Critical);
+		FGameplayTag DamageType = UAuraBlueprintFunctionLibrary::GetDamageTypeTag(EffectContextHandle);
+		DamageWidget->SetDamageText(Damage , Block ,Critical, DamageType);
 	}
+	
 }
+
+
+
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {

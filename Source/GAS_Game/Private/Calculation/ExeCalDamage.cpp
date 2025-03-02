@@ -2,6 +2,8 @@
 
 
 #include "Calculation/ExeCalDamage.h"
+
+
 #include "AuraBlueprintFunctionLibrary.h"
 #include "GAS/AuraAttributeSet.h"
 #include "Tag/AuraGameplayTags.h"
@@ -47,8 +49,6 @@ static const FCaptureDefinitionStatic& GetDefinitionStatic()
 	static FCaptureDefinitionStatic captureDefinitionStatic;
 	return captureDefinitionStatic;
 }
-
-
 
 
 UExeCalDamage::UExeCalDamage()
@@ -119,27 +119,43 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	float TargetCriticalHitResistance = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDefinitionStatic().CriticalHitResistanceDef , AggregatorParameters , TargetCriticalHitResistance);
 
+	FAuraGameplayTags Tags = FAuraGameplayTags::Get();
 	
-	/**************  计算伤害  抵御掉的伤害*********/
+
+	//计算伤害  抵御掉的伤害
 	float Damage  = 0;
-	for(auto Data : FAuraGameplayTags::Get().DamageTypeToResistance)
+	for(auto Data : Tags.DamageTypeToResistance)
 	{
+		// Debuff
+		float DebuffDamage = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Damage);
+		float DebuffDuration = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Duration);
+		float DebuffFrequency = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Frequency);
+		float DebuffChance = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Chance);
+
+
 		const FGameplayTag DamageType =  Data.Key;
 		const FGameplayTag DamageResistance =  Data.Value;
-		
 		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType);
+
 		checkf(AttributeDefinitions.Contains(DamageResistance) , TEXT("TagsCapture Not Found %s"),*DamageResistance.ToString());
 		const FGameplayEffectAttributeCaptureDefinition CaptureDefinition = AttributeDefinitions[DamageResistance];
 		
 		float DamageResistanceValue  = 0.f;
 		ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(CaptureDefinition, AggregatorParameters , DamageResistanceValue);
 		DamageResistanceValue  = FMath::Clamp(DamageResistanceValue, 0.f, 100.f);
+
+		if(DamageTypeValue > 0.5f) //Debuff
+		{
+			DebuffChance = DebuffChance*  (100- DamageResistanceValue)/ 100;
+			const bool bDebuff = FMath::RandRange(0 , 100) <= DebuffChance;
+			UAuraBlueprintFunctionLibrary::SetEffectDebuffParamsContext(EffectContextHandle , DebuffDuration ,DebuffFrequency ,DebuffDamage ,bDebuff,DamageType);
+		}
 		
 		DamageTypeValue = DamageTypeValue * (100 - DamageResistanceValue) / 100.f;
 	
 		Damage += DamageTypeValue;
 	}
-	/************                                     ***********/
+	//
 
 	
 	SourceCriticalHitChance = SourceCriticalHitChance * (100 - TargetCriticalHitResistance * 0.25) /100.f;

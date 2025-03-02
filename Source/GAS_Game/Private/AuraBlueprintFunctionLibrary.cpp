@@ -3,6 +3,7 @@
 
 #include "AuraBlueprintFunctionLibrary.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Character/AuraCharacterBase.h"
 #include "WidgetController/AuraUserWidgetController.h"
 #include "HUD/AuraHUD.h"
@@ -235,3 +236,79 @@ float UAuraBlueprintFunctionLibrary::GetCharacterExpValue(const UObject* WorldCo
 	
 	return DataInfo->GetCharacterDataInfo(CharacterClass).ExpValue.GetValueAtLevel(Level);
 }
+
+FActiveGameplayEffectHandle UAuraBlueprintFunctionLibrary::ApplyEffectParams(const FEffectParams& EffectParams)
+{
+
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle ,EffectParams.DamageTypeTag , EffectParams.BaseDamage);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Damage, EffectParams.DebuffDamage);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Chance, EffectParams.DebuffChance);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Duration, EffectParams.DebuffDuration);
+	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Frequency, EffectParams.DebuffFrequency);
+	
+	
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle =  EffectParams.SourceAbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*(EffectParams.EffectSpecHandle.Data.Get()) , EffectParams.TargetAbilitySystemComponent);
+	return ActiveGameplayEffectHandle;
+}
+
+void UAuraBlueprintFunctionLibrary::SetEffectDebuffParamsContext(FGameplayEffectContextHandle& EffectContextHandle, float Duration,
+                                                                 float Frequency, float Damage, bool IsDebuff, const FGameplayTag& DamageTypeTag)
+{
+	if(FAuraGameplayEffectContext * GEC = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		
+		GEC->SetDebuffDamage(Damage);
+		GEC->SetIsDebuff(IsDebuff);
+		GEC->SetDebuffFrequency(Frequency);
+		GEC->SetDebuffDuration(Duration);
+		GEC->SetDamageTypeTag(MakeShareable(new FGameplayTag(DamageTypeTag)));
+	}
+}
+
+bool UAuraBlueprintFunctionLibrary::GetIsDebuffFromContext(const FGameplayEffectContextHandle& EffectContext)
+{
+	if(const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->GetIsDebuff();
+	}
+	return false;
+}
+
+float UAuraBlueprintFunctionLibrary::GetDebuffDuration(const FGameplayEffectContextHandle& EffectContext)
+{
+	if(const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->GetDebuffDuration();
+	}
+		return 0.f;
+}
+
+float UAuraBlueprintFunctionLibrary::GetDebuffFrequency(const FGameplayEffectContextHandle& EffectContext)
+{
+	if(const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->GetDebuffFrequency();
+	}
+	return 0.f;
+}
+
+float UAuraBlueprintFunctionLibrary::GetDebuffDamage(const FGameplayEffectContextHandle& EffectContext)
+{
+	if(const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->GetDebuffDamage();
+	}
+	return 0.f;
+}
+
+FGameplayTag UAuraBlueprintFunctionLibrary::GetDamageTypeTag(const FGameplayEffectContextHandle& EffectContext)
+{
+	if(const FAuraGameplayEffectContext * GEC = static_cast<const FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->GetDamageTypeTag();
+	}
+	return FGameplayTag();
+}
+
+
+

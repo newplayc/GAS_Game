@@ -11,6 +11,7 @@
 #include "WidgetController/SpellMenuWidgetController.h"
 #include "AuraBlueprintFunctionLibrary.generated.h"
 
+struct FEffectParams;
 
 
 /**
@@ -74,5 +75,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static float GetCharacterExpValue(const UObject * WorldContext , ECharacterClass CharacterClass , int32 Level);
 
-	
+	static FActiveGameplayEffectHandle ApplyEffectParams(const FEffectParams & EffectParams);
+
+	UFUNCTION(BlueprintCallable)
+	static void SetEffectDebuffParamsContext(FGameplayEffectContextHandle & EffectContext, float Duration, float Frequency, float Damage, bool IsDebuff,const FGameplayTag
+	                                         & DamageTypeTag);
+
+	UFUNCTION(BlueprintCallable)
+	static bool GetIsDebuffFromContext(const FGameplayEffectContextHandle & EffectContext);
+
+	UFUNCTION(BlueprintCallable)
+	static float GetDebuffDuration(const FGameplayEffectContextHandle & EffectContext);
+
+	UFUNCTION(BlueprintCallable)
+	static float GetDebuffFrequency(const FGameplayEffectContextHandle & EffectContext);
+
+	UFUNCTION(BlueprintCallable)
+	static float GetDebuffDamage(const FGameplayEffectContextHandle & EffectContext);
+
+	UFUNCTION(BlueprintCallable)
+	static FGameplayTag GetDamageTypeTag(const FGameplayEffectContextHandle & EffectContext);
 };

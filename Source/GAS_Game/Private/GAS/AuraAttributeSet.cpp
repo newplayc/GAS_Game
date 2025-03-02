@@ -12,7 +12,11 @@
 #include "GameFramework/Character.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayEffectExtension.h"
+#include "GAS/Effect/AuraGameplayEffectTypes.h"
 #include "Interface/PlayerInterface.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
+
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -140,7 +144,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 
 
 
-void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor)
+void UAuraAttributeSet::ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor) const
 {
 	if(SourceActor)
 	{
@@ -177,12 +181,18 @@ void UAuraAttributeSet::SendXp(AActor* SourceActor, AActor* TargetActor)
  */
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-
 	Super::PostGameplayEffectExecute(Data);
 	
 	//FEffectProperties Properties;
 	//SetEffectProperties(Data, Properties);
 
+	AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
+	AActor * TargetActor = Data.Target.GetAvatarActor();
+	if(TargetActor->Implements<UICombatInterface>())
+	{
+		if(IICombatInterface::Execute_IsDead(TargetActor))return;
+	}
+	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
@@ -192,11 +202,11 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
 
-	AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
-	AActor * TargetActor = Data.Target.GetAvatarActor();
-	if(!SourceActor || !TargetActor)return;
-	
-	if(Data.EvaluatedData.Attribute==GetIncomingDamageAttribute())
+		UAbilitySystemComponent * SourceAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(SourceActor);
+		UAbilitySystemComponent * TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+		if(!SourceActor || !TargetActor)return;
+		
+	if(Data.EvaluatedData.Attribute==  GetIncomingDamageAttribute())
 	{
 		const float NewHealth = GetHealth() - GetIncomingDamage();
 		SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
@@ -231,9 +241,57 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 	}
 
-	
-	
-	
+	bool IsDebuff = UAuraBlueprintFunctionLibrary::GetIsDebuffFromContext(Data.EffectSpec.GetContext());
+	if(IsDebuff)
+	{
+		
+		FGameplayEffectContextHandle EffectContextHandle = SourceAbilitySystemComponent->MakeEffectContext();
+		EffectContextHandle.AddSourceObject(SourceActor);
+		
+		float DebuffDuration = UAuraBlueprintFunctionLibrary::GetDebuffDuration(Data.EffectSpec.GetContext());
+		float DebuffFrequency = UAuraBlueprintFunctionLibrary::GetDebuffFrequency(Data.EffectSpec.GetContext());
+		float DebuffDamage = UAuraBlueprintFunctionLibrary::GetDebuffDamage(Data.EffectSpec.GetContext());
+		FGameplayTag DamageTypeTag = UAuraBlueprintFunctionLibrary::GetDamageTypeTag(Data.EffectSpec.GetContext());
+
+		FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageTypeTag.ToString());
+		UGameplayEffect * DebuffEffect = NewObject<UGameplayEffect>(GetTransientPackage(),*DebuffName);
+		DebuffEffect->DurationPolicy = EGameplayEffectDurationType::HasDuration;
+		DebuffEffect->Period = DebuffFrequency;
+		DebuffEffect->DurationMagnitude = FScalableFloat(DebuffDuration);
+
+
+		
+		// 
+		FGameplayTag DebuffTag = FAuraGameplayTags::Get().DamageTypeToDebuff[DamageTypeTag];
+		UTargetTagsGameplayEffectComponent & TargetEffectComponent =  DebuffEffect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
+		FInheritedTagContainer TagContainer;
+		TagContainer.AddTag(DebuffTag);
+		TargetEffectComponent.SetAndApplyTargetTagChanges(TagContainer);
+		
+
+		
+		DebuffEffect->StackingType = EGameplayEffectStackingType::AggregateBySource;
+		DebuffEffect->StackLimitCount = 1;
+
+
+		
+		FGameplayModifierInfo ModifierInfo;
+		ModifierInfo.Attribute = GetIncomingDamageAttribute();
+		ModifierInfo.ModifierOp = EGameplayModOp::Override;
+		ModifierInfo.ModifierMagnitude = FScalableFloat(DebuffDamage);
+		DebuffEffect->Modifiers.Add(ModifierInfo);
+
+		
+		if(FGameplayEffectSpec * MutableSpec = new FGameplayEffectSpec(DebuffEffect , EffectContextHandle , Data.EffectSpec.GetLevel()))
+		{
+			FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
+			TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DebuffTag));
+			AuraContext->SetDamageTypeTag(DebuffDamageType);	
+			TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+		}
+
+		
+	}
 }
 
 

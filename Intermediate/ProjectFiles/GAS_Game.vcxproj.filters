@@ -80,9 +80,6 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GAS_Game\Private\PassiveAbility.cpp">
-      <Filter>Source\GAS_Game\Private</Filter>
-    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\AI">
       <UniqueIdentifier>{3B19F633-AD8C-3DFB-998A-605F9EFA2624}</UniqueIdentifier>
     </Filter>
@@ -123,6 +120,9 @@
       <UniqueIdentifier>{54B1EE26-C7EE-3C77-B66F-398A2B7DE287}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Component\AuraEnhancedInputComponent.cpp">
+      <Filter>Source\GAS_Game\Private\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Component\DebuffNiagaraComponent.cpp">
       <Filter>Source\GAS_Game\Private\Component</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Controller">
@@ -183,6 +183,9 @@
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\MeleeAbility.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\PassiveAbility.cpp">
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ProjectileSpell.cpp">
@@ -281,9 +284,6 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GAS_Game\Public\PassiveAbility.h">
-      <Filter>Source\GAS_Game\Public</Filter>
-    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\AI">
       <UniqueIdentifier>{9C7BEF3B-054F-3619-98F6-6E20B68BED73}</UniqueIdentifier>
     </Filter>
@@ -324,6 +324,9 @@
       <UniqueIdentifier>{A09F2EFA-6D2E-356F-9BCD-FED452B131B7}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Component\AuraEnhancedInputComponent.h">
+      <Filter>Source\GAS_Game\Public\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Component\DebuffNiagaraComponent.h">
       <Filter>Source\GAS_Game\Public\Component</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Data">
@@ -375,6 +378,9 @@
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\MeleeAbility.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\PassiveAbility.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ProjectileSpell.h">

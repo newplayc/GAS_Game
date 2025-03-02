@@ -12,7 +12,7 @@ FString UFireBoltAbility::GetLevelDescription(int32 Level)
 
 	SpellDescription = FString("Launch a Fire Bolt And Cause Fire Damage");
 
-	Damage = DamageTypes[FAuraGameplayTags::Get().Attributes_DamageType_Fire].GetValueAtLevel(Level);
+	Damage = DamageValue.GetValueAtLevel(Level);
 
 	GetCostGameplayEffect()->Modifiers[0].ModifierMagnitude.GetStaticMagnitudeIfPossible(Level , ManaCost);
 

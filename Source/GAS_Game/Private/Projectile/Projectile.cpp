@@ -37,13 +37,12 @@ AProjectile::AProjectile()
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
-	
 	Super::BeginPlay();
 	SetLifeSpan(lifeSpanTime);
 	AudioC = UGameplayStatics::SpawnSoundAttached(LoopingSound, RootComponent);
 	SphereComp->OnComponentBeginOverlap.AddDynamic(this ,&AProjectile::OnSphereOverlap);
-	
 }
+
 
 void AProjectile::Destroyed()
 {
@@ -59,21 +58,17 @@ void AProjectile::Destroyed()
 		bHit = true;
 	}
 	Super::Destroyed();
-	
 }
+
 
 void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	
-	if(SpecHandle.Data.IsValid() &&  SpecHandle.Data.Get()->GetContext().GetEffectCauser())
+	if(EffectParams.SourceAbilitySystemComponent)
+	if(AActor* Causer =  EffectParams.SourceAbilitySystemComponent->GetAvatarActor())
 	{
-		AActor * Causer = SpecHandle.Data.Get()->GetContext().GetEffectCauser();
-		if(OtherActor == Causer || UAuraBlueprintFunctionLibrary::IsFriend(Causer , OtherActor))return;
+		if(OtherActor == Causer || (UAuraBlueprintFunctionLibrary::IsFriend(Causer , OtherActor))) return;
 	}
-	else 
-	{
-		return;
-	}
+
 	if(!bHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
@@ -85,11 +80,10 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	{
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
-			ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-			
+			EffectParams.TargetAbilitySystemComponent = ASC;
+			UAuraBlueprintFunctionLibrary::ApplyEffectParams(EffectParams);
 		}
 		Destroy();
 	}
-	
 }
 

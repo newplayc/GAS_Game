@@ -16,7 +16,7 @@ class GAS_GAME_API UDamageTextWidgetCom : public UWidgetComponent
 public:
 	
 	UFUNCTION(BlueprintImplementableEvent ,BlueprintCallable)
-	void SetDamageText(const float damage ,bool IsBlock , bool IsDamage);
+	void SetDamageText(const float damage, bool IsBlock, bool IsDamage,  FGameplayTag DebuffTag);
 
 
 

@@ -8,6 +8,56 @@ void FAuraGameplayEffectContext::SetbBlock(bool bBlock)
 void FAuraGameplayEffectContext::SetbCritical(bool bCritical)
 {this->bCriticalHit = bCritical;}
 
+void FAuraGameplayEffectContext::SetDebuffDuration(float InDebuffDuration)
+{
+	DebuffDuration = InDebuffDuration;
+}
+
+void FAuraGameplayEffectContext::SetDebuffFrequency(float InDebuffFrequency)
+{
+	DebuffFrequency = InDebuffFrequency;
+}
+
+void FAuraGameplayEffectContext::SetDebuffDamage(float InDebuffDamage)
+{
+	DebuffDamage =  InDebuffDamage;
+}
+
+void FAuraGameplayEffectContext::SetIsDebuff(bool InIsDebuff)
+{
+	IsDebuff = InIsDebuff;
+}
+
+void FAuraGameplayEffectContext::SetDamageTypeTag(TSharedPtr<FGameplayTag>DamageTag)
+{
+	DamageTypeTag = DamageTag;
+} 
+
+float FAuraGameplayEffectContext::GetDebuffDuration()const
+{
+	return DebuffDuration;
+}
+
+float FAuraGameplayEffectContext::GetDebuffFrequency()const
+{
+	return DebuffFrequency;
+}
+
+float FAuraGameplayEffectContext::GetDebuffDamage()const
+{
+	return DebuffDamage;
+}
+
+bool FAuraGameplayEffectContext::GetIsDebuff()const
+{
+	return IsDebuff;
+}
+
+FGameplayTag FAuraGameplayEffectContext::GetDamageTypeTag() const
+{
+	return *DamageTypeTag.Get();
+}
+
 bool FAuraGameplayEffectContext::GetbCritical() const
 {return this->bCriticalHit;}
 
@@ -67,9 +117,30 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 		{
 			RepBits |= 1 << 8;
 		}
+		if(DebuffDamage > 0.f)
+		{
+			RepBits |= 1<<9;
+		}
+		if(DebuffDuration > 0.f)
+		{
+			RepBits |= 1<<10;
+		}
+		if(DebuffFrequency >0.f)
+		{
+			RepBits |= 1 << 11;
+		}
+		if(true)
+		{
+			RepBits |= 1<<12;
+		}
+		if(DamageTypeTag.IsValid())
+		{
+			RepBits |= 1<<13;
+		}
 	}
+	
 
-	Ar.SerializeBits(&RepBits, 9);
+	Ar.SerializeBits(&RepBits, 14);
 
 	if (RepBits & (1 << 0))
 	{
@@ -118,6 +189,35 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 	if(RepBits & (1 << 8))
 	{
 		Ar<<bBlockHit;
+	}
+	if(RepBits & (1<<9))
+	{
+		Ar << DebuffDamage;
+	}
+	if(RepBits & (1<<10))
+	{
+		Ar << DebuffDuration;
+	}
+
+	if(RepBits & (1<<11))
+	{
+		Ar << DebuffFrequency;
+	}
+	if(RepBits & (1<<12))
+	{
+		Ar << IsDebuff;
+	}
+	if (RepBits & (1 << 13))
+	{
+		if (Ar.IsLoading())
+		{
+			if (!DamageTypeTag.IsValid())
+			{
+				DamageTypeTag = MakeShared<FGameplayTag>();
+			}
+
+		}
+		DamageTypeTag->NetSerialize(Ar, Map, bOutSuccess);
 	}
 	
 	if (Ar.IsLoading())
