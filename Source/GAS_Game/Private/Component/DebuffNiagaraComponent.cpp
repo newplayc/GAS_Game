@@ -19,11 +19,11 @@ void UDebuffNiagaraComponent::BeginPlay()
 	Super::BeginPlay();
 	if(UAbilitySystemComponent * AbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()))
 	{
-		AbilitySystemComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_Burn).AddLambda([this](const FGameplayTag DebuffTag ,int32 Stack)
+		AbilitySystemComponent->RegisterGameplayTagEvent(DebuffTag).AddLambda([this](const FGameplayTag DebuffTag ,int32 Stack)
 		{
 			if(Stack > 0)
 			{
-				Activate();
+				Activate(true);
 			}
 			else
 			{

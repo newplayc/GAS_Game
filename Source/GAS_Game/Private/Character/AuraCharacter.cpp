@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "NiagaraComponent.h"
 #include "Components/AudioComponent.h"
+#include "GAS_Game/AuraLog.h"
 
 
 AAuraCharacter::AAuraCharacter()
@@ -26,6 +27,12 @@ AAuraCharacter::AAuraCharacter()
 	LevelUpAudioComponent = CreateDefaultSubobject<UAudioComponent>("LevelUpAudioCom");
 	LevelUpAudioComponent->bAutoActivate = false;
 	LevelUpAudioComponent->SetupAttachment(RootComponent);
+	CriticalComponent = CreateDefaultSubobject<UBuffHaloComponent>("CriticalComponent");
+	CriticalComponent->SetupAttachment(RootComponent);
+	HealthComponent = CreateDefaultSubobject<UBuffHaloComponent>("HealthCom");
+	HealthComponent->SetupAttachment(RootComponent);
+	ManaComponent = CreateDefaultSubobject<UBuffHaloComponent>("ManaCom");
+	ManaComponent->SetupAttachment(RootComponent);
 	
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
@@ -39,13 +46,29 @@ UAbilitySystemComponent* AAuraCharacter::GetAbilitySystemComponent() const
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
 	if (!PS)return nullptr;
 	return PS->GetAbilitySystemComponent();
+}
+
+void AAuraCharacter::OnStunTagChanged(const FGameplayTag StunTag, int32 count)
+{
 	
+	Super::OnStunTagChanged(StunTag, count);
+	
+	bool bStun = count > 0;
+	FGameplayTag AbiltyBlockTag = FAuraGameplayTags::Get().Ability_Block;
+	
+	if(bStun){
+		AbilityComponent->AddLooseGameplayTag(AbiltyBlockTag);
+	}
+	else{
+		AbilityComponent->RemoveLooseGameplayTag(AbiltyBlockTag);
+	}
 }
 
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	IniAbilityInfo();
+	
 	GiveStartAbilities();
 	
 	GetPlayerState<AAuraPlayerState>()->InitXpAndLevel();
@@ -144,6 +167,22 @@ void AAuraCharacter::AddTalentPoints_Implementation(int32 InPoints)
 	}
 }
 
+USkeletalMeshComponent* AAuraCharacter::GetWeaponMesh_Implementation()
+{
+	return Weapon;
+}
+
+void AAuraCharacter::OnRep_Stun() const
+{
+		FGameplayTag AbiltyBlockTag = FAuraGameplayTags::Get().Ability_Block;
+		if(IsStun){
+			AbilityComponent->AddLooseGameplayTag(AbiltyBlockTag);
+		}
+		else{
+			AbilityComponent->RemoveLooseGameplayTag(AbiltyBlockTag);
+		}
+}
+
 void AAuraCharacter::AddPointsAfterInitAttribute(UObject * Source)
 {
 	AbilityComponent->ApplyEffectToInit(InitalSecondaryEffect, GetPlayerLevel_Implementation() , Source);
@@ -160,6 +199,7 @@ void AAuraCharacter::Level_up_Implementation()
 void AAuraCharacter::PlayLevelEffect_Implementation()
 {
 	LevelUpNiagaraComponent->Activate(true);
+	
 	LevelUpAudioComponent->Activate(true);
 }
 
@@ -168,32 +208,36 @@ void AAuraCharacter::IniAbilityInfo()
 {
 
 	AAuraPlayerState* PS = GetPlayerState<AAuraPlayerState>();
-	
 	if (!PS)return;
 	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(PS->GetAbilitySystemComponent());
 	check(ASC);
 	AbilityComponent = ASC;
-	ASC->InitAbilityActorInfo(PS, this);
 
+	ASC->InitAbilityActorInfo(PS, this);
+	OnAbilitySystemComponent.Broadcast();
+	ASC->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_ElectricShock).AddUObject(this,&AAuraCharacter::OnStunTagChanged);
+	UE_LOG(AuraLog,Warning ,TEXT("AbilityCom Broad"));
 	UAuraAttributeSet* AS = PS->GetAttributeSet();
 	AttributeSet = AS;
-	AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(GetController());
-	if (PlayerController)
+	if (AAuraPlayerController* PlayerController = Cast<AAuraPlayerController>(GetController()))
 	{
 		if (AAuraHUD* AHUD = Cast<AAuraHUD>(PlayerController->GetHUD()))
 		{
 			AHUD->IniOverlayWidget(PS, PlayerController, ASC, AS);
 		}
 	}
-	
 	InitAttribute(this);
 	
 }
 
+
 void AAuraCharacter::GiveStartAbilities()
 {
+	
 	UAuraAbilitySystemComponent* ASC = Cast<UAuraAbilitySystemComponent>(AbilityComponent);
+	
 	ASC->GiveAbilitiesArray(StartAbilitys);
+	
 	ASC->GiveBaseAbilitiesArray(BaseAbilitys);
 
 }

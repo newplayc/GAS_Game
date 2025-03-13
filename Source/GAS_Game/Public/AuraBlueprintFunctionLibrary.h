@@ -11,6 +11,7 @@
 #include "WidgetController/SpellMenuWidgetController.h"
 #include "AuraBlueprintFunctionLibrary.generated.h"
 
+
 struct FEffectParams;
 
 
@@ -24,8 +25,10 @@ class GAS_GAME_API UAuraBlueprintFunctionLibrary : public UBlueprintFunctionLibr
 
 public:
 
+	
 	UFUNCTION()
 	static UAbilitiyInfo * GetAbilityInfo(const UObject * WorldContext);
+	
 	UFUNCTION()
 	static bool GetUserControllerParams(const UObject * WorldContext , FWidgetContollerParams & WidgetContollerParams);
 	UFUNCTION(BlueprintPure , BlueprintCallable ,meta=(DefaultToSelf="WorldContext"))
@@ -75,6 +78,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static float GetCharacterExpValue(const UObject * WorldContext , ECharacterClass CharacterClass , int32 Level);
 
+	UFUNCTION(BlueprintCallable)
 	static FActiveGameplayEffectHandle ApplyEffectParams(const FEffectParams & EffectParams);
 
 	UFUNCTION(BlueprintCallable)
@@ -95,4 +99,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static FGameplayTag GetDamageTypeTag(const FGameplayEffectContextHandle & EffectContext);
+
+	UFUNCTION()
+	static void SetDeathImpluse( FGameplayEffectContextHandle  EffectContextHandle ,const FVector & InFVector);
+
+	UFUNCTION()
+	static FVector GetDeathImpluse(const FGameplayEffectContextHandle & EffectContextHandle);
+
+	UFUNCTION()
+	static void SetKnockBack( FGameplayEffectContextHandle  EffectContextHandle ,const FVector & InFVector);
+
+	UFUNCTION()
+	static FVector GetKnockBack(const FGameplayEffectContextHandle & EffectContextHandle);
 };

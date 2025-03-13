@@ -18,7 +18,7 @@ public:
 	
 	virtual FString GetLevelDescription(int32 Level) override;
 	
-	virtual FString GetNextLevelDescription(int32 NextLevel)override;
+	virtual FString GetNextLevelDescription(int32 NowLevel)override;
 
 
 	

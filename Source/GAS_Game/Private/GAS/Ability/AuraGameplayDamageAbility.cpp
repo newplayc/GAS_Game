@@ -9,6 +9,7 @@
 
 FEffectParams UAuraGameplayDamageAbility::MakeDefaultEffectParams(AActor* TargetActor)
 {
+		
 	FEffectParams EffectParams;
 	EffectParams.DebuffChance = DebuffChance;
 	EffectParams.DebuffDamage = DebuffDamage;
@@ -16,6 +17,9 @@ FEffectParams UAuraGameplayDamageAbility::MakeDefaultEffectParams(AActor* Target
 	EffectParams.DebuffFrequency = DebuffFrenquency;
 	EffectParams.DamageTypeTag = DamageTypeTag;
 	EffectParams.AbilityLevel =  GetAbilityLevel();
+	EffectParams.DeathImpulseMagnitude = DeathImpulseMagnitude;
+	EffectParams.KnockBackMagnitude = KnockBackMagnitude;
+	EffectParams.bShouldKnockBack = bShouldKnockBack;
 	EffectParams.BaseDamage = DamageValue.GetValueAtLevel(EffectParams.AbilityLevel);
 	EffectParams.SourceAbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
 	EffectParams.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
@@ -27,6 +31,7 @@ FEffectParams UAuraGameplayDamageAbility::MakeDefaultEffectParams(AActor* Target
 	return EffectParams;
 }
 
+
 void UAuraGameplayDamageAbility::CauseDamage(AActor* Target)
 {
 	if(UAuraBlueprintFunctionLibrary::IsFriend(Target , GetAvatarActorFromActorInfo()))return;
@@ -35,7 +40,9 @@ void UAuraGameplayDamageAbility::CauseDamage(AActor* Target)
 		FGameplayEffectSpecHandle SpecHandle =  MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle ,DamageTypeTag, DamageValue.GetValueAtLevel(GetAbilityLevel()));
 		GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get() , UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target));
+		
 	}
+	
 }
 
 

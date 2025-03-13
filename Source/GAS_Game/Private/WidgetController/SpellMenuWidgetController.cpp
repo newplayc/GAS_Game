@@ -24,8 +24,7 @@ void USpellMenuWidgetController::AddSpellLevel(const FGameplayTag & AbilityTag)
 void USpellMenuWidgetController::ClickSpellButtonShowDescription(const FGameplayTag AbilityTag)
 {
 	if(!AbilityTag.IsValid())return;
-	FAbilityInfo AbilityInfo = UAuraBlueprintFunctionLibrary::GetAbilityInfo(this)->FIndAbilityInfoWithTag(AbilityTag);
-
+	
 	/** 当前技能已经激活  */
 	if(FGameplayAbilitySpec * AbilitySpec = GetAuraASC()->FindSpecWithTag(AbilityTag))
 	{

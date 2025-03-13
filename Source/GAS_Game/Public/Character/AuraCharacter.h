@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AuraCharacterBase.h"
+#include "Component/BuffHaloComponent.h"
 #include "Data/AbilitiyInfo.h"
 #include "Interface/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
@@ -14,6 +15,10 @@ class UAuraAbilitySystemComponent;
 /**
  * 
  */
+
+DECLARE_MULTICAST_DELEGATE(FOnAbilitySystemComponent);
+
+
 UCLASS()
 class GAS_GAME_API AAuraCharacter : public AAuraCharacterBase,public IPlayerInterface
 {
@@ -21,14 +26,17 @@ class GAS_GAME_API AAuraCharacter : public AAuraCharacterBase,public IPlayerInte
 public:
 	AAuraCharacter();
 
+	FOnAbilitySystemComponent OnAbilitySystemComponent;
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	virtual void OnStunTagChanged(const FGameplayTag StunTag, int32 count) override;
 	virtual void PossessedBy(AController* NewController) override;
 
 	virtual void OnRep_PlayerState()override;
 	
 	virtual void IniAbilityInfo() override;
-
+	
 	void GiveStartAbilities();
 
 	virtual int32 GetPlayerLevel_Implementation();
@@ -42,24 +50,32 @@ public:
 	int32 GetTalentPoints_Implementation();
 	void AddSpellPoints_Implementation(int32 InPoints);
 	void AddTalentPoints_Implementation(int32 InPoints);
+	USkeletalMeshComponent * GetWeaponMesh_Implementation() override;
 
 	UFUNCTION(Server ,Reliable)
 	void Level_up();
 
 	UFUNCTION(NetMulticast , Reliable)
 	void PlayLevelEffect();
-
+	
+	virtual void OnRep_Stun() const override;
+	
 	void AddPointsAfterInitAttribute(UObject * Source);
+	
 protected:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>> StartAbilitys;
-
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UGameplayAbility>> BaseAbilitys;
 	UPROPERTY(VisibleAnywhere,  BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent>LevelUpNiagaraComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UAudioComponent>LevelUpAudioComponent;
-	
+	UPROPERTY(VisibleAnywhere,  BlueprintReadOnly)
+	TObjectPtr<UBuffHaloComponent>CriticalComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UBuffHaloComponent>HealthComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UBuffHaloComponent>ManaComponent;
 };  

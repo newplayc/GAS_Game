@@ -22,7 +22,6 @@ AAuraEnemy::AAuraEnemy()
 	AbilityComponent->SetIsReplicated(true);
 	AbilityComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	
-
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetMesh());
@@ -96,10 +95,11 @@ void AAuraEnemy::BindAttribute()
 		OnMaxHealthChanged.Broadcast(Data.NewValue);   
 	}
 	);
+	// 麻痹
+	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_ElectricShock).AddUObject(this,&AAuraEnemy::OnStunTagChanged);
 
-	/*
-	 * 根据被打做出反应
-	 */
+	
+	//根据被打做出反应
 	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_React , EGameplayTagEventType::NewOrRemoved).AddUObject(this ,&AAuraEnemy::ReactTagChange);
 	
 	OnHealthChanged.Broadcast(AuraSet->GetHealth());
@@ -122,27 +122,18 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 void AAuraEnemy::ReactTagChange(const FGameplayTag Tag, int32 count)
 {
 	bHitReacting = count > 0 ;
-	if(bHitReacting)
+	//GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 500.f : EnemySpeed;
+	if (AIController && AIController->GetBlackboardComponent())
 	{
-		GetCharacterMovement()->StopActiveMovement();
-		if(AIController)
-		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReact") , true);
-
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
 	}
-	else
-	{
-		if(AIController)
-			AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReact"), false);
-	}
-
-	
 }
 
 
-void AAuraEnemy::HasDied_Implementation()
+void AAuraEnemy::HasDied_Implementation(const FVector & DeathVector)
 {
 	DetachFromControllerPendingDestroy();
-	Super::HasDied_Implementation();
+	Super::HasDied_Implementation(DeathVector);
 	SetLifeSpan(LifeSpan);
 }
 
@@ -154,4 +145,13 @@ AActor* AAuraEnemy::GetTargetActor_Implementation()
 void AAuraEnemy::SetTargetActor_Implementation(AActor* TargetActor)
 {
 	this->TargetEnemy = TargetActor;
+}
+
+void AAuraEnemy::OnStunTagChanged(const FGameplayTag StunTag, int32 count)
+{
+	Super::OnStunTagChanged(StunTag, count);
+	bool bStun = count>0;
+	if(AIController.Get())
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("IsStun") , bStun);
+	
 }

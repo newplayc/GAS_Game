@@ -79,7 +79,7 @@ public:
 	UAnimMontage* GetAnimReactMontage();
 	
 	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
-	 void  HasDied();
+	 void  HasDied(const FVector & DeathVector);
 
 	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
 	bool IsDead();
@@ -101,5 +101,7 @@ public:
 
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
 	ECharacterClass GetCharacterClass();
-	
+
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	void AddKnockBack(FVector & InVector);
 };

@@ -43,20 +43,21 @@ protected:
 	TObjectPtr<UBehaviorTree>BehaviorTree;
 
 	UPROPERTY()
-	AAuraAiController* AIController;
+	TObjectPtr<AAuraAiController> AIController;
 
 	UPROPERTY()
 	AActor * TargetEnemy = nullptr;
 	
 	void ReactTagChange(const FGameplayTag Tag , int32 count);
 	
-	void HasDied_Implementation();
+	void HasDied_Implementation(const FVector & DeathVector);
 
 	AActor* GetTargetActor_Implementation();
 
 	void SetTargetActor_Implementation(AActor* TargetActor);
 
-	
+	virtual  void OnStunTagChanged(const FGameplayTag StunTag, int32 count) override;
+
 public:
 	AAuraEnemy();
 

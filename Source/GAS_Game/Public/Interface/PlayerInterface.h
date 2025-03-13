@@ -50,6 +50,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void AddSpellPoints(int32 InPoints);
 
-
+	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
+	 USkeletalMeshComponent* GetWeaponMesh();
 	
 };

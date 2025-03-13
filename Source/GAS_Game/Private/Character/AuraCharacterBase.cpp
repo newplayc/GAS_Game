@@ -10,7 +10,10 @@
 #include "GAS_Game/GAS_Game.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMaterialLibrary.h"
+#include "Net/UnrealNetwork.h"
 #include "Tag/AuraGameplayTags.h"
+
+
 
 // Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
@@ -20,14 +23,17 @@ AAuraCharacterBase::AAuraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), "WeaponHandSocket");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
+	
 	FireDebuffNiagaraComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("DebuffEffectComponent");
+	FireDebuffNiagaraComponent->SetupAttachment(RootComponent);
+	StunDebuffNiagaraComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("StunCom");
+	StunDebuffNiagaraComponent->SetupAttachment(RootComponent);
 	
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Ignore);
 
-	
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::Type::QueryAndPhysics);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
 	GetMesh()->SetGenerateOverlapEvents(true);
@@ -38,7 +44,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 void AAuraCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SetReplicateMovement(true);
 }
 
 void AAuraCharacterBase::IniAbilityInfo()
@@ -55,12 +61,41 @@ UAnimMontage* AAuraCharacterBase::GetAnimReactMontage_Implementation()
 	return ReactAnimMontage;
 }
 
+void AAuraCharacterBase::OnStunTagChanged(const FGameplayTag StunTag, int32 count)
+{
+	if(count > 0)
+	{
+		IsStun = true;
+	}
+	else
+	{
+		IsStun = false;
+	}
+}
 
 
-void AAuraCharacterBase::HasDied_Implementation()
+
+
+void AAuraCharacterBase::OnRep_Stun() const
+{
+
+}
+
+void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AAuraCharacterBase,IsStun);
+}
+
+void AAuraCharacterBase::HasDied_Implementation(const FVector & DeathVector)
 {
 	Weapon->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-	NetDeath();
+	NetDeath(DeathVector);
+}
+
+void AAuraCharacterBase::AddKnockBack_Implementation( FVector& InVector)
+{
+	LaunchCharacter(InVector , true, true);
 }
 
 int32 AAuraCharacterBase::GetSummonNum_Implementation()
@@ -92,14 +127,19 @@ void AAuraCharacterBase::DissolveMesh()
 
 }
 
-void AAuraCharacterBase::NetDeath_Implementation()
+void AAuraCharacterBase::NetDeath_Implementation(const FVector& DeathVector)
 {
 	Weapon->SetSimulatePhysics(true);
 	Weapon->SetEnableGravity(true);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::Type::PhysicsOnly);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetMesh()->SetAllBodiesSimulatePhysics(true);
+	GetMesh()->AddImpulse(DeathVector , NAME_None , true);
+	FireDebuffNiagaraComponent->Deactivate();
+	
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound ,GetActorLocation());
 	DissolveMesh();
 }

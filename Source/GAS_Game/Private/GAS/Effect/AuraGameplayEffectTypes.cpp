@@ -31,7 +31,17 @@ void FAuraGameplayEffectContext::SetIsDebuff(bool InIsDebuff)
 void FAuraGameplayEffectContext::SetDamageTypeTag(TSharedPtr<FGameplayTag>DamageTag)
 {
 	DamageTypeTag = DamageTag;
-} 
+}
+
+void FAuraGameplayEffectContext::SetDeathDirection(const FVector &InFVector)
+{
+	DeathImpulseDirection =  InFVector;
+}
+
+void FAuraGameplayEffectContext::SetKnockBackDirection(const FVector &InFVector)
+{
+	KnockBackDirection =  InFVector;
+}
 
 float FAuraGameplayEffectContext::GetDebuffDuration()const
 {
@@ -51,6 +61,16 @@ float FAuraGameplayEffectContext::GetDebuffDamage()const
 bool FAuraGameplayEffectContext::GetIsDebuff()const
 {
 	return IsDebuff;
+}
+
+FVector FAuraGameplayEffectContext::GetDeathVector()const
+{
+	return DeathImpulseDirection;
+}
+
+FVector FAuraGameplayEffectContext::GetKnockBackDirection() const
+{
+	return KnockBackDirection;
 }
 
 FGameplayTag FAuraGameplayEffectContext::GetDamageTypeTag() const
@@ -137,10 +157,18 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 		{
 			RepBits |= 1<<13;
 		}
+		if(!DeathImpulseDirection.IsZero())
+		{
+			RepBits |= 1<<14;
+		}
+		if(!KnockBackDirection.IsZero())
+		{
+			RepBits |= 1<<15;
+		}
 	}
 	
 
-	Ar.SerializeBits(&RepBits, 14);
+	Ar.SerializeBits(&RepBits, 16);
 
 	if (RepBits & (1 << 0))
 	{
@@ -215,9 +243,12 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 			{
 				DamageTypeTag = MakeShared<FGameplayTag>();
 			}
-
 		}
 		DamageTypeTag->NetSerialize(Ar, Map, bOutSuccess);
+	}
+	if(RepBits & (1<<14))
+	{
+		DeathImpulseDirection.NetSerialize(Ar,Map,bOutSuccess);
 	}
 	
 	if (Ar.IsLoading())

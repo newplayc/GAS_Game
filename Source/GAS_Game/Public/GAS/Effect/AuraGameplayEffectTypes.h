@@ -38,7 +38,21 @@ struct FEffectParams
 
 	UPROPERTY()
 	FGameplayTag DamageTypeTag = FGameplayTag();
-	
+
+	UPROPERTY()
+	float DeathImpulseMagnitude = 0.f;
+
+	UPROPERTY()
+	FVector DeathImpulseDirection = FVector::Zero();
+
+	UPROPERTY()
+	float KnockBackMagnitude = 0.f;
+
+	UPROPERTY()
+	FVector KnockBackDirection = FVector::Zero();
+
+	UPROPERTY()
+	bool bShouldKnockBack = false;
 };
 
 USTRUCT(BlueprintType)
@@ -51,20 +65,24 @@ struct FAuraGameplayEffectContext : public FGameplayEffectContext
 	void SetbCritical(bool bCritical);
 	bool GetbCritical() const;
 	bool GetbBlock() const;
-
+	
 	
 	void SetDebuffDuration(float InDebuffDuration);
 	void SetDebuffFrequency(float InDebuffFrequency);
 	void SetDebuffDamage(float InDebuffDamage);
 	void SetIsDebuff(bool InIsDebuff);
 	void SetDamageTypeTag(TSharedPtr<FGameplayTag> DamageTag);
-	
+	void SetDeathDirection(const FVector &InFVector);
+	void SetKnockBackDirection(const FVector & InFVector);
 	
 	float GetDebuffDuration()const;
 	float GetDebuffFrequency()const;
 	float GetDebuffDamage()const;
 	bool GetIsDebuff()const;
+	FVector GetDeathVector()const;
+	FVector GetKnockBackDirection()const;
 	FGameplayTag GetDamageTypeTag()const;
+
 	
 	virtual UScriptStruct* GetScriptStruct() const override
 	{
@@ -95,7 +113,12 @@ protected:
 	bool IsDebuff = false;
 	
 	TSharedPtr<FGameplayTag>DamageTypeTag;
-	
+
+	UPROPERTY()
+	FVector DeathImpulseDirection = FVector::Zero();
+
+	UPROPERTY()
+	FVector KnockBackDirection = FVector::Zero();
 };
 
 template<>

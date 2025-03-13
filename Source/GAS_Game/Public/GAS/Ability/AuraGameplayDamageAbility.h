@@ -18,6 +18,7 @@ class GAS_GAME_API UAuraGameplayDamageAbility : public UAuraGameplayAbility
 
 protected:
 
+	UFUNCTION(BlueprintCallable)
 	FEffectParams MakeDefaultEffectParams(AActor* TargetActor = nullptr);
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
@@ -40,6 +41,15 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float DebuffChance;
+
+	UPROPERTY(EditDefaultsOnly)
+	float DeathImpulseMagnitude;
+
+	UPROPERTY(EditDefaultsOnly)
+	float KnockBackMagnitude;
+
+	UPROPERTY(EditDefaultsOnly)
+	bool bShouldKnockBack;
 	
 	UFUNCTION(BlueprintCallable)
 	void CauseDamage(AActor * Target);

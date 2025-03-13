@@ -245,10 +245,14 @@ FActiveGameplayEffectHandle UAuraBlueprintFunctionLibrary::ApplyEffectParams(con
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Chance, EffectParams.DebuffChance);
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Duration, EffectParams.DebuffDuration);
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Frequency, EffectParams.DebuffFrequency);
-	
+
+	SetDeathImpluse(EffectParams.EffectSpecHandle.Data.Get()->GetContext(), EffectParams.DeathImpulseDirection);
+	SetKnockBack(EffectParams.EffectSpecHandle.Data.Get()->GetContext() , EffectParams.KnockBackDirection);
 	
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle =  EffectParams.SourceAbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*(EffectParams.EffectSpecHandle.Data.Get()) , EffectParams.TargetAbilitySystemComponent);
 	return ActiveGameplayEffectHandle;
+
+	
 }
 
 void UAuraBlueprintFunctionLibrary::SetEffectDebuffParamsContext(FGameplayEffectContextHandle& EffectContextHandle, float Duration,
@@ -308,6 +312,42 @@ FGameplayTag UAuraBlueprintFunctionLibrary::GetDamageTypeTag(const FGameplayEffe
 		return GEC->GetDamageTypeTag();
 	}
 	return FGameplayTag();
+}
+
+void UAuraBlueprintFunctionLibrary::SetDeathImpluse( FGameplayEffectContextHandle EffectContext,
+	const FVector &  InFVector)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast< FAuraGameplayEffectContext*>(EffectContext.Get()))
+	{
+		return GEC->SetDeathDirection(InFVector);
+	}
+}
+
+FVector UAuraBlueprintFunctionLibrary::GetDeathImpluse(const FGameplayEffectContextHandle& EffectContextHandle) 
+{
+	if(const  FAuraGameplayEffectContext * GEC = static_cast< const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return GEC->GetDeathVector();
+	}
+	return FVector();
+}
+
+void UAuraBlueprintFunctionLibrary::SetKnockBack(FGameplayEffectContextHandle EffectContextHandle,
+	const FVector& InFVector)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast< FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return GEC->SetKnockBackDirection(InFVector);
+	}
+}
+
+FVector UAuraBlueprintFunctionLibrary::GetKnockBack(const FGameplayEffectContextHandle& EffectContextHandle)
+{
+	if(const  FAuraGameplayEffectContext * GEC = static_cast< const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return GEC->GetKnockBackDirection();
+	}
+	return FVector();
 }
 
 

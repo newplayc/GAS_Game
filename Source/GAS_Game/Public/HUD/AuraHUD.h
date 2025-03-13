@@ -22,10 +22,7 @@ class GAS_GAME_API AAuraHUD : public AHUD
 {
 	GENERATED_BODY()
 public:
-
-
-
-
+	
 	UFUNCTION()
 	UOverlapWidgetController* GetOverlayWidgetController(const FWidgetContollerParams& WPC);
 

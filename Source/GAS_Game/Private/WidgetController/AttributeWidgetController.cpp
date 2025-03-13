@@ -21,8 +21,6 @@ void UAttributeWidgetController::BroadcastInitailvalues()
 	}
 }
 
-
-
 void UAttributeWidgetController::BindCallbacksToDependences()
 {
 

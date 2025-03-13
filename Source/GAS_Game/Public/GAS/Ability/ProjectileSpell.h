@@ -20,10 +20,23 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AProjectile>ProjectileClass;
-	
+
+
+
+	void CreatFireBolt(FTransform &SpawnTransform, AActor * Target,const FVector& TargetLocation);
 	
 	UFUNCTION(BlueprintCallable)
-	void SpawnFireBolt(const  FVector  & TargetLocation , FGameplayTag SocketTag) ;
+	void SpawnFireBolt(const  FVector  & TargetLocation, FGameplayTag SocketTag, AActor * Target, bool bPitchOverride, float PitchOverride) ;
 
-	int32 SpawnCount = 1;
+	UPROPERTY(EditDefaultsOnly)
+	float SpreadSpeed = 650.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ProjectileSpread = 90;
+
+	
+	UPROPERTY(EditDefaultsOnly)
+	FScalableFloat ProjectileNums;
+
+	
 };

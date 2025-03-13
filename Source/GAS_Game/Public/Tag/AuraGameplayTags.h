@@ -106,6 +106,9 @@ public:
 	FGameplayTag Ability_Passive;
 	FGameplayTag Ability_Active;
 	FGameplayTag Ability_None;
+
+	FGameplayTag Ability_Block;
+	
 	
 	/** Active Tag*/
 	FGameplayTag Ability_Fire_FireBolt;

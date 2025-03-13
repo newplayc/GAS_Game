@@ -55,6 +55,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere ,BlueprintReadOnly)
 	TObjectPtr<UDebuffNiagaraComponent>FireDebuffNiagaraComponent;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	TObjectPtr<UDebuffNiagaraComponent>StunDebuffNiagaraComponent;
 	
 	UPROPERTY(EditDefaultsOnly)
 	ECharacterClass CharacterClass;
@@ -110,25 +112,34 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetMeshMaterial();
 
+	virtual void OnStunTagChanged(FGameplayTag StunTag, int32 count); 
+	
 	UPROPERTY(BlueprintReadWrite)
 	int32 NumSummon = 0;
 	
-	
-	
 	bool IsDead = false;
+
 	
-	void HasDied_Implementation();
+	UPROPERTY(BlueprintReadOnly ,ReplicatedUsing= OnRep_Stun)
+	bool IsStun = false;
+	
+	UFUNCTION()
+	virtual void OnRep_Stun() const;
+
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
+	
+	void HasDied_Implementation(const FVector & DeathVector);
+	
+	void AddKnockBack_Implementation(FVector& InVector) override;
 
 	int32 GetSummonNum_Implementation();
 
-	void ChangeSummonNum_Implementation(int32 Num) ;
+	void ChangeSummonNum_Implementation(int32 Num);
 	void DissolveMesh();
 
 	UFUNCTION(NetMulticast, Reliable)
-	virtual void NetDeath();
+	virtual void NetDeath(const FVector& DeathVector);
 	
-
-
 	FVector GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag);
 	
 	ECharacterClass GetCharacterClass_Implementation() ;

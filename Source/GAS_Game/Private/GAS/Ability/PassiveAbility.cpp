@@ -3,12 +3,20 @@
 
 #include "GAS/Ability/PassiveAbility.h"
 #include "AbilitySystemComponent.h"
+#include "GAS/AuraAbilitySystemComponent.h"
+
+
 
 void UPassiveAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
                                       const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                       const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+
+	UAuraAbilitySystemComponent * AuraAsc = static_cast<UAuraAbilitySystemComponent*>(GetAbilitySystemComponentFromActorInfo());
+	check(AuraAsc);
+	
+	AuraAsc->FOnPassiveSpellChanged.AddUObject(this , &UPassiveAbility::OnSpellChanged);
 	
 	FGameplayEffectContextHandle ContextHandle= GetAbilitySystemComponentFromActorInfo()->MakeEffectContext();
 	ContextHandle.SetAbility(this);
@@ -20,21 +28,22 @@ void UPassiveAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	
 }
 
+
+void UPassiveAbility::OnSpellChanged(const FGameplayTag& SPellTag, bool ActiveOrEnd)
+{
+	if(!ActiveOrEnd)
+	if(AbilityTags.HasTagExact(SPellTag))
+	{
+		EndAbility(CurrentSpecHandle ,CurrentActorInfo ,CurrentActivationInfo ,true ,true);
+	}
+}
+
 void UPassiveAbility::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 	const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-	
 	GetAbilitySystemComponentFromActorInfo()->RemoveActiveGameplayEffect(ActiveGameplayEffectHandle);
 }
 
-void UPassiveAbility::CancelAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
-	const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateCancelAbility)
-{
-	
-	bool bReplicateEndAbility = true;
-	bool bWasCancelled = true;
-	EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-}
 
 

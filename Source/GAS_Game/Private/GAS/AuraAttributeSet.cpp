@@ -188,6 +188,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 	AActor * SourceActor = Data.EffectSpec.GetContext().Get()->GetOriginalInstigatorAbilitySystemComponent()->GetAvatarActor();
 	AActor * TargetActor = Data.Target.GetAvatarActor();
+	FGameplayEffectContextHandle EffectContextHandle = Data.EffectSpec.GetContext();
 	if(TargetActor->Implements<UICombatInterface>())
 	{
 		if(IICombatInterface::Execute_IsDead(TargetActor))return;
@@ -213,22 +214,35 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		ShowText(Data, SourceActor, TargetActor);
 		
 		const bool IsDied = NewHealth <=0;
-		/* 没死 */ 
+		// 没死
 		if(!IsDied)
 		{
 			FGameplayTagContainer TempTags = FGameplayTagContainer();
 			TempTags.AddTag(FAuraGameplayTags::Get().Effects_React);
 			Data.Target.TryActivateAbilitiesByTag(TempTags);
+		
+			if( TargetActor->Implements<UICombatInterface>())
+			{
+				FVector KnockBackVector = UAuraBlueprintFunctionLibrary::GetKnockBack(EffectContextHandle);
+				IICombatInterface::Execute_AddKnockBack(TargetActor , KnockBackVector);
+			
+			}
+
+			
 		}
-		else
+		else 
 		{
 			if( TargetActor->Implements<UICombatInterface>())
 			{
+				FVector DeathVector = UAuraBlueprintFunctionLibrary::GetDeathImpluse(EffectContextHandle);
+
 				
 				IICombatInterface::Execute_SetDead(TargetActor , true);
-				IICombatInterface::Execute_HasDied(TargetActor);
-				
+				IICombatInterface::Execute_HasDied(TargetActor , DeathVector);
 				SendXp(SourceActor, TargetActor);
+
+				
+				
 			}
 		}
 	}
@@ -241,17 +255,17 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		}
 	}
 
-	bool IsDebuff = UAuraBlueprintFunctionLibrary::GetIsDebuffFromContext(Data.EffectSpec.GetContext());
+	bool IsDebuff = UAuraBlueprintFunctionLibrary::GetIsDebuffFromContext(EffectContextHandle);
 	if(IsDebuff)
 	{
 		
-		FGameplayEffectContextHandle EffectContextHandle = SourceAbilitySystemComponent->MakeEffectContext();
-		EffectContextHandle.AddSourceObject(SourceActor);
+		FGameplayEffectContextHandle TempEffectCh = SourceAbilitySystemComponent->MakeEffectContext();
+		TempEffectCh.AddSourceObject(SourceActor);
 		
-		float DebuffDuration = UAuraBlueprintFunctionLibrary::GetDebuffDuration(Data.EffectSpec.GetContext());
-		float DebuffFrequency = UAuraBlueprintFunctionLibrary::GetDebuffFrequency(Data.EffectSpec.GetContext());
-		float DebuffDamage = UAuraBlueprintFunctionLibrary::GetDebuffDamage(Data.EffectSpec.GetContext());
-		FGameplayTag DamageTypeTag = UAuraBlueprintFunctionLibrary::GetDamageTypeTag(Data.EffectSpec.GetContext());
+		float DebuffDuration = UAuraBlueprintFunctionLibrary::GetDebuffDuration(EffectContextHandle);
+		float DebuffFrequency = UAuraBlueprintFunctionLibrary::GetDebuffFrequency(EffectContextHandle);
+		float DebuffDamage = UAuraBlueprintFunctionLibrary::GetDebuffDamage(EffectContextHandle);
+		FGameplayTag DamageTypeTag = UAuraBlueprintFunctionLibrary::GetDamageTypeTag(EffectContextHandle);
 
 		FString DebuffName = FString::Printf(TEXT("DynamicDebuff_%s"), *DamageTypeTag.ToString());
 		UGameplayEffect * DebuffEffect = NewObject<UGameplayEffect>(GetTransientPackage(),*DebuffName);
@@ -282,7 +296,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		DebuffEffect->Modifiers.Add(ModifierInfo);
 
 		
-		if(FGameplayEffectSpec * MutableSpec = new FGameplayEffectSpec(DebuffEffect , EffectContextHandle , Data.EffectSpec.GetLevel()))
+		if(FGameplayEffectSpec * MutableSpec = new FGameplayEffectSpec(DebuffEffect , TempEffectCh , Data.EffectSpec.GetLevel()))
 		{
 			FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
 			TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DebuffTag));

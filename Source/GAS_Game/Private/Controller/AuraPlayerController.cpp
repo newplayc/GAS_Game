@@ -14,6 +14,7 @@
 #include <NavigationSystem.h>
 
 #include "AuraBlueprintFunctionLibrary.h"
+#include "NiagaraFunctionLibrary.h"
 #include "GameFramework/Character.h"
 
 
@@ -98,6 +99,8 @@ void AAuraPlayerController::SetDamageText_Implementation(float Damage, ACharacte
 		DamageWidget->AttachToComponent(ECharacter->GetMesh(),FAttachmentTransformRules::KeepRelativeTransform);
 		bool Block = UAuraBlueprintFunctionLibrary::GetGameContextBlock(EffectContextHandle);
 		bool Critical = UAuraBlueprintFunctionLibrary::GetGameContextCritical(EffectContextHandle);
+
+		
 		FGameplayTag DamageType = UAuraBlueprintFunctionLibrary::GetDamageTypeTag(EffectContextHandle);
 		DamageWidget->SetDamageText(Damage , Block ,Critical, DamageType);
 	}
@@ -116,6 +119,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	const FVector ForwardVector = FRotationMatrix(YRotator).GetUnitAxis(EAxis::X);
 	const FVector RightVector = FRotationMatrix(YRotator).GetUnitAxis(EAxis::Y);
 
+	
 	if (APawn* ControlPawn = GetPawn())
 	{
 		ControlPawn->AddMovementInput(ForwardVector, V2D.Y, false); 
@@ -139,6 +143,7 @@ void AAuraPlayerController::CheckUnderCursor()
 	GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
 	if (!HitResult.bBlockingHit)return;
 	IEnemyInterface* HitActor = Cast<IEnemyInterface>(HitResult.GetActor());
+	
 	if (HeightActor != HitActor)
 	{
 		if(HeightActor) {
@@ -154,16 +159,23 @@ void AAuraPlayerController::CheckUnderCursor()
 
 void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 {
-	
+
+	if(GetGAS()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Ability_Block)) return;
 	bTargeting = HeightActor ? true : false;
 	bAutoRunning = false;
+
+	if(FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag))
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this , ClickIcon ,HitResult.Location);
+	}
+	
 	if (!FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag)||bTargeting || bShift)
 	{
 		if (GetGAS())
-		{
-			GetGAS()->PressFunction(ActionTag);
-		}
-	}
+     	{
+     		GetGAS()->PressFunction(ActionTag);
+     	}
+    }
 }
 /*
  *
@@ -172,12 +184,15 @@ void AAuraPlayerController::PressFunction(FGameplayTag ActionTag)
 void AAuraPlayerController::ReleaseFunction(FGameplayTag ActionTag)
 {
 
+	
 	if (GetGAS()){
 		GetGAS()->ReleaseFunction(ActionTag);
 	}
-
+	if(GetGAS()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Ability_Block)) return;
 	if (!bTargeting && !bShift && FAuraGameplayTags::Get().Input_LMB.MatchesTagExact(ActionTag) )
 	{
+
+	
 		if (FollowTime <= ShortPressThreshold)
 		{
 
@@ -219,6 +234,7 @@ void AAuraPlayerController::HeldFunction(FGameplayTag ActionTag)
 	}
 	else 
 	{
+		if(GetGAS()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Ability_Block)) return;
 		FollowTime += GetWorld()->GetDeltaSeconds();
 
 		if (HitResult.bBlockingHit)

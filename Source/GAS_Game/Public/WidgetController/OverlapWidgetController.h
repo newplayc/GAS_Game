@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -35,9 +34,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAbilityAddDelegate , FAbilityInfo
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStateChanged, int32 , ChnageValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowSpellDescription , FString, NowLevelDesription , FString, NextLevelDesription/**Now兼职 激活能力条件  */); 
 
-/**
- * 
- */
 
 UCLASS(BlueprintType , Blueprintable)
 class GAS_GAME_API UOverlapWidgetController : public UAuraUserWidgetController
@@ -89,28 +85,20 @@ public:
 	void OnPsLevelBroadCast( int32 Level);
 
 	void OnAbilityBroadCast();
+
 	
-	void GetAbilityTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& AbilityContainer);
-
-	void DeleteAbility(const FGameplayTag& AbilityInput, FGameplayAbilitySpec& Spec,const  FGameplayTag& AbilityType);
-
 	UFUNCTION(BlueprintCallable)
-	void DeleteAbility(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType);
-	
-	void GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer);
+	void DeleteAbilityBlueprintCall(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType);
 
 	UFUNCTION(BlueprintCallable)
 	void LevelChangeSpell(float Level , FGameplayTag AbilityTag);
+	
+	UFUNCTION(BlueprintCallable)
+	void AddAbility(const FGameplayTag & SpellTag , const FGameplayTag & InputTag);
+	
+	void ChangeAbility(const FGameplayTag& AbilityTag) ;
 
-	UFUNCTION(Client , Reliable)
-	void ClientBroadcastAbility(const FAbilityInfo & AbilityInfo);
-	
-	UFUNCTION(Server, BlueprintCallable ,Reliable)
-	void AddAbility(FAbilityInfo AbilityInfo);
-	
-	void ChangeAbility(const FGameplayTag& AbilityTag)const ;
-	
-	void DeleteInput(const FGameplayTag& InputTag)const ;
-	
+	void DeleteInput(const FGameplayTag& InputTag) ;
+
 }; 
 

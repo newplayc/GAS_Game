@@ -3,8 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayEffect.h"
-#include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
 #include "GAS/Effect/AuraGameplayEffectTypes.h"
 #include "Projectile.generated.h"
@@ -28,6 +26,13 @@ public:
 	UPROPERTY()
 	FEffectParams EffectParams;
 
+	
+	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
+	TObjectPtr<UProjectileMovementComponent>ProjectileMoveCom;
+
+	UPROPERTY()
+	TObjectPtr<USceneComponent>TempSceneComponent;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,9 +41,7 @@ protected:
 
 	
 
-	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UProjectileMovementComponent>ProjectileMoveCom;
+
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent>SphereComp;
@@ -59,6 +62,8 @@ protected:
 	float lifeSpanTime = 10.f;
 	
 	bool bHit = false;
+
+
 	
 	UFUNCTION()
 	void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

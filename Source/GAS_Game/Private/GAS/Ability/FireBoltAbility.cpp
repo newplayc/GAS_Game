@@ -2,9 +2,7 @@
 
 
 #include "GAS/Ability/FireBoltAbility.h"
-
 #include "AuraBlueprintFunctionLibrary.h"
-#include "Tag/AuraGameplayTags.h"
 
 
 FString UFireBoltAbility::GetLevelDescription(int32 Level)
@@ -18,8 +16,13 @@ FString UFireBoltAbility::GetLevelDescription(int32 Level)
 
 	GetCooldownGameplayEffect()->DurationMagnitude.GetStaticMagnitudeIfPossible(Level ,CoolDown);
 	
-	return FString::Printf(TEXT("<TEXT>%s</>\n<TEXT>Cause FireDamage: </><Damage>%f</>\n<TEXT>ManaCost: </><Mana>%f</>\n<TEXT>CoolDown: </><CoolDown>%f</>\n<TEXT>Level: </><Level>%d</>"),*SpellDescription,Damage,ManaCost,CoolDown,Level);
-
+	return FString::Printf(TEXT("<TEXT>Description:%s</>\n"
+							 "<TEXT>Cause FireDamage: </><Damage>%f</>\n"
+		"<TEXT>ManaCost: </><Mana>%f</>\n"
+  "<TEXT>CoolDown: </><CoolDown>%f</>\n"
+  "<TEXT>SpawnFireBoltNums: </><Num>%d</>\n"
+  "<TEXT>Level: </><Level>%d</>"),
+  *SpellDescription,Damage,ManaCost,CoolDown,static_cast<int32>(ProjectileNums.GetValueAtLevel(GetAbilityLevel())) ,Level);
 }
 
 

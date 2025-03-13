@@ -8,8 +8,8 @@
 #include "Data/InputDataConfig.h"
 #include "WidgetComponent/DamageTextWidgetCom.h"
 #include "GameplayEffectTypes.h"
+#include "NiagaraSystem.h"
 #include "AuraPlayerController.generated.h"
-
 
 class UAuraAbilitySystemComponent;
 class UInputMappingContext;
@@ -60,6 +60,9 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "input")
 	TObjectPtr<UInputAction>ShiftAction;
+
+	UPROPERTY(EditDefaultsOnly ,Category="Icon")
+	TObjectPtr<UNiagaraSystem>ClickIcon;
 	
 	void Move(const FInputActionValue& InputActionValue);
 

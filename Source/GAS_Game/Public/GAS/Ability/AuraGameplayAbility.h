@@ -19,7 +19,7 @@ public:
 	
 	/** 先描述技能 再计算伤害  再蓝量消耗 冷却  */
 	virtual FString GetLevelDescription(int32 Level);
-	virtual FString GetNextLevelDescription(int32 NextLevel);
+	virtual FString GetNextLevelDescription(int32 NowLevel);
 	static  FString GetLockedDescription( UObject * WorldContext ,const FGameplayTag & AbilityTag);
 	
 

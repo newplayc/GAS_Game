@@ -127,15 +127,15 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	for(auto Data : Tags.DamageTypeToResistance)
 	{
 		// Debuff
-		float DebuffDamage = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Damage);
-		float DebuffDuration = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Duration);
-		float DebuffFrequency = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Frequency);
-		float DebuffChance = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Chance);
+		float DebuffDamage = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Damage , false);
+		float DebuffDuration = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Duration, false);
+		float DebuffFrequency = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Frequency, false);
+		float DebuffChance = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Chance, false);
 
 
 		const FGameplayTag DamageType =  Data.Key;
 		const FGameplayTag DamageResistance =  Data.Value;
-		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType);
+		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType , false);
 
 		checkf(AttributeDefinitions.Contains(DamageResistance) , TEXT("TagsCapture Not Found %s"),*DamageResistance.ToString());
 		const FGameplayEffectAttributeCaptureDefinition CaptureDefinition = AttributeDefinitions[DamageResistance];

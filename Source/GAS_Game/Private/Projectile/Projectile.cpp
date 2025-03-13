@@ -31,7 +31,9 @@ AProjectile::AProjectile()
 	ProjectileMoveCom->InitialSpeed = 550.f;
 	ProjectileMoveCom->MaxSpeed = 550.f;
 	ProjectileMoveCom->ProjectileGravityScale = 0.f;
+	ProjectileMoveCom->SetIsReplicated(true);
 
+	
 }
 
 // Called when the game starts or when spawned
@@ -54,6 +56,7 @@ void AProjectile::Destroyed()
 		if(AudioC)
 		{
 			AudioC->Stop();
+			AudioC->DestroyComponent();
 		}
 		bHit = true;
 	}
@@ -73,7 +76,12 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation());
-		if(AudioC) AudioC->Stop();
+		if(AudioC)
+		{
+			AudioC->Stop();
+			AudioC->DestroyComponent();
+		}
+			
 		bHit = true;
 	}
 	if (HasAuthority())
@@ -81,6 +89,12 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		if(UAbilitySystemComponent * ASC =  UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
 		{
 			EffectParams.TargetAbilitySystemComponent = ASC;
+			FVector Forward = GetActorForwardVector();
+			EffectParams.DeathImpulseDirection = Forward *  EffectParams.DeathImpulseMagnitude;
+			if(EffectParams.bShouldKnockBack)
+			{
+				EffectParams.KnockBackDirection = Forward * EffectParams.KnockBackMagnitude;
+			}
 			UAuraBlueprintFunctionLibrary::ApplyEffectParams(EffectParams);
 		}
 		Destroy();

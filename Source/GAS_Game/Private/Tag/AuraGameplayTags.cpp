@@ -143,7 +143,8 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Ability_State_Equipped = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Equipped"),FString("能力状态装备标签"));
 	GameplayTags.Ability_State_None = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.None"),FString("能力状态空标签"));
 	GameplayTags.Ability_State_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Lock"),FString("能力状态未解锁标签"));
-	
+
+	GameplayTags.Ability_Block = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Block") , FString("阻止其他能力"));
 
 
 	
