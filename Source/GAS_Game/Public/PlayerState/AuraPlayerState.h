@@ -15,6 +15,7 @@ class UAuraAttributeSet;
 class ULevelInfo;
 
 
+
 /**
  * 
  */
@@ -35,7 +36,6 @@ public:
 	int32 GetExp()const{return Experience;}
 	virtual void  GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
-
 	UFUNCTION(BlueprintCallable)
 	float GetExpPercent(int32 NowExp);
 	

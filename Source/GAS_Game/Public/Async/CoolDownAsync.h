@@ -11,6 +11,7 @@
 struct FActiveGameplayEffectHandle;
 struct FGameplayTag;
 class UAbilitySystemComponent;
+struct FGameplayEffectSpec;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCoolDown , float , CoolDOwnSecond);
 /**
  * 
@@ -28,7 +29,7 @@ class GAS_GAME_API UCoolDownAsync : public UBlueprintAsyncActionBase
 	
 	void OnTagChanged(const FGameplayTag GT , int32 Count)const;
 	
-	void OnEffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GEC , FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
+	void OnEffectApplied(UAbilitySystemComponent* ASC ,  const FGameplayEffectSpec& GEC , FActiveGameplayEffectHandle ActiveGameplayEffectHandle)const;
 	
 	UFUNCTION(BlueprintCallable , meta=(BlueprintInternalUseOnly))
 	static UCoolDownAsync * CreatCoolDownAsync(UAbilitySystemComponent * ASC , const FGameplayTag CoolDownTag);

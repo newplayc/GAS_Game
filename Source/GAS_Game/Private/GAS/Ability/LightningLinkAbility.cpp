@@ -15,7 +15,6 @@ void ULightningLinkAbility::SetParams()
 
 void ULightningLinkAbility::GetSingleObject( FVector& start,  FVector& end, FVector& SingleHit , AActor  *& HitActor)
 {
-
 	if(!GetAvatarActorFromActorInfo()->HasAuthority())return;
 	TArray<AActor*>Ignore;
 	Ignore.Add(NowCharacter);

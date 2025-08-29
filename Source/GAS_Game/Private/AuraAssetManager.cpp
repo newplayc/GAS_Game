@@ -11,7 +11,7 @@ const UAuraAssetManager& UAuraAssetManager::Get()
 	UAuraAssetManager* AssM = Cast<UAuraAssetManager>(GEngine->AssetManager);
 	return *AssM;
 }
-
+ 
 void UAuraAssetManager::StartInitialLoading()
 {
 	Super::StartInitialLoading();

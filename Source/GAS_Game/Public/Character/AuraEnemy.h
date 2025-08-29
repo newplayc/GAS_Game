@@ -11,7 +11,7 @@
 #include "WidgetController/OverlapWidgetController.h"
 #include "AuraEnemy.generated.h"
 
-
+DECLARE_DYNAMIC_DELEGATE(FOnEnemyDeath);
 /**
  * 
  */
@@ -19,12 +19,16 @@ UCLASS()
 class GAS_GAME_API AAuraEnemy : public AAuraCharacterBase , public IEnemyInterface
 {
 	GENERATED_BODY()
+public:
+	FOnEnemyDeath OnEnemyDeath;
+
+	
 protected:
 	virtual void BeginPlay()override;
-
+	
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	int32 Level = 1;
-
+	
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UWidgetComponent>HealthBar;
 

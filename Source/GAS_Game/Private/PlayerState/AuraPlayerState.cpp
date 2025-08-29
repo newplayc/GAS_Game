@@ -12,7 +12,6 @@
 AAuraPlayerState::AAuraPlayerState()
 {
 	NetUpdateFrequency = 100.f; 
-	
 	AbilityComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
@@ -71,7 +70,6 @@ void AAuraPlayerState::AddExp(int32 InExp)
 
 void AAuraPlayerState::AddLevel( int32 InLevel)
 {
-
 	while(InLevel-- > 0 )
 	{
 		Level+=1;
@@ -124,7 +122,7 @@ void AAuraPlayerState::Level_Up()
 	AddTalentPoints(TalentAward);
 
 	Cast<AAuraCharacter>(GetPawn())->Level_up();
-
+	
  }
 
 void AAuraPlayerState::On_RepLevel()const

@@ -13,6 +13,7 @@
 
 void UProjectileSpell::CreatFireBolt(FTransform &SpawnTransform, AActor * Target, const FVector& TargetLocation)
 {
+	// 生成 投射物 
 	AProjectile* Projectile = GetWorld()->SpawnActorDeferred<AProjectile>(
 	ProjectileClass,
 	SpawnTransform,
@@ -42,10 +43,12 @@ void UProjectileSpell::SpawnFireBolt(const FVector & TargetLocation, FGameplayTa
 	
 	FVector WeaponSocketLocation = IICombatInterface::Execute_GetWeaponSocketLocation( GetAvatarActorFromActorInfo(), SocketTag);
 	FRotator SpawnRotator = (TargetLocation - WeaponSocketLocation).Rotation();
+
+	// 调整 一些 高度
 	if(bPitchOverride){SpawnRotator.Pitch = PitchOverride;}
 	FVector Forward = SpawnRotator.Vector();
 
-	
+	// 添加 一点旋转
 	FVector LeftSpeard = Forward.RotateAngleAxis(-ProjectileSpread , FVector::UpVector);
 	FVector RightSpead = Forward.RotateAngleAxis(ProjectileSpread , FVector::UpVector);
 	int32 NumsProjectile = ProjectileNums.GetValueAtLevel(GetAbilityLevel());

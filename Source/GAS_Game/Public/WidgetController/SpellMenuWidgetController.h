@@ -21,7 +21,7 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FSpellChange OnSpellChange;
-
+	
 	UFUNCTION(BlueprintCallable)
 	void AddSpellLevel(const FGameplayTag & AbilityTag);
 

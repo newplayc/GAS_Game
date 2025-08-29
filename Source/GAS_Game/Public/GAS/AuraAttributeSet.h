@@ -71,34 +71,29 @@ public:
 	UAuraAttributeSet();
 
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
-
 	virtual void GetLifetimeReplicatedProps(TArray< class FLifetimeProperty >& OutLifetimeProps) const override;
-
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
-
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EP) const;
 	void ShowText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor, AActor* TargetActor) const;
-	void SendXp(AActor* SourceActor, AActor* TargetActor);
+	void ShowLifeSiphonText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor) const;
+	void ShowManaSiphonText(const FGameplayEffectModCallbackData& Data, AActor* SourceActor) const;
+	static void SendXp(AActor* SourceActor, AActor* TargetActor);
 
 
 	TMap<FGameplayTag, TAttributeFunptr> TagsToAttributes;
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Strength, Category = "Attributes")
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Strength); 
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Vigor, Category = "Attributes")
 	FGameplayAttributeData Vigor;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor);
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Intelligence, Category = "Attributes")
 	FGameplayAttributeData Intelligence;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Intelligence);
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Resilience, Category = "Attributes")
 	FGameplayAttributeData Resilience;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience);
@@ -110,29 +105,31 @@ public:
 	UPROPERTY()
 	FGameplayAttributeData IncomingExp;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, IncomingExp);
+
+	UPROPERTY()
+	FGameplayAttributeData LifeSiphon;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, LifeSiphon);
+	
+	UPROPERTY()
+	FGameplayAttributeData ManaSiphon;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet ,ManaSiphon);
 	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_BlockChance, Category = "Attributes")
 	FGameplayAttributeData BlockChance;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, BlockChance);
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Armor, Category = "Attributes")
 	FGameplayAttributeData Armor;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Armor);
-
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_ArmorPenetration, Category = "Attributes")
 	FGameplayAttributeData ArmorPenetration;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ArmorPenetration);
-
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_CriticalHitChance, Category = "Attributes")
 	FGameplayAttributeData CriticalHitChance;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitChance);
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_CriticalHitDamage, Category = "Attributes")
 	FGameplayAttributeData CriticalHitDamage;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, CriticalHitDamage);
@@ -149,19 +146,14 @@ public:
 	FGameplayAttributeData ManaRegeneration;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ManaRegeneration);
 
-
-
 	UPROPERTY(BlueprintReadWrite , ReplicatedUsing = OnRep_Health , Category = "Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Health);
 
-
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_MaxHealth, Category = "Attributes")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth);
-
-
-
+	
 	UPROPERTY(BlueprintReadWrite, ReplicatedUsing = OnRep_Mana, Category = "Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Mana);
@@ -192,8 +184,6 @@ public:
 
 	
 protected:
-
-
 	
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData & OldHealth)const;

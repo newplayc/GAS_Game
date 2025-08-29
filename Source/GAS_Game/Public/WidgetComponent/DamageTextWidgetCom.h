@@ -18,7 +18,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent ,BlueprintCallable)
 	void SetDamageText(const float damage, bool IsBlock, bool IsDamage,  FGameplayTag DebuffTag);
 
+	UFUNCTION(BlueprintImplementableEvent ,BlueprintCallable)
+	void SetLifeSiphonText(const float LifeSiphon);
 
-
-	
+	UFUNCTION(BlueprintImplementableEvent ,BlueprintCallable)
+	void SetManaSiphonText(const float ManaSiphon);
 };

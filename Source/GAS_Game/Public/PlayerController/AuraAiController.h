@@ -17,7 +17,6 @@ class GAS_GAME_API AAuraAiController : public AAIController
 protected:
 
 	 AAuraAiController();
-
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	TObjectPtr<UBehaviorTreeComponent> BehaviorTree;

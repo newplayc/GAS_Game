@@ -8,7 +8,7 @@
 #include "AuraGameplayDamageAbility.generated.h"
 
 /**
- * 
+ *    一个 可以 造成 伤害 技能的 基类  包含了 Debuff 相关 ， 伤害标签 ， 数值， 等等。
  */
 UCLASS()
 class GAS_GAME_API UAuraGameplayDamageAbility : public UAuraGameplayAbility
@@ -17,7 +17,7 @@ class GAS_GAME_API UAuraGameplayDamageAbility : public UAuraGameplayAbility
 	GENERATED_BODY()
 
 protected:
-
+	// 创建 一个 EffectParams  这个结构 都是 应用技能时需要的 ， 例如 伤害 ， buff ， 目标 等等
 	UFUNCTION(BlueprintCallable)
 	FEffectParams MakeDefaultEffectParams(AActor* TargetActor = nullptr);
 	

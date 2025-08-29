@@ -20,14 +20,13 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnTagetData TargetData;
-
-
+	
 	virtual void Activate() override;
 
 	void SendTargetData();
 
 	void  OnTargetDataCallBack(const FGameplayAbilityTargetDataHandle& DataHandle, FGameplayTag Activation);
-
+	// 必备创建接口
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TargetDataUnderMouse", HidePin = "GameplayAbility", DefaultToSelf = "GameplayAbility", BlueprintInternalUseOnly = "true"))
 	static UTargetDataTask* CreateTagetData(UGameplayAbility* GameplayAbility);
 

@@ -26,6 +26,7 @@ AProjectile::AProjectile()
 	SphereComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap);
 	SphereComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	SphereComp->SetCollisionObjectType(ECollisionChannel::ECC_EngineTraceChannel1);
+
 	
 	ProjectileMoveCom = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMoveComponent");
 	ProjectileMoveCom->InitialSpeed = 550.f;
@@ -71,7 +72,7 @@ void AProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	{
 		if(OtherActor == Causer || (UAuraBlueprintFunctionLibrary::IsFriend(Causer , OtherActor))) return;
 	}
-
+	
 	if(!bHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());

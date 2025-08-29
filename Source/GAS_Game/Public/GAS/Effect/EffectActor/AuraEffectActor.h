@@ -14,7 +14,7 @@
 
 
 
-
+// 应用策略
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy:uint8
 {
@@ -22,14 +22,16 @@ enum class EEffectApplicationPolicy:uint8
 	ApplyOnEndOverlap,
 	NeverApply
 };
-
+// 移除 策略
 UENUM(BlueprintType)
 enum class EEffectRemovePolicy:uint8
 {
 	RemoveOnEndOverlap,
 	NeverRemove
 };
-
+/*
+ *  可以拾取 道具基类 
+ */
 UCLASS()
 class GAS_GAME_API AAuraEffectActor : public AActor
 {
@@ -38,26 +40,20 @@ class GAS_GAME_API AAuraEffectActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AAuraEffectActor();
-
-
+	
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor * TargetActor);
-
-
+	
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
-
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-
-
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* Actor, TSubclassOf<UGameplayEffect> GameplayEffect) ;
 	
-
 	UPROPERTY(EditAnywhere,BlueprintReadOnly ,Category = "EffectToApply" )
 	TSubclassOf<UGameplayEffect>InstantlyGameplayEffect;
 	UPROPERTY(EditAnywhere, BlueprintReadwrite ,Category = "EffectToApply" )
@@ -87,8 +83,7 @@ protected:
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "EffectToApply")
 	bool bApplyDestory;
-
 	
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> InfiniteComponents;
-
+	
 };

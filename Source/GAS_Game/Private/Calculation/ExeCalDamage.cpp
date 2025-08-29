@@ -25,7 +25,9 @@ struct FCaptureDefinitionStatic
 	DECLARE_ATTRIBUTE_CAPTUREDEF(LightningResistance);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(PhysicsResistance);
 
-
+	DECLARE_ATTRIBUTE_CAPTUREDEF(LifeSiphon);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(ManaSiphon);
+	
 	FCaptureDefinitionStatic()
 	{
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArmorPenetration , Source , false);
@@ -38,8 +40,10 @@ struct FCaptureDefinitionStatic
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArcaneResistance , Target , false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, LightningResistance , Target , false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, PhysicsResistance , Target , false);
+
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet , LifeSiphon ,Source , false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet , ManaSiphon ,Source , false);
 	}
-	
 	
 };
 
@@ -49,6 +53,7 @@ static const FCaptureDefinitionStatic& GetDefinitionStatic()
 	static FCaptureDefinitionStatic captureDefinitionStatic;
 	return captureDefinitionStatic;
 }
+
 
 
 UExeCalDamage::UExeCalDamage()
@@ -63,13 +68,16 @@ UExeCalDamage::UExeCalDamage()
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().FireResistanceDef);
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().LightningResistanceDef);
 	RelevantAttributesToCapture.Add(GetDefinitionStatic().PhysicsResistanceDef);
+
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().LifeSiphonDef);
+	RelevantAttributesToCapture.Add(GetDefinitionStatic().ManaSiphonDef);
 }
 
 
 void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
 	FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
-
+	
 	TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition> AttributeDefinitions;
 	const FAuraGameplayTags & AuraGameplayTags = FAuraGameplayTags::Get();
 		
@@ -88,6 +96,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 
 	
 	const FGameplayEffectSpec Effectspec = ExecutionParams.GetOwningSpec();
+	
 	const UAbilitySystemComponent *  SourceASC = ExecutionParams.GetSourceAbilitySystemComponent();
 	const UAbilitySystemComponent * TargetASC =   ExecutionParams.GetTargetAbilitySystemComponent();
 	FGameplayEffectContextHandle EffectContextHandle = Effectspec.GetContext();
@@ -132,7 +141,7 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 		float DebuffFrequency = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Frequency, false);
 		float DebuffChance = Effectspec.GetSetByCallerMagnitude(Tags.Debuff_Chance, false);
 
-
+		
 		const FGameplayTag DamageType =  Data.Key;
 		const FGameplayTag DamageResistance =  Data.Value;
 		float DamageTypeValue  = Effectspec.GetSetByCallerMagnitude(DamageType , false);
@@ -155,15 +164,13 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	
 		Damage += DamageTypeValue;
 	}
-	//
+	
 
 	
 	SourceCriticalHitChance = SourceCriticalHitChance * (100 - TargetCriticalHitResistance * 0.25) /100.f;
-
 	
 	FRealCurve * ArPenCurve = AttCt->FindCurve("ArmorPenetration" , FString());
 	float EffArmor = TargetArmor  * (100 - SourceArmorPenetration * ArPenCurve->Eval(IICombatInterface::Execute_GetPlayerLevel(SourceActor))) / 100.f;
-	
 	
 	const bool bCritical = FMath::RandRange(0 , 100)<=SourceCriticalHitChance;
 	
@@ -178,6 +185,14 @@ void UExeCalDamage::Execute_Implementation(const FGameplayEffectCustomExecutionP
 	UAuraBlueprintFunctionLibrary::SetGameContextBlock( EffectContextHandle, bBlock);
 	
 	UAuraBlueprintFunctionLibrary::SetGameContextCritical( EffectContextHandle, bCritical);
+	
+	float LifeSiphon = 0.f;
+	float ManaSiphon = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDefinitionStatic().LifeSiphonDef ,AggregatorParameters, LifeSiphon);
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDefinitionStatic().ManaSiphonDef ,AggregatorParameters, ManaSiphon);
+	
+	UAuraBlueprintFunctionLibrary::SetLifeSiphon(EffectContextHandle , LifeSiphon);
+	UAuraBlueprintFunctionLibrary::SetManaSiphon(EffectContextHandle , ManaSiphon);
 	
 	FGameplayModifierEvaluatedData EffData = FGameplayModifierEvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute() ,EGameplayModOp::Override , EffDamage);
 	

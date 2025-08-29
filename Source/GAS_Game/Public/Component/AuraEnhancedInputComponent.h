@@ -17,7 +17,6 @@ class GAS_GAME_API UAuraEnhancedInputComponent : public UEnhancedInputComponent
 	 
 public:
 	 template<class UserClass , typename PressFuncType , typename ReleasedFuncType , typename HeldFuncType>
-
 	 void BindAbilityActions(const UInputDataConfig* InputConfig, UserClass* Object, PressFuncType PressFun, ReleasedFuncType ReleasedFun, HeldFuncType HeldFun);
 };
 
@@ -27,7 +26,6 @@ void UAuraEnhancedInputComponent::BindAbilityActions(const UInputDataConfig* Inp
 	check(InputConfig);
 	for (const FInputData& ID : InputConfig->InputDatas)
 	{
-
 		if (ID.InputAction && ID.GameplayTag.IsValid())
 		{
 			if (HeldFun)
@@ -37,7 +35,6 @@ void UAuraEnhancedInputComponent::BindAbilityActions(const UInputDataConfig* Inp
 			if (ReleasedFun)
 				BindAction(ID.InputAction, ETriggerEvent::Completed, Object, ReleasedFun, ID.GameplayTag);
 		}
-
-
+		
 	}
 }

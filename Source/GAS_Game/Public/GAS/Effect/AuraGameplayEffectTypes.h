@@ -3,6 +3,10 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTags.h"
 #include "AuraGameplayEffectTypes.generated.h"
+
+/**
+ *   承载 着 一个技能 的 大部分参数
+ */
 USTRUCT(BlueprintType)
 struct FEffectParams
 {
@@ -74,7 +78,12 @@ struct FAuraGameplayEffectContext : public FGameplayEffectContext
 	void SetDamageTypeTag(TSharedPtr<FGameplayTag> DamageTag);
 	void SetDeathDirection(const FVector &InFVector);
 	void SetKnockBackDirection(const FVector & InFVector);
-	
+	void SetLifeSiphon(const float & InLifeSiphon);
+	void SetManaSiphon(const float & InManaSiphon);
+
+
+	float GetLifeSiphon() const;
+	float GetManaSiphon() const;
 	float GetDebuffDuration()const;
 	float GetDebuffFrequency()const;
 	float GetDebuffDamage()const;
@@ -119,6 +128,12 @@ protected:
 
 	UPROPERTY()
 	FVector KnockBackDirection = FVector::Zero();
+
+	UPROPERTY()
+	float LifeSiphon = 0.f;
+
+	UPROPERTY()
+	float ManaSiphon = 0.f;
 };
 
 template<>

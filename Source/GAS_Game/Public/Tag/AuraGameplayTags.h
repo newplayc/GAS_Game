@@ -10,13 +10,10 @@
 
 struct FAuraGameplayTags
 {
-	
-public:
 	static const FAuraGameplayTags& Get() { return GameplayTags; }
 	static void AddGameplayTag();
 
-
-
+	
 	FGameplayTag Attributes_Primary_Vigor;
 	FGameplayTag Attributes_Primary_Strength;
 	FGameplayTag Attributes_Primary_Intelligence;
@@ -106,7 +103,6 @@ public:
 	FGameplayTag Ability_Passive;
 	FGameplayTag Ability_Active;
 	FGameplayTag Ability_None;
-
 	FGameplayTag Ability_Block;
 	
 	
@@ -130,6 +126,8 @@ public:
 	FGameplayTag Ability_IncreaseCriticalChance;
 	FGameplayTag Ability_IncreaseHealth;
 	FGameplayTag Ability_IncreaseMana;
+	FGameplayTag Ability_LifeSiphon;
+	FGameplayTag Ability_ManaSiphon;
 	
 	FGameplayTagContainer AbilitySpellTag;
 
@@ -158,6 +156,5 @@ public:
 	
 private:
 	static  FAuraGameplayTags GameplayTags;
-
-
 };
+

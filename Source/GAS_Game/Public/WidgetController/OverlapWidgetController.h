@@ -41,10 +41,11 @@ class GAS_GAME_API UOverlapWidgetController : public UAuraUserWidgetController
 	GENERATED_BODY()
 
 public:
+	// 初始化 Healht , MaxHeeal , Mana , MaxMana
 	virtual void BroadcastInitailvalues()override;
-
+	// 添加 四种属性 的 委托绑定 和 拾取道具 的提示 绑定 还有 技能变化等
 	virtual void BindCallbacksToDependences() override;
-
+	
 	UPROPERTY(BlueprintAssignable , Category = "DelegateAttribute")
 	FOnAttributeChanged OnHealthChanged;
 
@@ -56,16 +57,16 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "DelegateAttribute")
 	FOnAttributeChanged OnMaxManaChanged;
-
+	// 拾取道具 信息委托
 	UPROPERTY(BlueprintAssignable, Category = "DelegateWidgetMessage")
 	FOnMessageWidgetRowDelegate FWidgetDelegate;
-
+	// 道具信息表
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UDataTable> EffectMessageDataTable;
-
+	// 能力 信息 表
 	UPROPERTY(EditAnywhere , BlueprintReadOnly)
 	TObjectPtr<UAbilitiyInfo> AbilityInfos;
-
+	
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityAddDelegate AbilitiyInfoDelegate;
 
@@ -74,7 +75,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnStateChanged LevelChanged;
-
+    // 技能描述 
 	UPROPERTY(BlueprintAssignable)
 	FOnShowSpellDescription ShowSpellDescriptionDelegate;
 	
@@ -83,13 +84,13 @@ public:
 		
 	UFUNCTION()
 	void OnPsLevelBroadCast( int32 Level);
-
+	// ?? 
 	void OnAbilityBroadCast();
 
 	
 	UFUNCTION(BlueprintCallable)
 	void DeleteAbilityBlueprintCall(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType);
-
+	// 等级变化 添加 能力
 	UFUNCTION(BlueprintCallable)
 	void LevelChangeSpell(float Level , FGameplayTag AbilityTag);
 	

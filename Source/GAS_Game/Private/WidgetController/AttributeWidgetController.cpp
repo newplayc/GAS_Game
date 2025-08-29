@@ -11,8 +11,8 @@
 void UAttributeWidgetController::BroadcastInitailvalues()
 {
 
-	check(AttributeInfoData); 
-
+	check(AttributeInfoData);
+	
 	for (auto& Pair : GetAuraAttriute()->TagsToAttributes)
 	{
 		FAttributeInfos Att = AttributeInfoData->FindAttributeInfo(Pair.Key);

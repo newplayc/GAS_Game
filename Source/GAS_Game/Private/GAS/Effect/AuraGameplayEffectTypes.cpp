@@ -43,6 +43,26 @@ void FAuraGameplayEffectContext::SetKnockBackDirection(const FVector &InFVector)
 	KnockBackDirection =  InFVector;
 }
 
+void FAuraGameplayEffectContext::SetLifeSiphon(const float& InLifeSiphon)
+{
+	LifeSiphon = InLifeSiphon;
+}
+
+void FAuraGameplayEffectContext::SetManaSiphon(const float& InManaSiphon)
+{
+	ManaSiphon = InManaSiphon;
+}
+
+float FAuraGameplayEffectContext::GetLifeSiphon() const
+{
+	return LifeSiphon;
+}
+
+float FAuraGameplayEffectContext::GetManaSiphon() const
+{
+	return ManaSiphon;
+}
+
 float FAuraGameplayEffectContext::GetDebuffDuration()const
 {
 	return DebuffDuration;
@@ -165,10 +185,18 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 		{
 			RepBits |= 1<<15;
 		}
+		if(LifeSiphon > 0)
+		{
+			RepBits |= 1<<16;
+		}
+		if(ManaSiphon > 0)
+		{
+			RepBits |= 1<<17;
+		}
 	}
 	
 
-	Ar.SerializeBits(&RepBits, 16);
+	Ar.SerializeBits(&RepBits, 18);
 
 	if (RepBits & (1 << 0))
 	{
@@ -218,22 +246,23 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 	{
 		Ar<<bBlockHit;
 	}
-	if(RepBits & (1<<9))
-	{
-		Ar << DebuffDamage;
-	}
-	if(RepBits & (1<<10))
-	{
-		Ar << DebuffDuration;
-	}
 
-	if(RepBits & (1<<11))
-	{
-		Ar << DebuffFrequency;
-	}
 	if(RepBits & (1<<12))
 	{
 		Ar << IsDebuff;
+		if(RepBits & (1<<9))
+		{
+			Ar << DebuffDamage;
+		}
+		if(RepBits & (1<<10))
+		{
+			Ar << DebuffDuration;
+		}
+
+		if(RepBits & (1<<11))
+		{
+			Ar << DebuffFrequency;
+		}
 	}
 	if (RepBits & (1 << 13))
 	{
@@ -249,6 +278,20 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 	if(RepBits & (1<<14))
 	{
 		DeathImpulseDirection.NetSerialize(Ar,Map,bOutSuccess);
+	}
+	if(RepBits &(1<<15))
+	{
+		KnockBackDirection.NetSerialize(Ar,Map,bOutSuccess);
+	}
+
+	
+	if(RepBits &(1<<16))
+	{
+		Ar<<LifeSiphon;
+	}
+	if(RepBits & (1<<17))
+	{
+		Ar<<ManaSiphon;
 	}
 	
 	if (Ar.IsLoading())

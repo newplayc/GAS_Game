@@ -21,7 +21,6 @@ AAuraEnemy::AAuraEnemy()
 	AbilityComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitysysComponent");
 	AbilityComponent->SetIsReplicated(true);
 	AbilityComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-	
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetMesh());
@@ -42,6 +41,7 @@ void AAuraEnemy::HeightLightActor()
 	GetMesh()->SetCustomDepthStencilValue(250);
 	Weapon->SetRenderCustomDepth(true);
 	Weapon->SetCustomDepthStencilValue(250);
+	
 }
 
 void AAuraEnemy::UnHeightLightActor()
@@ -79,27 +79,27 @@ void AAuraEnemy::InitAttribute(UObject* Source)
 
 void AAuraEnemy::BindAttribute()
 {
-	
+	// 设值 血条组件的 Controller 
 	if(UAuraUserWidget * UserWidget =  Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
 		UserWidget->SetWidgetController(this);
 	}
 	UAuraAttributeSet * AuraSet = Cast<UAuraAttributeSet>(GetAttributeSet());
 	if(!AuraSet)return;
+	// 为 血量 更改 添加委托
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(AuraSet->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData & Data){
 		OnHealthChanged.Broadcast(Data.NewValue);   
 	}
 	);
-	
+	// 蓝量的委托
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(AuraSet->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData & Data){
 		OnMaxHealthChanged.Broadcast(Data.NewValue);   
 	}
 	);
 	// 麻痹
-	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_ElectricShock).AddUObject(this,&AAuraEnemy::OnStunTagChanged);
-
+	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Debuff_ElectricShock ).AddUObject(this,&AAuraEnemy::OnStunTagChanged);
 	
-	//根据被打做出反应
+	//根据被打做出反应 
 	AbilityComponent->RegisterGameplayTagEvent(FAuraGameplayTags::Get().Effects_React , EGameplayTagEventType::NewOrRemoved).AddUObject(this ,&AAuraEnemy::ReactTagChange);
 	
 	OnHealthChanged.Broadcast(AuraSet->GetHealth());
@@ -108,13 +108,13 @@ void AAuraEnemy::BindAttribute()
 
 void AAuraEnemy::PossessedBy(AController* NewController)
 {
-	
 	if(!HasAuthority())return;
 	Super::PossessedBy(NewController);
 	
 	AIController = Cast<AAuraAiController>(NewController);
 	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset.Get());
 	AIController->RunBehaviorTree(BehaviorTree);
+	
 	const bool IsRanegr = !(CharacterClass == ECharacterClass::Warrior);
 	AIController->GetBlackboardComponent()->SetValueAsBool(FName("IsRanger") , IsRanegr);
 }
@@ -134,6 +134,7 @@ void AAuraEnemy::HasDied_Implementation(const FVector & DeathVector)
 {
 	DetachFromControllerPendingDestroy();
 	Super::HasDied_Implementation(DeathVector);
+	OnEnemyDeath.ExecuteIfBound();
 	SetLifeSpan(LifeSpan);
 }
 
@@ -145,6 +146,7 @@ AActor* AAuraEnemy::GetTargetActor_Implementation()
 void AAuraEnemy::SetTargetActor_Implementation(AActor* TargetActor)
 {
 	this->TargetEnemy = TargetActor;
+	
 }
 
 void AAuraEnemy::OnStunTagChanged(const FGameplayTag StunTag, int32 count)

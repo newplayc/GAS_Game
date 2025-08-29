@@ -9,6 +9,7 @@ FString UAuraGameplayAbility::GetLevelDescription(int32 Level)
 	return FString();
 }
 
+
 FString UAuraGameplayAbility::GetNextLevelDescription(int32 NextLevel)
 {
 	return FString();

@@ -9,9 +9,7 @@
 
 
 /**
- * 
- * 
- * 
+ *  AuraWidget 基类  包含了 WidgetController
  */
 UCLASS()
 class GAS_GAME_API UAuraUserWidget : public UUserWidget

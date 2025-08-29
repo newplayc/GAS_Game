@@ -6,14 +6,14 @@
 #include "AuraGameplayAbility.generated.h"
 
 /**
- * 
+ *  提供了 激活标签 。 技能描述 
  */
 UCLASS()
 class GAS_GAME_API UAuraGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 public:
-	
+	// 激活标签 
 	UPROPERTY(EditAnywhere)
 	FGameplayTag ActiveTag;
 	
@@ -21,8 +21,8 @@ public:
 	virtual FString GetLevelDescription(int32 Level);
 	virtual FString GetNextLevelDescription(int32 NowLevel);
 	static  FString GetLockedDescription( UObject * WorldContext ,const FGameplayTag & AbilityTag);
-	
 
+	
 protected:
 	FString SpellDescription;
 
@@ -34,7 +34,4 @@ protected:
 
 	float CoolDown;
 	
-
-	
-
 };

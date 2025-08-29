@@ -15,7 +15,7 @@ void UPassiveAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	UAuraAbilitySystemComponent * AuraAsc = static_cast<UAuraAbilitySystemComponent*>(GetAbilitySystemComponentFromActorInfo());
 	check(AuraAsc);
-	
+	// 当 被动技能 被取消时 由GAS 调用
 	AuraAsc->FOnPassiveSpellChanged.AddUObject(this , &UPassiveAbility::OnSpellChanged);
 	
 	FGameplayEffectContextHandle ContextHandle= GetAbilitySystemComponentFromActorInfo()->MakeEffectContext();
@@ -24,16 +24,14 @@ void UPassiveAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponentFromActorInfo()->MakeOutgoingSpec(PassiveGameplayEffect , GetAbilityLevel() , ContextHandle);
 	
 	ActiveGameplayEffectHandle  = GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
-
 	
 }
 
-
+// 取消能力 
 void UPassiveAbility::OnSpellChanged(const FGameplayTag& SPellTag, bool ActiveOrEnd)
 {
 	if(!ActiveOrEnd)
-	if(AbilityTags.HasTagExact(SPellTag))
-	{
+	if(AbilityTags.HasTagExact(SPellTag)){
 		EndAbility(CurrentSpecHandle ,CurrentActorInfo ,CurrentActivationInfo ,true ,true);
 	}
 }

@@ -6,19 +6,14 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Character/AuraCharacter.h"
 #include "GAS/AuraAbilitySystemComponent.h"
-#include "GAS_Game/AuraLog.h"
-
-UBuffHaloComponent::UBuffHaloComponent()
-{
+UBuffHaloComponent::UBuffHaloComponent(){
 	bAutoActivate = false;
-
 }
 
 void UBuffHaloComponent::OnPassiveSpellChanged(const FGameplayTag&SpellTag, bool AOE)
 {
 	
-	if(SpellTag.MatchesTagExact(PassiveTag))
-	{
+	if(SpellTag.MatchesTagExact(PassiveTag)){
 		if(AOE)
 		{
 			Activate(true);
@@ -46,8 +41,6 @@ void UBuffHaloComponent::BeginPlay()
 			UAuraAbilitySystemComponent * AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwner()));
 			AuraAbilitySystemComponent->FOnPassiveSpellChanged.AddUObject(this,&UBuffHaloComponent::OnPassiveSpellChanged);
 		});
-
-		
 	}
 	
 

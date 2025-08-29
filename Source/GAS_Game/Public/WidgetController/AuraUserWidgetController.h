@@ -53,10 +53,10 @@ class GAS_GAME_API UAuraUserWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetParamas(const FWidgetContollerParams& WCParams);
-
+	// 初始化函数
 	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitailvalues();
-
+	// 绑定函数
 	UFUNCTION(BlueprintCallable)
 	virtual void BindCallbacksToDependences();
 protected:

@@ -18,7 +18,6 @@ UOverlapWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 		OverlayWidgetController = NewObject<UOverlapWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetParamas(WPC);
 		OverlayWidgetController->BindCallbacksToDependences();
-
 	}
 	return OverlayWidgetController;
 }
@@ -52,20 +51,20 @@ void AAuraHUD::IniOverlayWidget(APlayerState* PS, APlayerController* PC, UAbilit
 	checkf(OverlayWidgetClass, TEXT("check OverlayWidgetClass In the BP_AuraHUD"));
 	checkf(OverlayWidgetControllerClass, TEXT("check OverlayWidgetControllerClass In the BP_AuraHUD"));
 
+	// 创建组件 	
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 	check(OverlayWidget);
-	
-
+	// 创建 控制器
 	FWidgetContollerParams WidgetConteollerParam(PS, PC, ASC, AS);
 	UOverlapWidgetController* OWC = GetOverlayWidgetController(WidgetConteollerParam);
-	
 
+	
 	check(OWC);
 	OverlayWidgetController = OWC;
 	OverlayWidget->SetWidgetController(OWC);
 	
-	
+	// 初始化
 	OWC->BroadcastInitailvalues();
 	OverlayWidget->AddToViewport();
 }

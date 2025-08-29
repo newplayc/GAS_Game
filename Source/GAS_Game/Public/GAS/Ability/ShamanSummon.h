@@ -7,7 +7,7 @@
 #include "ShamanSummon.generated.h"
 
 /**
- * 
+ *  召唤物 技能 基类。
  */
 UCLASS()
 class GAS_GAME_API UShamanSummon : public UAuraGameplayAbility

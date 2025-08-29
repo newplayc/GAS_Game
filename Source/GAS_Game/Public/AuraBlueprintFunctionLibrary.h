@@ -111,4 +111,17 @@ public:
 
 	UFUNCTION()
 	static FVector GetKnockBack(const FGameplayEffectContextHandle & EffectContextHandle);
+
+	UFUNCTION()
+	static void SetLifeSiphon( FGameplayEffectContextHandle& EffectContextHandle ,float Life);
+
+	UFUNCTION()
+	static void SetManaSiphon( FGameplayEffectContextHandle& EffectContextHandle , float Mana);
+
+	
+	UFUNCTION()
+	static float GetLifeSiphon(const FGameplayEffectContextHandle& EffectContextHandle);
+	
+	UFUNCTION()
+	static float GetManaSiphon(const FGameplayEffectContextHandle& EffectContextHandle);
 };

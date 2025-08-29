@@ -16,8 +16,10 @@ TArray<FVector> UShamanSummon::GetSpawnLocations()
 	float space = SummonSpread  / NumSummon;
 	for(int i = 0 ; i < NumSummon ; i++)
 	{
+		// 生成 位置 成扇形
 		FVector NowVector = LeftBorderVector.RotateAngleAxis(space * i , FVector::UpVector) ;
 		FVector SpawnLocation = NowLocation + NowVector * FMath::RandRange(MinDistance , MaxDistance);
+		// 做 射线 检测 防止 生成 在空中
 		FHitResult Hit;
 		GetWorld()->LineTraceSingleByChannel(Hit, SpawnLocation , SpawnLocation + FVector::DownVector  * 200 , ECC_Visibility);
 		if(Hit.bBlockingHit)

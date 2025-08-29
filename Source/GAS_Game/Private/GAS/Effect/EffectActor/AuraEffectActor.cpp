@@ -48,6 +48,7 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	{
 		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffect);
 	}
+	// 删除 一个 无限 时长Effect
 	if(InfiniteEffectRemovePolicy == EEffectRemovePolicy::RemoveOnEndOverlap)
 	{
 		UAbilitySystemComponent * ASC  = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MaxHealthMagnitudeCalculation.h"
+#include "AttributeCalculation/MaxHealthMagnitudeCalculation.h"
 #include "GAS/AuraAttributeSet.h"
 #include "Interface/ICombatInterface.h"
 
@@ -26,8 +26,7 @@ float UMaxHealthMagnitudeCalculation::CalculateBaseMagnitude_Implementation(cons
 	Vigor = FMath::Max<float>(Vigor, 0.f);
 
 	UObject* obj = Spec.GetContext().GetSourceObject();
-
-
+	
 	if(obj->Implements<UICombatInterface>())
 	{
 		const int PlayerLevel = IICombatInterface::Execute_GetPlayerLevel(obj);

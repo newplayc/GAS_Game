@@ -3,6 +3,7 @@
 
 #include "PlayerController/AuraAiController.h"
 
+#include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 

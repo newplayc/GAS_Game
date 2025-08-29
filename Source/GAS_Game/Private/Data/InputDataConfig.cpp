@@ -15,8 +15,6 @@ const UInputAction* UInputDataConfig::FindInputActionForTag(const FGameplayTag& 
 	if (bLogNF)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cant Find InputAction"));
-		
-
 	}
 	return nullptr;
 }

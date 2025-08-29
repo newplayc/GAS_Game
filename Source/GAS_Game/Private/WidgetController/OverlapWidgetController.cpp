@@ -15,14 +15,13 @@ void UOverlapWidgetController::BroadcastInitailvalues()
 	
 	OnManaChanged.Broadcast(GetAuraAttriute()->GetMana());
 
-	OnMaxManaChanged.Broadcast(GetAuraAttriute()->GetMaxMana());	
+	OnMaxManaChanged.Broadcast(GetAuraAttriute()->GetMaxMana());
 }
 
 
 void UOverlapWidgetController::BindCallbacksToDependences()
 {
 	
-
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnHealthChanged.Broadcast(Data.NewValue);});
 
 	AbilityComponent->GetGameplayAttributeValueChangeDelegate(GetAuraAttriute()->GetMaxHealthAttribute()).AddLambda([this](const FOnAttributeChangeData& Data) {OnMaxHealthChanged.Broadcast(Data.NewValue); });
@@ -43,9 +42,12 @@ void UOverlapWidgetController::BindCallbacksToDependences()
 			}
 	   }
 	);
-
+	// 某个位置被 卸载 技能栏 的情况
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FOnSpellInputChange.AddUObject(this, &UOverlapWidgetController::DeleteInput);
+	// 能力被取消 主要目的是更改 技能页面的情况 
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FOnSpellAbilityChange.AddUObject(this, &UOverlapWidgetController::ChangeAbility);
+
+	// 装备了 某个技能 会 同时更改 技能装备栏 和 技能 页面
 	Cast<UAuraAbilitySystemComponent>(AbilityComponent)->FOnAbilityInfoChange.AddLambda([this](const FAbilityInfo& AbilityInfo)
 	{
 		AbilitiyInfoDelegate.Broadcast(AbilityInfo);
@@ -104,108 +106,18 @@ void UOverlapWidgetController::OnAbilityBroadCast()
 void UOverlapWidgetController::DeleteAbilityBlueprintCall(const FGameplayTag& AbilityInput,const FGameplayTag& AbilityType)
 {
 	GetAuraASC()->ServerDeleteAbility(AbilityInput , AbilityType);
-	/*
-	for(FGameplayAbilitySpec& Spec :GetAuraASC()->GetActivatableAbilities())
-             	{
-             		if(Spec.DynamicAbilityTags.HasTagExact(AbilityInput))
-             		{
-             			Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
-             			Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
-             			Spec.DynamicAbilityTags.RemoveTag(AbilityInput);
-             			
-             			FGameplayTagContainer AbilityContainer;
-             			UAuraAbilitySystemComponent::GetAbilityTagFromSpec(Spec, AbilityContainer);
-             			
-             			ChangeAbility(AbilityContainer.First());
-             			DeleteInput(AbilityInput);
-             			// 被动取消
-             			if(AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
-             			{
-             				GetAuraASC()->NetMulticast_PassiveSpellChange(AbilityContainer.First() , false);
-             			}
-			return;
-		}
-	}*/
-	
 }
 
-// void UOverlapWidgetController::GetInputTagFromSpec(FGameplayAbilitySpec& Spec, FGameplayTagContainer& InputContainer)
-// {
-// 	FGameplayTagContainer InputTag;
-// 	InputTag.AddTag(FGameplayTag::RequestGameplayTag(FName("Input")));
-// 	InputContainer = Spec.DynamicAbilityTags.Filter(InputTag);
-// }
+
 
 void UOverlapWidgetController::AddAbility(const FGameplayTag & SpellTag  , const FGameplayTag & InputTag)
 {
 	GetAuraASC()->ServerAddAbility(SpellTag , InputTag);
-	/*
-	if(GetAuraPlayerController()->HasAuthority())
-	{
-		UE_LOG(AuraLog , Warning , TEXT("Authority"));
-	}
-	AbilityInfo.StateTag = FAuraGameplayTags::Get().Ability_State_Equipped;
-	bool IsPass = false;
-	for(FGameplayAbilitySpec& Spec :GetAuraASC()->GetActivatableAbilities())
-	{
-
-		if(Spec.DynamicAbilityTags.HasTagExact(AbilityInfo.InputTag))
-		{
-			// 当前位置有能力  先卸掉当前位置能力
-			Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
-			Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
-			Spec.DynamicAbilityTags.RemoveTag(AbilityInfo.InputTag);
-			FGameplayTagContainer AbilityContainer;
-			GetAbilityTagFromSpec(Spec, AbilityContainer);
-			ChangeAbility(AbilityContainer.First());
-			// 被动需要取消激活
-			if(AbilityInfo.AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
-			{
-				GetAuraASC()->NetMulticast_PassiveSpellChange(AbilityContainer.First() , false);
-			}
-			
-			
-			if(IsPass)break;
-			IsPass = true;
-		}
-		if(Spec.Ability.Get()->AbilityTags.HasTagExact(AbilityInfo.AbilityTag))
-		{
-			// 当前能力在其他位置上 
-			if(Spec.DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Ability_State_Equipped))
-			{
-				Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
-				Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Equipped);
-				FGameplayTagContainer InputContainer;
-				GetInputTagFromSpec(Spec, InputContainer);
-				Spec.DynamicAbilityTags.RemoveTags(InputContainer);
-				DeleteInput(InputContainer.First());
-			}
-			// 安装能力
-			Spec.DynamicAbilityTags.RemoveTag(FAuraGameplayTags::Get().Ability_State_Eligible);
-			Spec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Equipped);
-			Spec.DynamicAbilityTags.AddTag(AbilityInfo.InputTag);
-			if(AbilityInfo.AbilityType.MatchesTag(FAuraGameplayTags::Get().Ability_Passive))
-			{
-				GetAuraASC()->ActiveAbilityFromSpec(Spec);
-				
-				FGameplayTagContainer AbilityContainer;
-				GetAbilityTagFromSpec(Spec, AbilityContainer);
-				GetAuraASC()->NetMulticast_PassiveSpellChange(AbilityContainer.First() , true);
-			}
-			if(IsPass)break;
-			IsPass = true;
-		}
-	}
-	AbilitiyInfoDelegate.Broadcast(AbilityInfo);
-	*/
 }
-
-
 
 
 void UOverlapWidgetController::LevelChangeSpell(float Level, FGameplayTag AbilityTag)
 {
-	
 	FAbilityInfo AbilityInfo = AbilityInfos.Get()->FIndAbilityInfoWithTag(AbilityTag);
 	if(GetAuraASC()->FindSpecWithTag(AbilityTag) ==nullptr)
 	{
@@ -216,29 +128,6 @@ void UOverlapWidgetController::LevelChangeSpell(float Level, FGameplayTag Abilit
 			AbilitySpec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Ability_State_Eligible);
 			GetAuraASC()->AddAbilityFromSpec(AbilitySpec);
 			AbilitiyInfoDelegate.Broadcast(AbilityInfo);
-		}
-	}
-	else
-	{
-		for(auto AbilitySpec : GetAuraASC()->GetActivatableAbilities())
-		{
-			if(AbilitySpec.Ability.Get()->AbilityTags.HasTag(AbilityTag))
-			{
-				
-				for(auto tag : AbilitySpec.DynamicAbilityTags)
-				{
-					if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Ability.State"))))
-					{
-						AbilityInfo.StateTag = tag;
-					}
-					if(tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Input"))))
-					{
-						AbilityInfo.InputTag = tag;
-					}
-				}
-				AbilitiyInfoDelegate.Broadcast(AbilityInfo);
-				return;
-			}
 		}
 	}
 }
@@ -260,7 +149,5 @@ void UOverlapWidgetController::DeleteInput(const FGameplayTag& InputTag)
 	AInfo.StateTag = FAuraGameplayTags::Get().Ability_State_None;
 	AbilitiyInfoDelegate.Broadcast(AInfo);
 }
-
-
 
 

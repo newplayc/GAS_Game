@@ -27,7 +27,8 @@ public:
 	AAuraCharacterBase();
 	
 	virtual void InitAttribute(UObject * Source);
-	
+
+	virtual void SecondaryAndVital(UObject * Source);
 
 protected:
 	// Called when the game starts or when spawned
@@ -90,6 +91,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect>InitalVitalEffect;
 
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolve;
 	
@@ -109,6 +111,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetWeaponMaterial();
 
+	
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void TimeLineSetMeshMaterial();
 
@@ -135,8 +138,9 @@ protected:
 	int32 GetSummonNum_Implementation();
 
 	void ChangeSummonNum_Implementation(int32 Num);
+	
 	void DissolveMesh();
-
+	
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void NetDeath(const FVector& DeathVector);
 	

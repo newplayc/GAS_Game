@@ -19,6 +19,7 @@ class GAS_GAME_API UMaxManaMagnitudeCalculation : public UGameplayModMagnitudeCa
 
 public:
 
+		
 	UMaxManaMagnitudeCalculation();
 
 	virtual float CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const override;

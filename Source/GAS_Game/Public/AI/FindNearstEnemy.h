@@ -7,7 +7,7 @@
 #include "FindNearstEnemy.generated.h"
 
 /**
- * 
+ *  选择  最近 的敌人  并且修改 黑板键
  */
 UCLASS()
 class UFindNearstEnemy : public UBTService
@@ -16,6 +16,8 @@ class UFindNearstEnemy : public UBTService
 
 	public:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+
+	
 	UPROPERTY(EditAnywhere)
 	FBlackboardKeySelector NearestDistanceKey;
 

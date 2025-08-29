@@ -26,6 +26,9 @@
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
     <None Include="..\..\Config\DefaultEngine.ini">
       <Filter>Config</Filter>
     </None>
@@ -56,21 +59,6 @@
     <ClInclude Include="..\..\Source\GAS_Game\GAS_Game.h">
       <Filter>Source\GAS_Game</Filter>
     </ClInclude>
-    <Filter Include="Source\GAS_Game\AttributeCalcultion">
-      <UniqueIdentifier>{4F87604D-09FF-324D-A845-6E65F1B8D580}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.cpp">
-      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxHealthMagnitudeCalculation.h">
-      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxManaMagnitudeCalculation.cpp">
-      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\GAS_Game\AttributeCalcultion\MaxManaMagnitudeCalculation.h">
-      <Filter>Source\GAS_Game\AttributeCalcultion</Filter>
-    </ClInclude>
     <Filter Include="Source\GAS_Game\Private">
       <UniqueIdentifier>{8BAA4F4A-6C0C-3B6D-BCB9-79164BDD33F8}</UniqueIdentifier>
     </Filter>
@@ -78,6 +66,9 @@
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\AuraBlueprintFunctionLibrary.cpp">
+      <Filter>Source\GAS_Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AuraGameInstance.cpp">
       <Filter>Source\GAS_Game\Private</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\AI">
@@ -97,6 +88,15 @@
     </Filter>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Async\CoolDownAsync.cpp">
       <Filter>Source\GAS_Game\Private\Async</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\AttributeCalculation">
+      <UniqueIdentifier>{2A4C953E-FC07-32A1-814E-D3AAC5087A4B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeCalculation\MaxHealthMagnitudeCalculation.cpp">
+      <Filter>Source\GAS_Game\Private\AttributeCalculation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\AttributeCalculation\MaxManaMagnitudeCalculation.cpp">
+      <Filter>Source\GAS_Game\Private\AttributeCalculation</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Calculation">
       <UniqueIdentifier>{9A2C9E45-B04B-3A20-BF26-E63C4DB4030B}</UniqueIdentifier>
@@ -161,6 +161,15 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\Game\AuraGameModeBase.cpp">
       <Filter>Source\GAS_Game\Private\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Game\CheckPoint.cpp">
+      <Filter>Source\GAS_Game\Private\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Game\MapEntrance.cpp">
+      <Filter>Source\GAS_Game\Private\Game</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\GAS_Game\Private\Game\MapEntrance.h">
+      <Filter>Source\GAS_Game\Private\Game</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Private\GAS">
       <UniqueIdentifier>{8228F2B3-46FC-3345-AF8F-0E793E9EEB8F}</UniqueIdentifier>
     </Filter>
@@ -176,6 +185,9 @@
     <Filter Include="Source\GAS_Game\Private\GAS\Ability">
       <UniqueIdentifier>{18B3E39C-0AE9-3E9B-B236-AAD07ABB35F7}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\ArcanCrystal.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\AuraGameplayAbility.cpp">
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
@@ -183,6 +195,9 @@
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\FireBoltAbility.cpp">
+      <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\LifeSiphon.cpp">
       <Filter>Source\GAS_Game\Private\GAS\Ability</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\GAS\Ability\LifeSiphonAbility.cpp">
@@ -227,6 +242,9 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\HUD\AuraHUD.cpp">
       <Filter>Source\GAS_Game\Private\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\HUD\MenuHUD.cpp">
+      <Filter>Source\GAS_Game\Private\HUD</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Interface">
       <UniqueIdentifier>{EE459A54-CEA9-3417-84F1-D520124BFFFB}</UniqueIdentifier>
     </Filter>
@@ -238,6 +256,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Interface\PlayerInterface.cpp">
       <Filter>Source\GAS_Game\Private\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Interface\SaveActorInterface.cpp">
+      <Filter>Source\GAS_Game\Private\Interface</Filter>
+    </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\OtherActor">
+      <UniqueIdentifier>{A186DF3E-8D7F-3C3B-8E24-9A04DBAEE9CA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\OtherActor\AuraDecalActor.cpp">
+      <Filter>Source\GAS_Game\Private\OtherActor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\OtherActor\PointsCollection.cpp">
+      <Filter>Source\GAS_Game\Private\OtherActor</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\PlayerState">
       <UniqueIdentifier>{01109C75-E243-3BFF-A623-E307B1EA5144}</UniqueIdentifier>
@@ -251,6 +281,12 @@
     <ClCompile Include="..\..\Source\GAS_Game\Private\Projectile\Projectile.cpp">
       <Filter>Source\GAS_Game\Private\Projectile</Filter>
     </ClCompile>
+    <Filter Include="Source\GAS_Game\Private\Save">
+      <UniqueIdentifier>{404D62DD-3588-33F1-8371-1FCD1C4F5B61}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Save\SlotSaveGame.cpp">
+      <Filter>Source\GAS_Game\Private\Save</Filter>
+    </ClCompile>
     <Filter Include="Source\GAS_Game\Private\Tag">
       <UniqueIdentifier>{FEB7E23F-BBB0-31B5-846A-85BD85701BAC}</UniqueIdentifier>
     </Filter>
@@ -261,6 +297,15 @@
       <UniqueIdentifier>{0674BCC8-C900-36F4-A7B9-34615F890997}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\GAS_Game\Private\Widget\AuraUserWidget.cpp">
+      <Filter>Source\GAS_Game\Private\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Widget\LoadScreenMVVM.cpp">
+      <Filter>Source\GAS_Game\Private\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Widget\LoadSlotMVVM.cpp">
+      <Filter>Source\GAS_Game\Private\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GAS_Game\Private\Widget\LoadWidgetBase.cpp">
       <Filter>Source\GAS_Game\Private\Widget</Filter>
     </ClCompile>
     <Filter Include="Source\GAS_Game\Private\WidgetComponent">
@@ -293,6 +338,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\AuraBlueprintFunctionLibrary.h">
       <Filter>Source\GAS_Game\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AuraGameInstance.h">
+      <Filter>Source\GAS_Game\Public</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\AI">
       <UniqueIdentifier>{9C7BEF3B-054F-3619-98F6-6E20B68BED73}</UniqueIdentifier>
     </Filter>
@@ -310,6 +358,15 @@
     </Filter>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Async\CoolDownAsync.h">
       <Filter>Source\GAS_Game\Public\Async</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\AttributeCalculation">
+      <UniqueIdentifier>{E6626D09-1EFF-3ECC-BA6C-57B6342B24E1}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeCalculation\MaxHealthMagnitudeCalculation.h">
+      <Filter>Source\GAS_Game\Public\AttributeCalculation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\AttributeCalculation\MaxManaMagnitudeCalculation.h">
+      <Filter>Source\GAS_Game\Public\AttributeCalculation</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Calculation">
       <UniqueIdentifier>{3D256216-47F2-3BDC-A439-D7363FE88262}</UniqueIdentifier>
@@ -365,6 +422,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\Game\AuraGameModeBase.h">
       <Filter>Source\GAS_Game\Public\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Game\CheckPoint.h">
+      <Filter>Source\GAS_Game\Public\Game</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\GAS">
       <UniqueIdentifier>{D6EC2603-2B18-32E5-B4B3-7D00F906F0AC}</UniqueIdentifier>
     </Filter>
@@ -380,6 +440,9 @@
     <Filter Include="Source\GAS_Game\Public\GAS\Ability">
       <UniqueIdentifier>{FA67CEB5-52F3-327A-B0A7-CA8DF7BBE6F6}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\ArcanCrystal.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\AuraGameplayAbility.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
@@ -387,6 +450,9 @@
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\FireBoltAbility.h">
+      <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\LifeSiphon.h">
       <Filter>Source\GAS_Game\Public\GAS\Ability</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\GAS\Ability\LifeSiphonAbility.h">
@@ -431,6 +497,9 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\HUD\AuraHUD.h">
       <Filter>Source\GAS_Game\Public\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\HUD\MenuHUD.h">
+      <Filter>Source\GAS_Game\Public\HUD</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Interface">
       <UniqueIdentifier>{9EF4C641-C150-303F-97DD-B1535947ADA7}</UniqueIdentifier>
     </Filter>
@@ -442,6 +511,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Interface\PlayerInterface.h">
       <Filter>Source\GAS_Game\Public\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Interface\SaveActorInterface.h">
+      <Filter>Source\GAS_Game\Public\Interface</Filter>
+    </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\OtherActor">
+      <UniqueIdentifier>{FECFD7ED-7C76-3BD3-8967-3648F8385C36}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\OtherActor\AuraDecalActor.h">
+      <Filter>Source\GAS_Game\Public\OtherActor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\OtherActor\PointsCollection.h">
+      <Filter>Source\GAS_Game\Public\OtherActor</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\PlayerController">
       <UniqueIdentifier>{958B4BCC-280D-310D-993F-94D4ACADD54F}</UniqueIdentifier>
@@ -464,6 +545,12 @@
     <ClInclude Include="..\..\Source\GAS_Game\Public\Projectile\Projectile.h">
       <Filter>Source\GAS_Game\Public\Projectile</Filter>
     </ClInclude>
+    <Filter Include="Source\GAS_Game\Public\Save">
+      <UniqueIdentifier>{11664723-DF60-358E-808F-71A30C8E994D}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Save\SlotSaveGame.h">
+      <Filter>Source\GAS_Game\Public\Save</Filter>
+    </ClInclude>
     <Filter Include="Source\GAS_Game\Public\Tag">
       <UniqueIdentifier>{8DB32C07-D348-3D56-AD0D-3AA9DFD6D9B4}</UniqueIdentifier>
     </Filter>
@@ -474,6 +561,15 @@
       <UniqueIdentifier>{5802A808-2511-3B3D-8347-7A76A9EA71B5}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\GAS_Game\Public\Widget\AuraUserWidget.h">
+      <Filter>Source\GAS_Game\Public\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Widget\LoadScreenMVVM.h">
+      <Filter>Source\GAS_Game\Public\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Widget\LoadSlotMVVM.h">
+      <Filter>Source\GAS_Game\Public\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GAS_Game\Public\Widget\LoadWidgetBase.h">
       <Filter>Source\GAS_Game\Public\Widget</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game\Public\WidgetComponent">

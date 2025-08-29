@@ -152,6 +152,12 @@ void AAuraCharacterBase::InitAttribute(UObject* Source)
 		AbilityComponent->ApplyEffectToInit(InitalVitalEffect,GetPlayerLevel_Implementation()  ,Source);
 }
 
+void AAuraCharacterBase::SecondaryAndVital(UObject* Source)
+{
+	AbilityComponent->ApplyEffectToInit(InitalSecondaryEffect, GetPlayerLevel_Implementation() , Source);
+	AbilityComponent->ApplyEffectToInit(InitalVitalEffect,GetPlayerLevel_Implementation()  ,Source);
+}
+
 FVector AAuraCharacterBase::GetWeaponSocketLocation_Implementation(FGameplayTag AttackTag)
 {
 	FAuraGameplayTags AllTags =  FAuraGameplayTags::Get();

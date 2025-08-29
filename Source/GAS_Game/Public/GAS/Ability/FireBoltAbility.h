@@ -7,7 +7,7 @@
 #include "FireBoltAbility.generated.h"
 
 /**
- * 
+ *  
  */
 UCLASS()
 class GAS_GAME_API UFireBoltAbility : public UProjectileSpell

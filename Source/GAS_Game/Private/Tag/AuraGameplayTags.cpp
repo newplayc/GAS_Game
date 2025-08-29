@@ -55,16 +55,17 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Arcane , GameplayTags.Attributes_Resistance_ArcaneResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Lightning , GameplayTags.Attributes_Resistance_LightningResistance);
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Attributes_DamageType_Physics	 , GameplayTags.Attributes_Resistance_PhysicsResistance);
-
-
 	
 	GameplayTags.Attributes_Meta_InComingExp = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Meta.IncomingExp"), FString("IncomExp"));
 	GameplayTags.Attributes_Extra_SpellPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.SpellPoints") , FString("法术技能点"));
 	GameplayTags.Attributes_Extra_TalentPoints = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Extra.TalentPoints") , FString("天赋点"));
+
 	
 	GameplayTags.Attack_MeleeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.MeleeAttack"), FString("激活 AI 近战攻击的标签"));
 	GameplayTags.Attack_RangeAttack = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.RangeAttack") , FString("激活 AI 远程攻击"));
 	GameplayTags.Attack_Summon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attack.Summon"), FString("激活 AI 召唤的标签"));
+
+
 	/*
 	 * Socket
 	 */
@@ -74,6 +75,7 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Socket_LeftTrail = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.LeftTrail"), FString("Socket LeftTrail"));
 	GameplayTags.Socket_RightTrail = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Socket.RightTrail"), FString("Socket RightTrail"));
 
+	
 	/*
 	 *Montage
 	 */
@@ -83,6 +85,7 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Montage_Attack_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_4"), FString("Montage_Attack_4"));
 	GameplayTags.Montage_Attack_5 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Montage.Attack_5"), FString("Montage_Attack_5"));
 
+	
 	/*
 	 * Ability
 	 */
@@ -97,6 +100,8 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Ability_Lightning_Speed = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningSpeed"), FString("闪电速度能力标签"));
 	GameplayTags.Ability_Lightning_Link = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningLink"), FString("闪电链接能力标签"));
 	GameplayTags.Ability_None = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Lightning.LightningLink") ,FString("空能力标签"));
+
+	
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Fire"));
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Arcane"));
 	GameplayTags.AbilitySpellTag.AddTag(FGameplayTag::RequestGameplayTag("Ability.Lightning"));
@@ -105,9 +110,12 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Ability_IncreaseCriticalChance =  UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseCriticalChance"), FString("提高暴击率被动技能能力标签"));
 	GameplayTags.Ability_IncreaseHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseHealth"), FString("提高生命技能能力标签"));
 	GameplayTags.Ability_IncreaseMana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.IncreaseMana"), FString("提高魔法技能能力标签"));
-	
+	GameplayTags.Ability_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.LifeSiphon"), FString("吸血能力标签"));
+	GameplayTags.Ability_LifeSiphon = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.ManaSiphon"), FString("吸蓝能力标签"));
 	GameplayTags.Ability_Active = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Active"), FString("主动技能能力标签"));
 	GameplayTags.Ability_Passive  = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Passive"), FString("被动技能能力标签"));
+
+
 	/*
 	 * CoolDown
 	 */
@@ -145,8 +153,6 @@ void FAuraGameplayTags::AddGameplayTag()
 	GameplayTags.Ability_State_Locked = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.State.Lock"),FString("能力状态未解锁标签"));
 
 	GameplayTags.Ability_Block = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Ability.Block") , FString("阻止其他能力"));
-
-
 	
 }
 

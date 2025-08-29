@@ -2,7 +2,7 @@
 
 
 
-#include "MaxManaMagnitudeCalculation.h"
+#include "AttributeCalculation/MaxManaMagnitudeCalculation.h"
 #include "GAS/AuraAttributeSet.h"
 #include "Interface/ICombatInterface.h"
 
@@ -14,6 +14,8 @@ UMaxManaMagnitudeCalculation::UMaxManaMagnitudeCalculation()
 
 	RelevantAttributesToCapture.Add(IntelligenceDef);
 }
+
+
 
 float UMaxManaMagnitudeCalculation::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {

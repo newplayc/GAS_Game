@@ -5,6 +5,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Character/AuraCharacterBase.h"
+#include "Engine/OverlapResult.h"
 #include "WidgetController/AuraUserWidgetController.h"
 #include "HUD/AuraHUD.h"
 #include "GAS/AuraAttributeSet.h"
@@ -180,7 +181,7 @@ void  UAuraBlueprintFunctionLibrary::GetOverlapActors(const UObject* WorldContex
 	
 	for(FOverlapResult& res : Overlaps)
 	{
-		if(res.GetActor()->Implements<UICombatInterface>() && !(IICombatInterface::Execute_IsDead(res.GetActor())))
+		if(res.GetActor()->Implements<UICombatInterface>() && !IICombatInterface::Execute_IsDead(res.GetActor()))
 		{
 			HitActors.AddUnique(res.GetActor());
 		}
@@ -239,7 +240,7 @@ float UAuraBlueprintFunctionLibrary::GetCharacterExpValue(const UObject* WorldCo
 
 FActiveGameplayEffectHandle UAuraBlueprintFunctionLibrary::ApplyEffectParams(const FEffectParams& EffectParams)
 {
-
+	
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle ,EffectParams.DamageTypeTag , EffectParams.BaseDamage);
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Damage, EffectParams.DebuffDamage);
 	UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(EffectParams.EffectSpecHandle,FAuraGameplayTags::Get().Debuff_Chance, EffectParams.DebuffChance);
@@ -251,8 +252,6 @@ FActiveGameplayEffectHandle UAuraBlueprintFunctionLibrary::ApplyEffectParams(con
 	
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle =  EffectParams.SourceAbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*(EffectParams.EffectSpecHandle.Data.Get()) , EffectParams.TargetAbilitySystemComponent);
 	return ActiveGameplayEffectHandle;
-
-	
 }
 
 void UAuraBlueprintFunctionLibrary::SetEffectDebuffParamsContext(FGameplayEffectContextHandle& EffectContextHandle, float Duration,
@@ -348,6 +347,40 @@ FVector UAuraBlueprintFunctionLibrary::GetKnockBack(const FGameplayEffectContext
 		return GEC->GetKnockBackDirection();
 	}
 	return FVector();
+}
+
+void UAuraBlueprintFunctionLibrary::SetLifeSiphon( FGameplayEffectContextHandle& EffectContextHandle, float Life)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast< FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		GEC->SetLifeSiphon(Life);
+	}
+}
+
+void UAuraBlueprintFunctionLibrary::SetManaSiphon( FGameplayEffectContextHandle& EffectContextHandle, float Mana)
+{
+	if( FAuraGameplayEffectContext * GEC = static_cast< FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		GEC->SetManaSiphon(Mana);
+	}
+}
+
+float UAuraBlueprintFunctionLibrary::GetLifeSiphon(const FGameplayEffectContextHandle& EffectContextHandle)
+{
+	if(const  FAuraGameplayEffectContext * GEC = static_cast< const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return GEC->GetLifeSiphon();
+	}
+	return 0.f;
+}
+
+float UAuraBlueprintFunctionLibrary::GetManaSiphon(const FGameplayEffectContextHandle& EffectContextHandle)
+{
+	if(const  FAuraGameplayEffectContext * GEC = static_cast< const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return GEC->GetManaSiphon();
+	}
+	return 0.f;
 }
 
 

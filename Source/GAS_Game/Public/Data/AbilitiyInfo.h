@@ -19,7 +19,7 @@ struct FAbilityInfo
 	GENERATED_BODY()
 	
 	UPROPERTY(BlueprintReadWrite)
-	FGameplayTag InputTag;
+	FGameplayTag InputTag = FGameplayTag::EmptyTag;
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	FGameplayTag AbilityTag;
@@ -59,9 +59,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FAbilityInfo FIndAbilityInfoWithTag(const FGameplayTag& AbilityTag)const;
-	UFUNCTION(BlueprintCallable)
-	FAbilityInfo SetAbilityStateTagWithAbilityTag(const FGameplayTag & AbilityTag , const FGameplayTag& StateTag);
-	UFUNCTION(BlueprintCallable)
-	FAbilityInfo SetAbilityInputTagWithAbilityTag(const FGameplayTag & AbilityTag , const FGameplayTag& InputTag);
-
 };
