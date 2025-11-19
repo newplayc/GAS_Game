@@ -1,8 +1,17 @@
 {
 	"SourceFiles": [
-		"E:\\Unreal Project\\GAS_Game\\Source\\GAS_Game\\GAS_Game.Build.cs",
-		"E:\\Unreal Project\\GAS_Game\\Source\\GAS_Game.Target.cs",
-		"E:\\Unreal Project\\GAS_Game\\Source\\GAS_GameEditor.Target.cs"
+		"E:\\RiderProject\\GAS_Game\\Source\\GAS_Game\\GAS_Game.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RD\\RD.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderBlueprint\\RiderBlueprint.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderDebuggerSupport\\RiderDebuggerSupport.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderGameControl\\RiderGameControl.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderLC\\RiderLC.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderLink\\RiderLink.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderLogging\\RiderLogging.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderShaderInfo\\RiderShaderInfo.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\MazeCreator\\Source\\MazeCreator\\MazeCreator.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Source\\GAS_Game.Target.cs",
+		"E:\\RiderProject\\GAS_Game\\Source\\GAS_GameEditor.Target.cs"
 	],
 	"EngineVersion": "5.4.4"
 }
