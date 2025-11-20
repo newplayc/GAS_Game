@@ -1,5 +1,11 @@
 {
 	"RemapUnityFiles": 
 	{
+		"Module.MazeCreator.cpp.obj": [
+			"MazeCreator.cpp.obj",
+			"MazeCreator.init.gen.cpp.obj",
+			"PMazeCreator.gen.cpp.obj",
+			"PMazeCreator.cpp.obj"
+		]
 	}
 }

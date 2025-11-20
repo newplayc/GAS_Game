@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.cpp",
+        "Source": "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ridershaderinfo\\definitions.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ridershaderinfo\\definitions.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\ridershaderinfo\\ridershaderinfo.h",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\modules\\moduleinterface.h",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\coretypes.h",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\hal\\platform.h",

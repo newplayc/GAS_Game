@@ -52,7 +52,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float playRate = 0.3f;
 	
-	UPROPERTY(EditAnywhere , meta=(ToolTips = "0 使用dfs生成 拥有 明显的主路, 1  拥有更多的分岔路 , 2 拥有 方块形 的 活动区域"))
+	UPROPERTY(EditAnywhere , meta=(ToolTip = "0 使用dfs生成 拥有 明显的主路, 1  拥有更多的分岔路 , 2 拥有 方块形 的 活动区域"))
 	int32 creationMode = 0;
 	
 	UPROPERTY()

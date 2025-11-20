@@ -39,6 +39,14 @@
 		{
 			"Name": "ModelViewViewModel",
 			"Enabled": true
+		},
+		{
+			"Name": "MazeCreator",
+			"Enabled": true
+		},
+		{
+			"Name": "QuatTree",
+			"Enabled": true
 		}
 	]
 }

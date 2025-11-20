@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\src\\fmt.cpp",
+        "Source": "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\src\\fmt.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\format-inl.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\format-inl.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\algorithm",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\yvals_core.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\vcruntime.h",
@@ -116,8 +116,8 @@
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\xloctime",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\io.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\corecrt_io.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\format.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\core.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\format.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\thirdparty\\spdlog\\include\\spdlog\\fmt\\bundled\\core.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\string",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\string_view",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\intrin.h",

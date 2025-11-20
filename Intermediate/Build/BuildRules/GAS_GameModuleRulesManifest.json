@@ -10,6 +10,7 @@
 		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderLogging\\RiderLogging.Build.cs",
 		"E:\\RiderProject\\GAS_Game\\Plugins\\Developer\\RiderLink\\Source\\RiderShaderInfo\\RiderShaderInfo.Build.cs",
 		"E:\\RiderProject\\GAS_Game\\Plugins\\MazeCreator\\Source\\MazeCreator\\MazeCreator.Build.cs",
+		"E:\\RiderProject\\GAS_Game\\Plugins\\QuatTree\\Source\\QuatTree\\QuatTree.Build.cs",
 		"E:\\RiderProject\\GAS_Game\\Source\\GAS_Game.Target.cs",
 		"E:\\RiderProject\\GAS_Game\\Source\\GAS_GameEditor.Target.cs"
 	],

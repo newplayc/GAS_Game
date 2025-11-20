@@ -1,8 +1,11 @@
-
 /.vs
 /Intermediate
 /Binaries
 /Saved
 /.idea
-/Intermediate
-/Saved
+/Plugins/MazeCreator/Intermediate
+/Plugins/Developer
+/Plugins/Developer/RiderLink
+
+/Plugins/QuatTree/Intermediate
+/Plugins/Developer

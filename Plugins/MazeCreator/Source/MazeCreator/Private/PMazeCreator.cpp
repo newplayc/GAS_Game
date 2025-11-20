@@ -98,26 +98,25 @@ void AMazeCreator::DfsSpawn()
 			NewCube->SetupAttachment(RootComponent);
 			NewCube->RegisterComponent();
 			// 边界
-			if(i == 0 || i == Height - 1 || j == 0 || j == Width)
+			if(i == 0 || i == Height - 1 || j == 0 || j == Width-1)
 			{
 				NewCube->SetStaticMesh(BlockMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 			}
 			else if(i & 1  && j & 1)
 			{
 				NewCube->SetStaticMesh(PlaneMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , 0));
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , 0));
 				roadArr[i][j] = 1;
 			}
 			else
 			{
 				NewCube->SetStaticMesh(BlockMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 			}
 			SpawnStaticMeshes.Add(NewCube);
 		}
 	}
-
 	
 	TArray<TTuple<int32 , int32 , TArray<Point>>>Stack;
     TTuple<int32 , int32 , int32> Begin =  GetBorderRandomLoc(Width-1, Height-1);
@@ -158,7 +157,11 @@ void AMazeCreator::DfsSpawn()
 		}
 	}
 }
-// 生成 概率公式RoomNum * (1 - (RoomSize * (1- 当前的1为左上角 面积的 最大占比)))
+// 生成 概率公式RoomNum * (1 - (RoomSize * (1- 当前的1为左上角 面积的 最大占比 /  ？)))
+// 过大的 RoomSize 或造成 没有方块 ， 概率公式 可以自行更改
+/*
+ * 问题 : 是否要考虑剩余面积 对 生成概率的影响 
+ */
 void AMazeCreator::CubeSplit()
 {
 
@@ -173,52 +176,53 @@ void AMazeCreator::CubeSplit()
 			NewCube->SetupAttachment(RootComponent);
 			NewCube->RegisterComponent();
 			// 边界
-			if(i == 0 || i == Height - 1 || j == 0 || j == Width)
+			if(i == 0 || i == Height - 1 || j == 0 || j == Width-1)
 			{
 				NewCube->SetStaticMesh(BlockMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 			}
 			else if(i & 1  && j & 1)
 			{
-				
-				if(CubeFlag[i][j] == false)
+				if(CubeFlag[i][j] == false&&CubeFlag[i-1][j] == false  && CubeFlag[i][j-1]== false && CubeFlag[i][j+1]== false)
 				{
-					float Area = (Height - i)  * (Width - j) / (Width *  Height);
-					float probability = RoomNum * (1 - RoomSize + RoomSize * Area) * 100.f;
-					if(bool bSpawnCube = FMath::RandRange(0.f , 100.f) < probability)
+					// 公式
+					float Area = static_cast<float>(Height - i)  * (Width - j) / static_cast<float>(Width * Height);
+					float probability = RoomNum * (1 - RoomSize + RoomSize * Area / 5.f) * 100.f;
+					UE_LOG(LogTemp , Warning , TEXT("Probability %f") , probability);
+					if(FMath::RandRange(0.f , 100.f) < probability)
 					{
-						int32 CWidth = (Width - j) * FMath::RandRange(0.f , RoomSize);
-						if((CWidth & 1) != 1) {CWidth-=1;}
-						int32 CHeight =(Height - i) *  FMath::RandRange(0.f , RoomSize);
-						if((CHeight & 1)!=1){CHeight-=1;}
-
+						int32 CWidth = (Width - j-1) * FMath::RandRange(0.f , RoomSize);
+						if((CWidth & 1) == 1) {CWidth+=1;}
+						int32 CHeight =(Height - i-1) *  FMath::RandRange(0.f , RoomSize);
+						if((CHeight & 1)==1){CHeight+=1;}
 						for(; CHeight >=0; CHeight--)
 						{
-							for(;CWidth >=0; CWidth--)
+							for(int t = CWidth;t >=0; t--)
 							{
-								CubeFlag[i + CHeight][j + CWidth] = true;
+								CubeFlag[i + CHeight][j + t] = true;
 							}
 						}
 					}
 				}
 				NewCube->SetStaticMesh(PlaneMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , 0));
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , 0));
 				roadArr[i][j] = 1;
 			}
 			else
 			{
 				if(CubeFlag[i][j]){
 					NewCube->SetStaticMesh(PlaneMesh);
-					NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , 0));
+					NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , 0));
 				}
 				else{
 					NewCube->SetStaticMesh(BlockMesh);
-					NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+					NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 				}	
 			}
 			SpawnStaticMeshes.Add(NewCube);
 		}
 	}
+	
 }
 
 void AMazeCreator::PrimSpawn()
@@ -238,21 +242,21 @@ void AMazeCreator::PrimSpawn()
 			NewCube->SetupAttachment(RootComponent);
 			NewCube->RegisterComponent();
 			// 边界
-			if(i == 0 || i == Height - 1 || j == 0 || j == Width)
+			if(i == 0 || i == Height - 1 || j == 0 || j == Width-1)
 			{
 				NewCube->SetStaticMesh(BlockMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 			}
 			else if(i & 1  && j & 1)
 			{
 				NewCube->SetStaticMesh(PlaneMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , 0));
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , 0));
 				roadArr[i][j] = 1;
 			}
 			else
 			{
 				NewCube->SetStaticMesh(BlockMesh);
-				NewCube->SetRelativeLocation(FVector(j* MeshWidth , -i * MeshWidth , MeshWidth /2));	
+				NewCube->SetRelativeLocation(FVector(j* MeshWidth , i * MeshWidth , MeshWidth /2));	
 			}
 			SpawnStaticMeshes.Add(NewCube);
 		}
@@ -306,9 +310,6 @@ void AMazeCreator::PrimSpawn()
 		}
 		YellowAndBlue.RemoveAt(Rd);
 	}
-
-
-	
 }
 
 void AMazeCreator::ChangeMesh()
@@ -321,6 +322,10 @@ void AMazeCreator::ChangeMesh()
 		SpawnStaticMeshes[x * Width + y]->SetStaticMesh(PlaneMesh);
 		SpawnStaticMeshes[x * Width + y]->AddRelativeLocation(FVector(0,0,-MeshWidth/2));
 		taskQueue.Pop();
+	}
+	else
+	{
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 	}
 }
 

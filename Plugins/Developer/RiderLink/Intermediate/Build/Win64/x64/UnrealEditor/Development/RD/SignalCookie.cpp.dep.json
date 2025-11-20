@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\src\\main\\reactive\\base\\signalcookie.cpp",
+        "Source": "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\src\\main\\reactive\\base\\signalcookie.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\src\\main\\reactive\\base\\signalcookie.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\src\\main\\reactive\\base\\signalcookie.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\cstdint",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\yvals_core.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\vcruntime.h",
@@ -14,7 +14,7 @@
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\vadefs.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\xkeycheck.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\stdint.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\rd_core_export.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_core_cpp\\rd_core_export.h",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\atomic",
             "e:\\program files\\microsoft visual studio\\2022\\professional\\vc\\tools\\msvc\\14.38.33130\\include\\yvals.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\ucrt\\crtdbg.h",

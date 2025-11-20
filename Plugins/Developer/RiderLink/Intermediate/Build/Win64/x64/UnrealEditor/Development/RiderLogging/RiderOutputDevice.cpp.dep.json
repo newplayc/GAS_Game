@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\riderlogging\\private\\rideroutputdevice.cpp",
+        "Source": "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\riderlogging\\private\\rideroutputdevice.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\riderlogging\\definitions.h",
-            "c:\\users\\adamzzhang\\downloads\\gas_game-main\\gas_game-main\\plugins\\developer\\riderlink\\source\\riderlogging\\private\\rideroutputdevice.hpp",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\riderlogging\\definitions.h",
+            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\riderlogging\\private\\rideroutputdevice.hpp",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\misc\\outputdevice.h",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\corefwd.h",
             "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\core\\public\\coretypes.h",
