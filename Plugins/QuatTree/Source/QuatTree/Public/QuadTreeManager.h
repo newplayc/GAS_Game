@@ -9,7 +9,9 @@
 class ALeafActor;
 class QuadTreeNode;
 
-
+/**
+ * 四叉树管理器 - 用于空间分区和碰撞检测优化
+ */
 UCLASS()
 class QUATTREE_API AQuadTreeManager : public AActor
 {
@@ -22,59 +24,67 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent>Checker;
+	// 组件
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<USceneComponent> RootCom;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent>RootCom;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UStaticMeshComponent> Checker;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent>SceneComponent1;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<USceneComponent> SpawnPoint1;
 	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent>SceneComponent2;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<USceneComponent> SpawnPoint2;
 	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent>SceneComponent3;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<USceneComponent> SpawnPoint3;
 
-	TArray<FVector>RandLocations;
+	// 四叉树配置
+	UPROPERTY(EditAnywhere, Category = "QuadTree", meta = (ClampMin = "100.0"))
+	double Width = 2000.0;
 	
-	UPROPERTY(EditAnywhere)
-	double Width;
+	UPROPERTY(EditAnywhere, Category = "QuadTree", meta = (ClampMin = "100.0"))
+	double Height = 2000.0;
 	
-	UPROPERTY(EditAnywhere)
-	double Height;
-	
-	UPROPERTY(EditAnywhere)
-	int32 ActorNum;
+	UPROPERTY(EditAnywhere, Category = "QuadTree", meta = (ClampMin = "1.0"))
+	float CheckRadius = 600.0f;
 
-	UPROPERTY(EditAnywhere)
-	float Speed = 100.f;
-	UPROPERTY(EditAnywhere)
+	// 生成配置
+	UPROPERTY(EditAnywhere, Category = "Spawning", meta = (ClampMin = "1"))
+	int32 MaxActorCount = 100;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<ALeafActor> LeafActorClass;
+
+	UPROPERTY(EditAnywhere, Category = "Spawning", meta = (ClampMin = "0.1"))
 	float SpawnRate = 0.3f;
 	
-	int32 NowNums = 0;
-	
-	TSharedPtr<QuadTreeNode>Root;
+	UPROPERTY(EditAnywhere, Category = "Spawning", meta = (ClampMin = "10.0"))
+	float MoveSpeed = 100.0f;
 
-	void SpawnActorsInTimer();
-	void MoveActor();
+private:
+	// 四叉树根节点
+	TSharedPtr<QuadTreeNode> QuadTreeRoot;
+
+	// 生成的Actor列表
+	UPROPERTY()
+	TArray<ALeafActor*> SpawnedActors;
+
+	// 重生位置
+	TArray<FVector> RespawnLocations;
 	
+	// 定时器
 	FTimerHandle SpawnTimerHandle;
 	FTimerHandle MoveTimerHandle;
 	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ALeafActor>LeafClass;
+	// 边界
+	FBox2D Bounds;
+	int32 CurrentActorCount;
 
-	UPROPERTY()
-	TArray<ALeafActor*>Objs;
-
-	UPROPERTY(EditAnywhere)
-	float CheckBaseLegth = 600.f; // 宽
-
-
-
-	
-private:
-	double Minx , Maxx , Miny , Maxy;
+	// 内部方法
+	void SpawnActorsTick();
+	void MoveActorsTick();
+	void InitializeBounds();
+	FVector GetRandomLocationInBounds() const;
 };

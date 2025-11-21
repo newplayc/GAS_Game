@@ -1,58 +1,64 @@
 #pragma once
 
+#include "CoreMinimal.h"
+
 class ALeafActor;
 
+/**
+ * QuadTree node for spatial partitioning
+ * Optimized for cache coherency and minimal allocations
+ */
 class QuadTreeNode : public TSharedFromThis<QuadTreeNode>
 {
 public:
-	FVector center;// 中心点
-	FVector extend;// 扩展尺寸 // x 半宽  y 半高
-	bool isLeaf;
-	int32 maxCount = 4;
-	int32 Depth = 0;
-	TSharedPtr<QuadTreeNode>Root;
-	TArray<ALeafActor*>Objs;
-	bool bInRange = false;
-	static UObject * WorldContext;
-	TArray<TSharedPtr<QuadTreeNode>>Child_Node;
-	
-	TSet<ALeafActor*>EscapeActors;
-public:
-
-	void Tick(UObject * Obj);
-	
-	QuadTreeNode(const FVector& _center, const FVector& _extend , TSharedPtr<QuadTreeNode>_root,int32 _Depth);
-
+	QuadTreeNode(const FVector& InCenter, const FVector& InExtent, TSharedPtr<QuadTreeNode> InParent, int32 InDepth);
 	~QuadTreeNode();
-	
-	// 一个 位置 是否在 当前范围内
-	bool IsInBound(const FVector& InLoc) const;
-	
-	
-	// 插入一个 节点
-	bool Insert(ALeafActor* Obj);
-	
-	
-	// 与圆形 相交
-	bool InterSectWithCircle(const FVector& Orign , float Radius) const;
 
-	// 与矩形相交 
-	bool InterSectWithRecentage(const FVector& OtherCenter, const FVector& OtherExtent) const;
-	
-	void CheckIn(const FVector& _center, float Radious, bool IsParent);
-	
-	//点是否在指定区域内
-	static  bool InterSection(const FVector& _pMin, const FVector& _pMax, const FVector& _point);
+	// Core operations
+	bool Insert(ALeafActor* Actor);
+	void Update();
+	void CheckInRange(const FVector& Center, float Radius, bool bParentInRange);
+	void DrawDebug(const UObject* WorldContext) const;
 
-	void DrawBound(const UObject * Obj) const;
+	// Query operations
+	bool IsInBounds(const FVector& Location) const;
+	bool IntersectsCircle(const FVector& Origin, float Radius) const;
+	bool IntersectsRectangle(const FVector& OtherCenter, const FVector& OtherExtent) const;
 
-	void update();
-protected:
-	//  将这物体 下方孩子节点
-	bool InsertToChild(ALeafActor * Obj);
+	// Accessors
+	FORCEINLINE bool IsLeaf() const { return bIsLeaf; }
+	FORCEINLINE int32 GetDepth() const { return Depth; }
+	FORCEINLINE const FVector& GetCenter() const { return Center; }
+	FORCEINLINE const FVector& GetExtent() const { return Extent; }
 	
-	//  细分节点 把孩子向下传递
+	TSet<ALeafActor*> EscapeActors;
+
+private:
+	// Spatial data - grouped for cache efficiency
+	FVector Center;
+	FVector Extent;
+	
+	// Tree structure
+	TSharedPtr<QuadTreeNode> Parent;
+	TSharedPtr<QuadTreeNode> Children[4];
+	
+	// Node data
+	TArray<ALeafActor*> Objects;
+	
+	// State flags - packed together
+	bool bIsLeaf;
+	bool bInRange;
+	int32 Depth;
+	
+	// Configuration
+	static constexpr int32 MaxObjectsPerNode = 4;
+	static constexpr int32 MaxDepth = 8;
+
+	// Internal operations
 	void Subdivide();
-
-	bool ReMatch(ALeafActor * Actor);
+	bool InsertToChild(ALeafActor* Actor);
+	bool ReInsert(ALeafActor* Actor);
+	
+	// Utility
+	static bool PointInBounds(const FVector& Point, const FVector& Min, const FVector& Max);
 };

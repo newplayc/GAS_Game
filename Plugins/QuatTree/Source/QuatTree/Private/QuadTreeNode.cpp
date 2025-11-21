@@ -1,204 +1,232 @@
 #include "QuadTreeNode.h"
-
 #include "LeafActor.h"
+#include "DrawDebugHelpers.h"
 
-void QuadTreeNode::Tick(UObject * Obj)
+QuadTreeNode::QuadTreeNode(const FVector& InCenter, const FVector& InExtent, TSharedPtr<QuadTreeNode> InParent, int32 InDepth)
+	: Center(InCenter)
+	, Extent(InExtent)
+	, Parent(InParent)
+	, bIsLeaf(true)
+	, bInRange(false)
+	, Depth(InDepth)
 {
-	DrawBound(Obj);
-	if(!isLeaf)
-	for(const auto & child : Child_Node){
-		if(child.IsValid()){
-			child->Tick(Obj);
-		}
+	Objects.Reserve(MaxObjectsPerNode);
+	for (int32 i = 0; i < 4; ++i)
+	{
+		Children[i] = nullptr;
 	}
-}
-
-QuadTreeNode::QuadTreeNode(const FVector& _center, const FVector& _extend ,TSharedPtr<QuadTreeNode>_root , int32 _Depth): center(_center),
-                                                                                                           extend(_extend) , Root(_root) , Depth(_Depth)
-{
-	isLeaf = true;
-	bInRange = false;
-	Child_Node.Init(nullptr , 4);
 }
 
 QuadTreeNode::~QuadTreeNode()
 {
-	Objs.Empty();
-	Child_Node.Empty();
+	Objects.Empty();
+	for (int32 i = 0; i < 4; ++i)
+	{
+		Children[i].Reset();
+	}
 }
 
-bool QuadTreeNode::IsInBound(const FVector& InLoc) const
+bool QuadTreeNode::IsInBounds(const FVector& Location) const
 {
-	return InLoc.X >=center.X - extend.X  &&
-		InLoc.X <= center.X + extend.X &&
-		InLoc.Y >=center.Y - extend.Y &&
-		InLoc.Y <= center.Y + extend.Y ;
+	return FMath::Abs(Location.X - Center.X) <= Extent.X &&
+	       FMath::Abs(Location.Y - Center.Y) <= Extent.Y;
 }
 
 void QuadTreeNode::Subdivide()
 {
-	isLeaf = false;
-	double x = center.X , y = center.Y , z = center.Z;
-	double w = extend.X / 2, h = extend.Y /2 , l = extend.Z;
-	Child_Node[0] = (MakeShared<QuadTreeNode>(FVector(x - w  ,y - h ,z) ,
-		FVector(w,h,l) , AsShared(),Depth +1)  );
-
-	Child_Node[1] = (MakeShared<QuadTreeNode>(FVector(x + w  ,y - h ,z) ,
-		FVector(w,h,l),AsShared(),Depth +1) );
-
-	Child_Node[2]=  (MakeShared<QuadTreeNode>(FVector(x - w  ,y + h ,z) ,
-		FVector(w,h,l),AsShared(),Depth +1));
-
-	Child_Node[3] = (MakeShared<QuadTreeNode>(FVector(x + w  ,y + h ,z) ,
-		FVector(w,h,l) ,AsShared(),Depth +1));
-	
-	for(const auto & p : Objs)
+	if (Depth >= MaxDepth)
 	{
-		if(!InsertToChild(p))
+		return;
+	}
+
+	bIsLeaf = false;
+	
+	const double HalfX = Extent.X * 0.5;
+	const double HalfY = Extent.Y * 0.5;
+	const double Z = Center.Z;
+	const FVector ChildExtent(HalfX, HalfY, Extent.Z);
+	
+	// 创建四个子节点: 左下, 右下, 左上, 右上
+	Children[0] = MakeShared<QuadTreeNode>(FVector(Center.X - HalfX, Center.Y - HalfY, Z), ChildExtent, AsShared(), Depth + 1);
+	Children[1] = MakeShared<QuadTreeNode>(FVector(Center.X + HalfX, Center.Y - HalfY, Z), ChildExtent, AsShared(), Depth + 1);
+	Children[2] = MakeShared<QuadTreeNode>(FVector(Center.X - HalfX, Center.Y + HalfY, Z), ChildExtent, AsShared(), Depth + 1);
+	Children[3] = MakeShared<QuadTreeNode>(FVector(Center.X + HalfX, Center.Y + HalfY, Z), ChildExtent, AsShared(), Depth + 1);
+	
+	// 重新分配现有对象到子节点
+	for (ALeafActor* Actor : Objects)
+	{
+		if (!InsertToChild(Actor))
 		{
-			if(Root.IsValid())
+			if (Parent.IsValid())
 			{
-				Root->ReMatch(p);
+				Parent->ReInsert(Actor);
 			}
 			else
 			{
-				Root->EscapeActors.Add(p);	
+				EscapeActors.Add(Actor);
 			}
 		}
 	}
-	Objs.Empty();
-
+	
+	Objects.Empty();
 }
 
 
 
-bool QuadTreeNode::Insert(ALeafActor* Obj)
+bool QuadTreeNode::Insert(ALeafActor* Actor)
 {
-	if(!IsInBound(Obj->GetActorLocation()))
-    {
-     	return false;
-    }
-	if(isLeaf && Objs.Num() < maxCount)
+	if (!Actor || !IsInBounds(Actor->GetActorLocation()))
 	{
-		Objs.Push(Obj);
-		return  true;
+		return false;
 	}
-	if(isLeaf)
+
+	if (bIsLeaf)
 	{
+		if (Objects.Num() < MaxObjectsPerNode)
+		{
+			Objects.Add(Actor);
+			return true;
+		}
+		
 		Subdivide();
 	}
-	return InsertToChild(Obj);
+	
+	return InsertToChild(Actor);
 }
 
-bool QuadTreeNode::InsertToChild(ALeafActor* Obj)
+bool QuadTreeNode::InsertToChild(ALeafActor* Actor)
 {
-	for(const auto& child : Child_Node){
-		if(child.IsValid() &&  child->Insert(Obj)){
+	for (int32 i = 0; i < 4; ++i)
+	{
+		if (Children[i].IsValid() && Children[i]->Insert(Actor))
+		{
 			return true;
 		}
 	}
 	return false;
 }
 
-bool QuadTreeNode::InterSectWithCircle(const FVector& Orign, float Radius) const 
+bool QuadTreeNode::IntersectsCircle(const FVector& Origin, float Radius) const
 {
-	UE::Math::TBox<double> Box2(UE::Math::TVector(center.X- extend.X , center.Y - extend.Y , center.Z) , UE::Math::TVector(center.X+  extend.X , center.Y+ extend.Y , center.Z + 10.f));
-	return 	FMath::SphereAABBIntersection(Orign , static_cast<double>(Radius) * static_cast<double>(Radius) , Box2);
+	const FVector Min(Center.X - Extent.X, Center.Y - Extent.Y, Center.Z);
+	const FVector Max(Center.X + Extent.X, Center.Y + Extent.Y, Center.Z + 10.0);
+	const FBox Box(Min, Max);
+	
+	return FMath::SphereAABBIntersection(Origin, Radius * Radius, Box);
 }
 
-bool QuadTreeNode::InterSectWithRecentage(const FVector& OtherCenter, const FVector& OtherExtent) const
+bool QuadTreeNode::IntersectsRectangle(const FVector& OtherCenter, const FVector& OtherExtent) const
 {
-	// 获取当前节点的中心、半尺寸和旋转
-	FVector CenterA = this->center;
-	FVector ExtentA = this->extend; 
-    
-	FVector CenterB = OtherCenter;
-	FVector ExtentB = OtherExtent;
-	// 计算中心距离（绝对值）
-	float DeltaX = FMath::Abs(CenterA.X - CenterB.X);
-	float DeltaY = FMath::Abs(CenterA.Y - CenterB.Y);
-    
-	// 计算半尺寸和
-	float SumExtentX = ExtentA.X + ExtentB.X;
-	float SumExtentY = ExtentA.Y + ExtentB.Y;
-    
-	// 分离轴检测
-	bool bOverlapX = DeltaX <= SumExtentX;
-	bool bOverlapY = DeltaY <= SumExtentY;
-    
-	return bOverlapX && bOverlapY;
+	const float DeltaX = FMath::Abs(Center.X - OtherCenter.X);
+	const float DeltaY = FMath::Abs(Center.Y - OtherCenter.Y);
+	const float SumExtentX = Extent.X + OtherExtent.X;
+	const float SumExtentY = Extent.Y + OtherExtent.Y;
+	
+	return DeltaX <= SumExtentX && DeltaY <= SumExtentY;
 }
 
-void QuadTreeNode::CheckIn(const FVector& _center, float Radious, bool IsParent)
+void QuadTreeNode::CheckInRange(const FVector& QueryCenter, float Radius, bool bParentInRange)
 {
-	bInRange = IsParent &&  InterSectWithCircle(_center ,Radious );
-	if(!isLeaf){
-		for(const auto & Child : Child_Node){
-			Child->CheckIn(_center , Radious,bInRange);
-		}
-	}
-	else{
-		for(const auto & obj : Objs){
-			obj->Active(obj->HasCollision(_center , Radious));	
-		}
-	}
-}
-
-
-bool QuadTreeNode::InterSection(const FVector& _pMin, const FVector& _pMax, const FVector& _point)
-{		
-	return (_point.X >= _pMin.X &&
-		_point.X <= _pMax.X &&
-		_point.Y >= _pMin.Y &&
-		_point.Y <= _pMax.Y);
-}
-
-void QuadTreeNode::DrawBound(const UObject * Obj) const
-{
-		FColor drawColor = bInRange ? FColor::Green : FColor::Red;
-		FVector drawCenter = center + (bInRange ? FVector(0, 0, 8) : FVector(0, 0, 5));
-		DrawDebugBox(Obj ->GetWorld(), drawCenter , extend + FVector(0,0,1) ,drawColor , false,-1.f , 0,10.f);
-}
-
-bool QuadTreeNode::ReMatch(ALeafActor* Actor)
-{
-	if(Actor && Insert(Actor))
+	bInRange = bParentInRange && IntersectsCircle(QueryCenter, Radius);
+	
+	if (!bIsLeaf)
 	{
-		return true;
-	}
-	if(Root.IsValid() && Root->ReMatch(Actor))
-	{
-		return true;
-	}
-	EscapeActors.Add(Actor);
-	UE_LOG(LogTemp , Warning , TEXT("Hi This is A Leaf Escape"));
-	return false;
-}
-void QuadTreeNode::update()
-{
-	if(!isLeaf)
-	{
-		for(const auto & child : Child_Node){
-			child->update();
-		}
-	}
-	else{
-		TArray<ALeafActor *> DeleteArray;
-		for(ALeafActor * obj : Objs)
+		for (int32 i = 0; i < 4; ++i)
 		{
-			if(!IsInBound(obj->GetActorLocation())){
-				if(Root.IsValid()){
-					Root->ReMatch(obj);
-				}
-				else{
-					EscapeActors.Add(obj);
-				}
-				DeleteArray.Add(obj);
+			if (Children[i].IsValid())
+			{
+				Children[i]->CheckInRange(QueryCenter, Radius, bInRange);
 			}
 		}
-		for(const auto & del : DeleteArray)
+	}
+	else
+	{
+		for (ALeafActor* Actor : Objects)
 		{
-			Objs.RemoveSingle(del);
+			if (Actor)
+			{
+				Actor->Active(Actor->HasCollision(QueryCenter, Radius));
+			}
+		}
+	}
+}
+
+bool QuadTreeNode::PointInBounds(const FVector& Point, const FVector& Min, const FVector& Max)
+{
+	return Point.X >= Min.X && Point.X <= Max.X &&
+	       Point.Y >= Min.Y && Point.Y <= Max.Y;
+}
+
+void QuadTreeNode::DrawDebug(const UObject* WorldContext) const
+{
+	if (!WorldContext)
+	{
+		return;
+	}
+
+	const FColor DrawColor = bInRange ? FColor::Green : FColor::Red;
+	const FVector DrawCenter = Center + FVector(0, 0, bInRange ? 8.0 : 5.0);
+	DrawDebugBox(WorldContext->GetWorld(), DrawCenter, Extent + FVector(0, 0, 1), DrawColor, false, -1.0f, 0, 10.0f);
+	
+	if (!bIsLeaf)
+	{
+		for (int32 i = 0; i < 4; ++i)
+		{
+			if (Children[i].IsValid())
+			{
+				Children[i]->DrawDebug(WorldContext);
+			}
+		}
+	}
+}
+
+bool QuadTreeNode::ReInsert(ALeafActor* Actor)
+{
+	if (Actor && Insert(Actor))
+	{
+		return true;
+	}
+	
+	if (Parent.IsValid() && Parent->ReInsert(Actor))
+	{
+		return true;
+	}
+	
+	EscapeActors.Add(Actor);
+	return false;
+}
+
+void QuadTreeNode::Update()
+{
+	if (!bIsLeaf)
+	{
+		for (int32 i = 0; i < 4; ++i)
+		{
+			if (Children[i].IsValid())
+			{
+				Children[i]->Update();
+			}
+		}
+	}
+	else
+	{
+		// 使用反向迭代避免删除时的索引问题
+		for (int32 i = Objects.Num() - 1; i >= 0; --i)
+		{
+			ALeafActor* Actor = Objects[i];
+			if (Actor && !IsInBounds(Actor->GetActorLocation()))
+			{
+				Objects.RemoveAtSwap(i, 1, false);
+				
+				if (Parent.IsValid())
+				{
+					Parent->ReInsert(Actor);
+				}
+				else
+				{
+					EscapeActors.Add(Actor);
+				}
+			}
 		}
 	}
 }

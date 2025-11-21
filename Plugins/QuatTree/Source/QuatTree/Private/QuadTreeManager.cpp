@@ -1,102 +1,177 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "QuadTreeManager.h"
 #include "LeafActor.h"
 #include "QuadTreeNode.h"
 #include "Kismet/KismetMathLibrary.h"
 
-
-// Sets default values
 AQuadTreeManager::AQuadTreeManager()
+	: CurrentActorCount(0)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-
-	RootCom = CreateDefaultSubobject<USceneComponent>("RootComponent");
+	RootCom = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = RootCom;
 
-
-	SceneComponent1 = CreateDefaultSubobject<USceneComponent>("RootComponent1");
-	SceneComponent2 = CreateDefaultSubobject<USceneComponent>("SceneComponent2");
-	SceneComponent3 = CreateDefaultSubobject<USceneComponent>("SceneComponent3");
-	
-	
-	Checker = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	Checker = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Checker"));
+	Checker->SetupAttachment(RootCom);
 	Checker->SetSimulatePhysics(true);
-	Checker->Mobility  = EComponentMobility::Type::Movable;
+	Checker->Mobility = EComponentMobility::Movable;
 	Checker->SetConstraintMode(EDOFMode::XYPlane);
-	Checker->SetCollisionEnabled(ECollisionEnabled::Type::PhysicsOnly);
+	Checker->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+
+	SpawnPoint1 = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint1"));
+	SpawnPoint1->SetupAttachment(RootCom);
+	
+	SpawnPoint2 = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint2"));
+	SpawnPoint2->SetupAttachment(RootCom);
+	
+	SpawnPoint3 = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPoint3"));
+	SpawnPoint3->SetupAttachment(RootCom);
 }
 
 void AQuadTreeManager::BeginPlay()
 {
 	Super::BeginPlay();
-	RandLocations.Add(SceneComponent1->GetComponentLocation());
-	RandLocations.Add(SceneComponent2->GetComponentLocation());
-	RandLocations.Add(SceneComponent3->GetComponentLocation());
-
 	
-	Root = MakeShareable(new QuadTreeNode(GetActorLocation()  , FVector(Width/2 , Height/2 , 2) , nullptr,0));
-	FVector ActorLoc = GetActorLocation();
-	Maxx = ActorLoc.X + Width / 2;
-	Minx = ActorLoc.X - Width / 2;
-	Maxy = ActorLoc.Y + Height / 2;
-	Miny = ActorLoc.Y - Height / 2;
-	GetWorld()->GetTimerManager().SetTimer(SpawnTimerHandle, this,  &ThisClass::SpawnActorsInTimer ,SpawnRate , true);
-	GetWorld()->GetTimerManager().SetTimer(MoveTimerHandle , this, &ThisClass::MoveActor , 2.f , true);
-}
- 
-void AQuadTreeManager::SpawnActorsInTimer()
-{
-	if(NowNums < ActorNum)
+	// 初始化重生位置
+	RespawnLocations.Reserve(3);
+	RespawnLocations.Add(SpawnPoint1->GetComponentLocation());
+	RespawnLocations.Add(SpawnPoint2->GetComponentLocation());
+	RespawnLocations.Add(SpawnPoint3->GetComponentLocation());
+
+	// 初始化边界
+	InitializeBounds();
+	
+	// 创建四叉树根节点
+	const FVector TreeCenter = GetActorLocation();
+	const FVector TreeExtent(Width * 0.5, Height * 0.5, 2.0);
+	QuadTreeRoot = MakeShared<QuadTreeNode>(TreeCenter, TreeExtent, nullptr, 0);
+	
+	// 预分配Actor数组
+	SpawnedActors.Reserve(MaxActorCount);
+	
+	// 启动定时器
+	if (UWorld* World = GetWorld())
 	{
-		double RandX = FMath::FRandRange(Minx , Maxx);
-		double RandY = FMath::FRandRange(Miny , Maxy);
-		ALeafActor * LA =  GetWorld()->SpawnActor<ALeafActor>(LeafClass,FVector(RandX , RandY , GetActorLocation().Z + 5) , FRotator());
-		Objs.Add(LA);
-		Root->Insert(LA);
-		NowNums++;	
-	}
-	else
-	{
-		GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+		World->GetTimerManager().SetTimer(SpawnTimerHandle, this, &ThisClass::SpawnActorsTick, SpawnRate, true);
+		World->GetTimerManager().SetTimer(MoveTimerHandle, this, &ThisClass::MoveActorsTick, 2.0f, true);
 	}
 }
 
-void AQuadTreeManager::MoveActor()
+void AQuadTreeManager::InitializeBounds()
 {
+	const FVector Center = GetActorLocation();
+	const double HalfWidth = Width * 0.5;
+	const double HalfHeight = Height * 0.5;
+	
+	Bounds = FBox2D(
+		FVector2D(Center.X - HalfWidth, Center.Y - HalfHeight),
+		FVector2D(Center.X + HalfWidth, Center.Y + HalfHeight)
+	);
+}
 
-	for(const auto & obj : Objs)
+FVector AQuadTreeManager::GetRandomLocationInBounds() const
+{
+	const FVector2D RandomPoint = FMath::RandPointInBox(Bounds);
+	return FVector(RandomPoint.X, RandomPoint.Y, GetActorLocation().Z + 5.0);
+}
+void AQuadTreeManager::SpawnActorsTick()
+{
+	if (CurrentActorCount >= MaxActorCount)
 	{
-		obj->MeshComponent->SetPhysicsLinearVelocity(UKismetMathLibrary::RandomUnitVector() * Speed);
+		if (UWorld* World = GetWorld())
+		{
+			World->GetTimerManager().ClearTimer(SpawnTimerHandle);
+		}
+		return;
 	}
 
-	
-	for(const auto & Escap: Root->EscapeActors)
+	if (!LeafActorClass || !QuadTreeRoot.IsValid())
 	{
-		int32 Rand = FMath::RandRange(0 , 2);
-		Escap->SetActorLocation(RandLocations[Rand]);
-		Root->Insert(Escap);
+		return;
 	}
-	Root->EscapeActors.Empty();
 
-	
-	Checker->SetPhysicsLinearVelocity(UKismetMathLibrary::RandomUnitVector() * Speed);
-	if(!Root->IsInBound(Checker->GetComponentLocation()))
+	UWorld* World = GetWorld();
+	if (!World)
 	{
-		int32 Rand = FMath::RandRange(0 , RandLocations.Num() -1);
-		Checker->SetWorldLocation(RandLocations[Rand]);
+		return;
 	}
+
+	const FVector SpawnLocation = GetRandomLocationInBounds();
+	ALeafActor* NewActor = World->SpawnActor<ALeafActor>(LeafActorClass, SpawnLocation, FRotator::ZeroRotator);
 	
+	if (NewActor)
+	{
+		SpawnedActors.Add(NewActor);
+		QuadTreeRoot->Insert(NewActor);
+		++CurrentActorCount;
+	}
+}
+
+void AQuadTreeManager::MoveActorsTick()
+{
+	if (!QuadTreeRoot.IsValid())
+	{
+		return;
+	}
+
+	// 给所有生成的Actor随机速度
+	const FVector RandomVelocity = UKismetMathLibrary::RandomUnitVector() * MoveSpeed;
+	for (ALeafActor* Actor : SpawnedActors)
+	{
+		if (Actor && Actor->MeshComponent)
+		{
+			Actor->MeshComponent->SetPhysicsLinearVelocity(RandomVelocity);
+		}
+	}
+
+	// 处理逃逸的Actor
+	if (QuadTreeRoot->EscapeActors.Num() > 0)
+	{
+		for (ALeafActor* EscapedActor : QuadTreeRoot->EscapeActors)
+		{
+			if (EscapedActor && RespawnLocations.Num() > 0)
+			{
+				const int32 RandomIndex = FMath::RandRange(0, RespawnLocations.Num() - 1);
+				EscapedActor->SetActorLocation(RespawnLocations[RandomIndex]);
+				QuadTreeRoot->Insert(EscapedActor);
+			}
+		}
+		QuadTreeRoot->EscapeActors.Empty();
+	}
+
+	// 移动检查器
+	if (Checker)
+	{
+		Checker->SetPhysicsLinearVelocity(UKismetMathLibrary::RandomUnitVector() * MoveSpeed);
+		
+		if (!QuadTreeRoot->IsInBounds(Checker->GetComponentLocation()) && RespawnLocations.Num() > 0)
+		{
+			const int32 RandomIndex = FMath::RandRange(0, RespawnLocations.Num() - 1);
+			Checker->SetWorldLocation(RespawnLocations[RandomIndex]);
+		}
+	}
 }
 
 
 void AQuadTreeManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Root->update();
-	Root->CheckIn(Checker->GetComponentLocation() , CheckBaseLegth / 2 , true);
-	Root->Tick(this);
+	
+	if (!QuadTreeRoot.IsValid() || !Checker)
+	{
+		return;
+	}
+
+	// 更新四叉树
+	QuadTreeRoot->Update();
+	
+	// 检查范围内的对象
+	const FVector CheckerLocation = Checker->GetComponentLocation();
+	QuadTreeRoot->CheckInRange(CheckerLocation, CheckRadius, true);
+	
+	// 绘制调试信息
+	QuadTreeRoot->DrawDebug(this);
 }
 
