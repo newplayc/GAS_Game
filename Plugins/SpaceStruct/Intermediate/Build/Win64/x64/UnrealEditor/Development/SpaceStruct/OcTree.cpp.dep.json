@@ -1,0 +1,16 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\octree.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\spacestruct\\definitions.spacestruct.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\octree.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\leafactor.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\leafactor.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

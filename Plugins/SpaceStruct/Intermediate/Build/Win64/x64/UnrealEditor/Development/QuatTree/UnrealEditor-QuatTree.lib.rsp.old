@@ -1,0 +1,15 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-QuatTree.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\RiderProject\GAS_Game\Intermediate\Build\Win64\x64\GAS_GameEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.InclOrderOldest.h.obj"
+"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\Module.QuatTree.cpp.obj"
+"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\LeafActor.cpp.obj"
+"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\QuadTreeManager.cpp.obj"
+"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\QuadTreeNode.cpp.obj"
+"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\Default.rc2.res"
+/OUT:"E:\RiderProject\GAS_Game\Plugins\QuatTree\Intermediate\Build\Win64\x64\UnrealEditor\Development\QuatTree\UnrealEditor-QuatTree.lib"

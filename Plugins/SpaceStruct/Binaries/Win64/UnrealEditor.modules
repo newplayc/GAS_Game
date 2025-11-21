@@ -1,0 +1,8 @@
+{
+	"BuildId": "33043543",
+	"Modules": 
+	{
+		"QuatTree": "UnrealEditor-QuatTree.dll",
+		"SpaceStruct": "UnrealEditor-SpaceStruct.dll"
+	}
+}

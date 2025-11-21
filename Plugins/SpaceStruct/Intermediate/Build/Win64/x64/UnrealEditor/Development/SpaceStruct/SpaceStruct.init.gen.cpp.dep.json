@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\spacestruct.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\spacestruct\\definitions.spacestruct.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

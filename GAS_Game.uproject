@@ -45,7 +45,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "QuatTree",
+			"Name": "SpaceStruct",
 			"Enabled": true
 		}
 	]

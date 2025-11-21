@@ -1,0 +1,23 @@
+﻿{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "SpaceStruct",
+	"Description": "空间加速结构",
+	"Category": "Other",
+	"CreatedBy": "newplayc",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "SpaceStruct",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

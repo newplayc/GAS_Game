@@ -1,0 +1,22 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\quadtreemanager.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\spacestruct\\definitions.spacestruct.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\quadtreemanager.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\quadtreemanager.generated.h",
+            "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\geometrycore\\public\\geometrytypes.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\leafactor.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\leafactor.generated.h",
+            "e:\\riderproject\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\quadtreenode.h",
+            "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.h",
+            "e:\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetmathlibrary.generated.h",
+            "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

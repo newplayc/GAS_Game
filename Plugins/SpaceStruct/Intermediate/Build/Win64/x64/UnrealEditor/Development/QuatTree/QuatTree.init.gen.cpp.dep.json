@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\quattree.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\quattree\\definitions.quattree.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

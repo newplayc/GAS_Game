@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\private\\quadtreemanager.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\quattree\\definitions.quattree.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\quadtreemanager.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\quadtreemanager.generated.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\leafactor.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\leafactor.generated.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\quadtreenode.h",
+            "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.h",
+            "e:\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetmathlibrary.generated.h",
+            "e:\\epic games\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

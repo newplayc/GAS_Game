@@ -1,0 +1,23 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\quattree\\module.quattree.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\riderproject\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\quattree\\definitions.quattree.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\leafactor.gen.cpp",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\leafactor.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\leafactor.generated.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\quadtreemanager.gen.cpp",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\quadtreemanager.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\quadtreemanager.generated.h",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\intermediate\\build\\win64\\unrealeditor\\inc\\quattree\\uht\\quattree.init.gen.cpp",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\private\\leafactor.cpp",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\private\\quattree.cpp",
+            "e:\\riderproject\\gas_game\\plugins\\quattree\\source\\quattree\\public\\quattree.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
