@@ -24,6 +24,20 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent>Checker;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent>RootCom;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent>SceneComponent1;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent>SceneComponent2;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent>SceneComponent3;
+
+	TArray<FVector>RandLocations;
 	
 	UPROPERTY(EditAnywhere)
 	double Width;
@@ -33,7 +47,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	int32 ActorNum;
-	
+
+	UPROPERTY(EditAnywhere)
+	float Speed = 100.f;
 	UPROPERTY(EditAnywhere)
 	float SpawnRate = 0.3f;
 	
@@ -46,12 +62,19 @@ protected:
 	
 	FTimerHandle SpawnTimerHandle;
 	FTimerHandle MoveTimerHandle;
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ALeafActor>LeafClass;
 
 	UPROPERTY()
 	TArray<ALeafActor*>Objs;
 
+	UPROPERTY(EditAnywhere)
+	float CheckBaseLegth = 600.f; // 宽
+
+
+
+	
 private:
 	double Minx , Maxx , Miny , Maxy;
 };

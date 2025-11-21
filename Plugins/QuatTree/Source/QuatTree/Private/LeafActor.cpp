@@ -10,13 +10,11 @@ ALeafActor::ALeafActor()
 	PrimaryActorTick.bCanEverTick = false;
 	SpawnCollisionHandlingMethod = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
-	
 	RootComponent = MeshComponent;
 	MeshComponent->SetCollisionEnabled(ECollisionEnabled::Type::PhysicsOnly);
 	MeshComponent->Mobility =EComponentMobility::Type::Movable;
 	MeshComponent->SetConstraintMode(EDOFMode::Type::XYPlane);
 	MeshComponent->SetSimulatePhysics(true);
-	
 }
  
 void ALeafActor::BeginPlay()
@@ -26,6 +24,14 @@ void ALeafActor::BeginPlay()
 void ALeafActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+bool ALeafActor::HasCollision(const FVector& Origin, float Radius) const
+{
+	FVector Min, Max;
+	MeshComponent->GetLocalBounds(Min, Max);
+	UE::Math::TBox<double> Box2(Min +GetActorLocation() , Max+GetActorLocation());
+    return FMath::SphereAABBIntersection(Origin , static_cast<double>(Radius) * static_cast<double>(Radius) , Box2);
 }
 
 void ALeafActor::Active(bool Active) const

@@ -15,13 +15,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	
 public:
 	virtual void Tick(float DeltaTime) override;
-
 	
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent * MeshComponent;
+
+	bool HasCollision(const FVector& Orign , float Radious) const;
 	
 	UPROPERTY(EditDefaultsOnly)
 	UMaterial * ActiveMat;
