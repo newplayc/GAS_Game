@@ -1,0 +1,17 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.SpaceStruct.cpp.obj": [
+			"LeafActor.gen.cpp.obj",
+			"OcTreeManager.gen.cpp.obj",
+			"QuadTreeManager.gen.cpp.obj",
+			"SpaceStruct.init.gen.cpp.obj",
+			"LeafActor.cpp.obj",
+			"OcTree.cpp.obj",
+			"OcTreeManager.cpp.obj",
+			"QuadTreeManager.cpp.obj",
+			"QuadTreeNode.cpp.obj",
+			"SpaceStruct.cpp.obj"
+		]
+	}
+}

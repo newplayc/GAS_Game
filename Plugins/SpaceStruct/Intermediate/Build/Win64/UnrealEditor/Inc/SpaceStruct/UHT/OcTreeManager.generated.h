@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define SPACESTRUCT_OcTreeManager_generated_h
 
-#define FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_INCLASS_NO_PURE_DECLS \
+#define FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAOcTreeManager(); \
 	friend struct Z_Construct_UClass_AOcTreeManager_Statics; \
@@ -23,7 +23,7 @@ public: \
 	DECLARE_SERIALIZER(AOcTreeManager)
 
 
-#define FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_ENHANCED_CONSTRUCTORS \
+#define FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	AOcTreeManager(AOcTreeManager&&); \
@@ -35,12 +35,12 @@ public: \
 	NO_API virtual ~AOcTreeManager();
 
 
-#define FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_9_PROLOG
-#define FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_GENERATED_BODY \
+#define FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_9_PROLOG
+#define FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_INCLASS_NO_PURE_DECLS \
-	FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_ENHANCED_CONSTRUCTORS \
+	FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_INCLASS_NO_PURE_DECLS \
+	FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h_13_ENHANCED_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -48,7 +48,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> SPACESTRUCT_API UClass* StaticClass<class AOcTreeManager>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_RiderProject_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h
+#define CURRENT_FILE_ID FID_Unreal_Project_GAS_Game_Plugins_SpaceStruct_Source_SpaceStruct_Public_OcTreeManager_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

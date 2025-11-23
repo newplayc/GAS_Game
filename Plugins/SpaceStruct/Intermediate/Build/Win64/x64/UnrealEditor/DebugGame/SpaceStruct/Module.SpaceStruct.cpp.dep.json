@@ -1,0 +1,36 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\spacestruct\\module.spacestruct.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unreal project\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\debuggame\\unrealed\\sharedpch.unrealed.project.nonoptimized.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\spacestruct\\definitions.spacestruct.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\leafactor.gen.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\leafactor.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\leafactor.generated.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\octreemanager.gen.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\octreemanager.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\octreemanager.generated.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\quadtreemanager.gen.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\quadtreemanager.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\quadtreemanager.generated.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\unrealeditor\\inc\\spacestruct\\uht\\spacestruct.init.gen.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\leafactor.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\octree.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\octree.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\octreemanager.cpp",
+            "e:\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.h",
+            "e:\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\kismetmathlibrary.generated.h",
+            "e:\\ue_5.4\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetmathlibrary.inl",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\quadtreemanager.cpp",
+            "e:\\ue_5.4\\engine\\source\\runtime\\geometrycore\\public\\geometrytypes.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\quadtreenode.h",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\quadtreenode.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\spacestruct.cpp",
+            "e:\\unreal project\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\spacestruct.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

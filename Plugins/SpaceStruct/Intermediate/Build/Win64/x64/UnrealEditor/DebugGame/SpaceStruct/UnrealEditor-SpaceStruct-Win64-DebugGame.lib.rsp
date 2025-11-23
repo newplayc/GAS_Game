@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-SpaceStruct-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\Unreal Project\GAS_Game\Intermediate\Build\Win64\x64\GAS_GameEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.InclOrderOldest.h.obj"
+"E:\Unreal Project\GAS_Game\Plugins\SpaceStruct\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\SpaceStruct\Module.SpaceStruct.cpp.obj"
+"E:\Unreal Project\GAS_Game\Plugins\SpaceStruct\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\SpaceStruct\Default.rc2.res"
+/OUT:"E:\Unreal Project\GAS_Game\Plugins\SpaceStruct\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\SpaceStruct\UnrealEditor-SpaceStruct-Win64-DebugGame.lib"

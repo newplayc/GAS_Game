@@ -1193,6 +1193,18 @@
     <None Include="..\..\Plugins\MazeCreator\Resources\Icon128.png">
       <Filter>Plugins\MazeCreator\Resources</Filter>
     </None>
+    <Filter Include="Plugins\SpaceStruct">
+      <UniqueIdentifier>{8DF3911A-0BE9-311F-B2EB-B0D21641D9C7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\SpaceStruct\SpaceStruct.uplugin">
+      <Filter>Plugins\SpaceStruct</Filter>
+    </None>
+    <Filter Include="Plugins\SpaceStruct\Resources">
+      <UniqueIdentifier>{C0E115E9-2070-363A-9F1D-CE143A645CC2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\SpaceStruct\Resources\Icon128.png">
+      <Filter>Plugins\SpaceStruct\Resources</Filter>
+    </None>
     <Filter Include="Plugins\Developer\RiderLink\Source\RiderBlueprint">
       <UniqueIdentifier>{D2AC7BF7-ED63-3A02-8780-2282F36BF8D7}</UniqueIdentifier>
     </Filter>
@@ -1585,6 +1597,57 @@
     </ClInclude>
     <ClInclude Include="..\..\Plugins\MazeCreator\Source\MazeCreator\Public\PMazeCreator.h">
       <Filter>Plugins\MazeCreator\Source\MazeCreator\Public</Filter>
+    </ClInclude>
+    <Filter Include="Plugins\SpaceStruct\Source">
+      <UniqueIdentifier>{27ECD23D-766B-328B-9C5A-7C6F1BC2ACBC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\SpaceStruct\Source\SpaceStruct">
+      <UniqueIdentifier>{12063100-41CD-3391-8A43-03436E58D41F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\SpaceStruct.Build.cs">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct</Filter>
+    </None>
+    <Filter Include="Plugins\SpaceStruct\Source\SpaceStruct\Private">
+      <UniqueIdentifier>{6BCB32A4-FD19-385B-AF26-C56DF3360C45}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\LeafActor.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\OcTree.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\OcTreeManager.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\QuadTreeManager.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\QuadTreeNode.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Private\SpaceStruct.cpp">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Private</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\SpaceStruct\Source\SpaceStruct\Public">
+      <UniqueIdentifier>{25398389-522D-3538-94F7-D898386D59ED}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\LeafActor.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\OcTree.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\OcTreeManager.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\QuadTreeManager.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\QuadTreeNode.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\SpaceStruct\Source\SpaceStruct\Public\SpaceStruct.h">
+      <Filter>Plugins\SpaceStruct\Source\SpaceStruct\Public</Filter>
     </ClInclude>
     <Filter Include="Source\GAS_Game">
       <UniqueIdentifier>{4F2636E4-F4F6-3DF1-B1A7-1092EB99E757}</UniqueIdentifier>

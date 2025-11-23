@@ -17,7 +17,6 @@ void UFindNearstEnemy::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 	{
 		IsRanger = IICombatInterface::Execute_GetCharacterClass(AiOwner) == ECharacterClass::Ranger;
 	}
-	
 	FName EnemyName = AiOwner->ActorHasTag(FName("Player")) ? FName("Enemy") : FName("Player");
 
 	TArray<AActor*> EnemysFound;

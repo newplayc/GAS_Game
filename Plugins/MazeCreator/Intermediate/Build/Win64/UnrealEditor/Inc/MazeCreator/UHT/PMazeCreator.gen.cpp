@@ -221,14 +221,14 @@ AMazeCreator::~AMazeCreator() {}
 // End Class AMazeCreator
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_RiderProject_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics
+struct Z_CompiledInDeferFile_FID_Unreal_Project_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
 		{ Z_Construct_UClass_AMazeCreator, AMazeCreator::StaticClass, TEXT("AMazeCreator"), &Z_Registration_Info_UClass_AMazeCreator, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMazeCreator), 3191299896U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_RiderProject_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_4151195758(TEXT("/Script/MazeCreator"),
-	Z_CompiledInDeferFile_FID_RiderProject_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_RiderProject_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Unreal_Project_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_4151195758(TEXT("/Script/MazeCreator"),
+	Z_CompiledInDeferFile_FID_Unreal_Project_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Unreal_Project_GAS_Game_Plugins_MazeCreator_Source_MazeCreator_Public_PMazeCreator_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration
