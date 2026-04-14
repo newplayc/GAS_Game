@@ -41,7 +41,7 @@ AActor* AAuraGameModeBase::ChoosePlayerStart_Implementation(AController* Player)
 void AAuraGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	WorldMap.Add(FirstName , FirstMap);
 }
 

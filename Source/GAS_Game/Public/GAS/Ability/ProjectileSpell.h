@@ -30,6 +30,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float SpreadSpeed = 650.f;
 
+	
 	UPROPERTY(EditDefaultsOnly)
 	float ProjectileSpread = 90;
 	

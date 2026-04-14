@@ -7,6 +7,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "ActiveGameplayEffectHandle.h"
+#include "Engine/AssetManager.h"
 
 
 void UCoolDownAsync::OnTagChanged(const FGameplayTag GT, int32 Count)const
@@ -27,6 +28,7 @@ void UCoolDownAsync::OnEffectApplied(UAbilitySystemComponent* ASC, const FGamepl
 		TArray<float> TimeRemaing =  ASC->GetActiveEffectsTimeRemaining(EffectQuery);
 		CoolDownBegin.Broadcast(TimeRemaing[0]);
 	}
+	
 }
 
 UCoolDownAsync* UCoolDownAsync::CreatCoolDownAsync(UAbilitySystemComponent* ASC, const FGameplayTag CoolDownTag)

@@ -11,5 +11,11 @@ public class GAS_GameTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 
 		ExtraModuleNames.AddRange( new string[] { "GAS_Game" } );
+		RegisterModulesCreatedByRider();
+	}
+
+	private void RegisterModulesCreatedByRider()
+	{
+		ExtraModuleNames.AddRange(new string[] { "testMode" });
 	}
 }

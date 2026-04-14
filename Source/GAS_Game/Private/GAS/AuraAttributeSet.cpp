@@ -247,7 +247,6 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		// 没死
 		if(!IsDied)
 		{
-
 			// 添加受击标签
 			FGameplayTagContainer TempTags = FGameplayTagContainer();
 			TempTags.AddTag(FAuraGameplayTags::Get().Effects_React);

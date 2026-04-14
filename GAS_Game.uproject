@@ -18,6 +18,11 @@
 				"Niagara",
 				"ModelViewViewModel"
 			]
+		},
+		{
+			"Name": "testMode",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [

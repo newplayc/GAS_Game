@@ -1,10 +1,10 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\util\\hashing.cpp",
+        "Source": "e:\\unrealtext\\gas_game\\plugins\\developer\\riderlink\\source\\rd\\src\\rd_framework_cpp\\src\\main\\util\\hashing.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "e:\\riderproject\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h"
+            "e:\\unrealtext\\gas_game\\plugins\\developer\\riderlink\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\rd\\definitions.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

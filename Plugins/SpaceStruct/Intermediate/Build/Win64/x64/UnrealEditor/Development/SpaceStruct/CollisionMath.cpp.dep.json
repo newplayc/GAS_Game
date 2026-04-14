@@ -1,0 +1,18 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unrealtext\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\private\\collisionmath.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unrealtext\\gas_game\\intermediate\\build\\win64\\x64\\gas_gameeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderoldest.h.pch",
+        "Includes": [
+            "e:\\unrealtext\\gas_game\\plugins\\spacestruct\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\spacestruct\\definitions.spacestruct.h",
+            "e:\\unrealtext\\gas_game\\plugins\\spacestruct\\source\\spacestruct\\public\\collisionmath.h",
+            "e:\\visualstudio\\ide\\vc\\tools\\msvc\\14.38.33130\\include\\vector",
+            "e:\\visualstudio\\ide\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_bit_utils.hpp",
+            "e:\\visualstudio\\ide\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_sanitizer_annotate_container.hpp",
+            "e:\\visualstudio\\ide\\vc\\tools\\msvc\\14.38.33130\\include\\xpolymorphic_allocator.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

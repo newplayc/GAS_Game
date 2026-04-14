@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj": {}
+    "E:\\UnrealTEXT\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj": {}
   },
   "projects": {
     "E:\\UE_5.4\\Engine\\Intermediate\\Build\\BuildRulesProjects\\UE5ProgramRules\\UE5ProgramRules.csproj": {
@@ -1014,14 +1014,14 @@
         }
       }
     },
-    "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj": {
+    "E:\\UnrealTEXT\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj",
+        "projectUniqueName": "E:\\UnrealTEXT\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj",
         "projectName": "GAS_GameModuleRules",
-        "projectPath": "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj",
+        "projectPath": "E:\\UnrealTEXT\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\GAS_GameModuleRules.csproj",
         "packagesPath": "C:\\Users\\22637\\.nuget\\packages\\",
-        "outputPath": "E:\\Unreal Project\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\obj\\",
+        "outputPath": "E:\\UnrealTEXT\\GAS_Game\\Intermediate\\Build\\BuildRulesProjects\\GAS_GameModuleRules\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\22637\\AppData\\Roaming\\NuGet\\NuGet.Config"
